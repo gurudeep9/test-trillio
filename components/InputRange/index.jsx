@@ -21,7 +21,6 @@ export const Range = ({
       </div>
 
       <input
-        f
         max={max}
         min={min}
         onChange={evt => { return setCurrentValue(evt.target.value) }}

@@ -10,7 +10,9 @@ const Column = ({ children, ...props }) => {
   )
 }
 
-Column.propTypes = {}
+Column.propTypes = {
+  children: PropTypes.any
+}
 
 export default Column
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const cookie = require('cookie')
 
 export default {

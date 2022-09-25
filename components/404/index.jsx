@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types'
 import Column from 'components/common/Atoms/Column'
 import Text from 'components/common/Atoms/Text'
-// import Portal from 'components/portal'
 import { RippleButton } from 'components/Ripple'
 import { useRouter } from 'next/router'
 import { BGColor, PColor, SECColor } from 'public/colors'
@@ -49,6 +49,10 @@ const NotFount = ({
   )
 }
 
-NotFount.propTypes = {}
+NotFount.propTypes = {
+  error: PropTypes.string,
+  errorType: PropTypes.string,
+  redirect: PropTypes.string
+}
 
 export default NotFount

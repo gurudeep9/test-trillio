@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import styled, { css, keyframes } from 'styled-components'
 import { SECColor, SEGColor } from '../../public/colors'
 import { MODAL_SIZES } from './constanst'

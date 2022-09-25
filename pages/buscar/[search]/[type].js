@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 import { useLazyQuery } from '@apollo/client'
@@ -33,14 +34,14 @@ export default function HomeView () {
       <Buscar
         type={type}
       />
-      {type === 'RESTAURANT' || 'TODO' && <ListRestaurant
+      {(type === 'RESTAURANT' || 'TODO') && <ListRestaurant
         catStoreId={type}
         data={dataStore?.getAllMatchesStore || []}
         setShowMore={setShowMore}
         showMore={showMore}
       />
       }
-      {type === 'PLATOS' || 'TODO' && <ContainerProductSearch>
+      {(type === 'PLATOS' || 'TODO') && <ContainerProductSearch>
         {data?.getAllMatchesProducts ? data?.getAllMatchesProducts.map(food => {
           return (
             <CardProduct food={food} key={food.pId} /* onClick={() => getOneProduct(food)} */ />

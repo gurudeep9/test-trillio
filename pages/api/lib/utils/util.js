@@ -1,8 +1,10 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
 const { Base64 } = require('js-base64')
 
 const codeRed = async model => {
   /** variables necesarias */
-  let result = ''; let error = false
+  let result = ''; const error = false
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
   /** creación de código */
@@ -10,7 +12,7 @@ const codeRed = async model => {
     result += characters.charAt(Math.floor(Math.random() * characters.length))
   }
   /** busca si ya existe */
-  const dataUP = await model.findOne({ attributes: ['up_id'], where: { up_code: result } }).catch(x = error = true)
+  const dataUP = await model.findOne({ attributes: ['up_id'], where: { up_code: result } })
   /** verifica si existe */
   if (dataUP) { await codeRed() } else { return result }
 }
@@ -59,7 +61,7 @@ const UpCrFind = async (model, newItem, where, condition, updateFind = false) =>
   const res = await model.findOne({ where: where || { [condition.id]: deCode(condition.value) } })
   /** confirma si hay id para actualizar o registrar */
   if (res) {
-    const data = await model.update(newItem, { where: where || { [condition.id]: deCode(condition.value) } })
+    await model.update(newItem, { where: where || { [condition.id]: deCode(condition.value) } })
     return res
   } return await model.create(newItem)
 }
@@ -79,10 +81,10 @@ const updateOrCreate = async (model, newItem, where) => {
 const getAttributes = (model, { fieldNodes }) => {
   // get the fields of the Model (columns of the table)
   const columns = new Set(Object.keys(model.rawAttributes))
-  const requested_attributes = fieldNodes[0].selectionSet.selections
+  const requestedAttributes = fieldNodes[0].selectionSet.selections
     .map(({ name: { value } }) => { return value })
     // filter the attributes against the columns
-  return requested_attributes.filter(attribute => { return columns.has(attribute) })
+  return requestedAttributes.filter(attribute => { return columns.has(attribute) })
 }
 /**
  * Verifica que contenga un valor

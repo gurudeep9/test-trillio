@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Head from 'next/head'
 import { withIronSessionSsr } from 'iron-session/next'
 import { cookie, defaultReturnObject } from 'utils'

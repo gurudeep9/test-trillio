@@ -77,7 +77,6 @@ export const MessageComp = ({
           <div className='header-chat'>
             <input
               autoComplete='off'
-              errors={values?.content}
               name='content'
               onChange={handleChange}
               placeholder='Aa'

@@ -102,7 +102,7 @@ export const TypeRoad = () => {
         </RippleButton>
       </Form>
       <Card>
-        {road?.road ? road?.road?.map(index => {
+        {road?.road && road?.road?.map(index => {
           return (
             <ContainerTask key={index.ctId} show={show === index}>
               <OptionsFunction show={show === index}>
@@ -118,7 +118,7 @@ export const TypeRoad = () => {
               <div style={{ display: 'contents' }}><Button onClick={() => { return setShow(index === show ? false : index) }}><IconDost color={show === index ? PColor : '#CCC'} size={30} /></Button></div>
             </ContainerTask>
           )
-        }) : <i>No hay ninguna cuidad en base de datos</i>}
+        })}
       </Card>
     </Container>
   </>

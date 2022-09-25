@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { PColor } from '../../../../assets/colors'

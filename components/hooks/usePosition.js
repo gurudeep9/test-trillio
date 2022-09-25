@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable consistent-return */
 import { useState, useEffect } from 'react'
 
 const defaultSettings = {
@@ -42,7 +44,7 @@ export const usePosition = (watch = false, settings = defaultSettings) => {
     }
 
     return () => { return watcher && navigator.geolocation.clearWatch(watcher) }
-  }, [settings, settings.enableHighAccuracy, settings.timeout, settings.maximumAge, watch])
+  }, [settings, settings.enableHighAccuracy, settings.timeout, settings.maximumAge, watch, onError])
 
   return { ...position, error }
 }

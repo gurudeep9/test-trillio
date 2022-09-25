@@ -2,7 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
-const Row = ({ children, as = 'div', ...props }) => {
+const Row = ({
+  children,
+  as = 'div',
+  ...props
+}) => {
   return (
     <View as={as} {...props}>
       {children}
@@ -11,6 +15,7 @@ const Row = ({ children, as = 'div', ...props }) => {
 }
 
 Row.propTypes = {
+  as: PropTypes.string,
   children: PropTypes.node
 }
 
@@ -45,7 +50,7 @@ export const View = styled.div`
     ${({ gridTemplateColumns }) => { return gridTemplateColumns && css`grid-template-columns: ${gridTemplateColumns};` }}
     ${({ gridGap }) => { return gridGap && css`gap: ${gridGap};` }}
     ${({ Border }) => { return Border && css`border: ${Border};` }}
-    ${({ BorderRadius }) => { return BorderRadius && css`border-radius: ${Border};` }}
+    ${({ BorderRadius }) => { return BorderRadius && css`border-radius: ${BorderRadius};` }}
     ${({ background }) => { return background && css`background: ${background};` }}
     ${({ backgroundColor }) => { return backgroundColor && css`background-color: ${backgroundColor};` }}
     ${({ backgroundImage }) => { return backgroundImage && css`background-image: ${backgroundImage};` }}

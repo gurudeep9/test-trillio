@@ -1,5 +1,5 @@
 
-export const LoginEmail = ({ code, or_JWT_Token }) => {
+export const LoginEmail = ({ code, or_JWT_Token: token }) => {
   return `
     <!DOCTYPE html>
     <html lang="es">
@@ -98,7 +98,7 @@ export const LoginEmail = ({ code, or_JWT_Token }) => {
                 </td>
             </tr>
             <tr>
-            <td> <a href="http://localhost:3001/entrar/email/${or_JWT_Token}"
+            <td> <a href="http://localhost:3001/entrar/email/${token}"
                     style="text-align: center; color: #F5E9DA; font-weight: bold; text-decoration: unset; font-size: 16px; display: block;">
                     <table border="0" height="50px" width="335px" align="center" cellpadding="5" cellspacing="10"
                         bgcolor="#EA1D2C" style=" border-radius: 4px;">

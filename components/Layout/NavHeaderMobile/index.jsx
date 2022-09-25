@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useApolloClient } from '@apollo/client'
 import { OUR_URL_BASE } from 'apollo/urls'
 import ActiveLink from 'components/common/Link'
@@ -65,4 +66,8 @@ export const NavHeaderMobile = ({ menuMobile }) => {
       </div>
     </NavHeaderMenuMobileContent>
   )
+}
+
+NavHeaderMobile.propTypes = {
+  menuMobile: PropTypes.bool
 }

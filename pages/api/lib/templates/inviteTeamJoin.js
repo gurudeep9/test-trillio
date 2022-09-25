@@ -1,4 +1,8 @@
-export const TemplateJoinTeam = ({ username, id }) => {
+/* eslint-disable no-tabs */
+export const TemplateJoinTeam = ({
+  username,
+  id
+}) => {
   return `
     <html><link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet" />
 <style type="text/css">body{display:flex !important;flex-direction:column !important;margin:0 !important;}</style>

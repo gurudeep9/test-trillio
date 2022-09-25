@@ -1,7 +1,10 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
-// import { Container } from './styled'
-import { ContainerText, ContainerToast, ContentToast } from './styled'
+import {
+  ContainerText,
+  ContainerToast,
+  ContentToast
+} from './styled'
 
 export const AlertBox = ({ err }) => {
   const [closed, setClosed] = useState(false)
@@ -14,6 +17,7 @@ export const AlertBox = ({ err }) => {
         setClosed(false)
       }
     }
+    return {}
   }, [err])
   return (
     <React.Fragment>
@@ -30,4 +34,12 @@ export const AlertBox = ({ err }) => {
       </ContainerToast>
     </React.Fragment>
   )
+}
+
+AlertBox.propTypes = {
+  err: PropTypes.shape({
+    color: PropTypes.any,
+    duration: PropTypes.number,
+    message: PropTypes.string
+  })
 }
