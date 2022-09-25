@@ -1,0 +1,287 @@
+import React, {
+  useEffect, 
+  useRef,
+  useState 
+} from 'react'
+import { APColor, PColor } from '../../public/colors'
+import { RippleButton } from '../../components/Ripple'
+import { 
+  Body,
+  Card,
+  CardPro,
+  ContainerAnimation,
+  ContainerAnimationTow,
+  ContentInfo,
+  flex,
+  Text,
+  Wrapper
+} from './styled'
+import {
+  numberFormat,
+  RandomCode,
+  updateCache } from '../../utils'
+import InputHooks from '../../components/InputHooks/InputHooks'
+import { GET_ALL_SHOPPING_CARD } from '../restaurantes/queries'
+import { useFormTools } from '../../components/BaseForm'
+import {
+  useLazyQuery,
+  useMutation,
+  useQuery
+} from '@apollo/client'
+import { CardProduct, ContentTotal } from '../../components/AsideCheckout/styled'
+import {
+  CREATE_MULTIPLE_ORDER_PRODUCTS,
+  DELETE_ONE_ITEM_SHOPPING_PRODUCT,
+  PUSH_NOTIFICATION_ORDER_STORE
+} from './queries'
+import { useRouter } from 'next/router'
+import { CREATE_ONE_STORE_PEDIDO } from '../confirmCheckout/queries'
+import { IconGoogleLocation, IconLocationMap } from '../../public/icons'
+
+export const Checkout = ({
+  setAlertBox,
+  setCountItemProduct,
+  locationStr,
+  setModalLocation
+}) => {
+  // STATE
+  const [handleChange, handleSubmit, setDataValue, { dataForm, errorForm }] = useFormTools()
+  const [active, setActive] = useState(1)
+  const router = useRouter()
+  const [key, setSetKey] = useState([])
+  const handleClick = index => { setActive(index === active ? true : index) }
+  // QUERIES
+  const { data: dataShoppingCard, loading } = useQuery(GET_ALL_SHOPPING_CARD)
+  const result = dataShoppingCard?.getAllShoppingCard?.reduce(function (r, a) {
+    r[a.getStore?.storeName] = r[a.getStore?.storeName] || []
+    r[a.getStore?.storeName].push(a)
+    return r
+  }, Object.create(null))
+
+  const [pushNotificationOrder] = useLazyQuery(PUSH_NOTIFICATION_ORDER_STORE, {
+    context: { clientName: 'admin-server' }
+
+  })
+  const [deleteOneItem] = useMutation(DELETE_ONE_ITEM_SHOPPING_PRODUCT, {
+    onCompleted: data => {
+      setAlertBox({ message: data?.deleteOneItem?.message })
+      if (dataShoppingCard?.getAllShoppingCard?.length === 1) {
+        setAlertBox({ message: 'Tu carrito esta vació' })
+        router.replace('/restaurantes')
+      }
+    }
+  })
+  const [createOnePedidoStore] = useMutation(CREATE_ONE_STORE_PEDIDO)
+  const [createMultipleOrderStore] = useMutation(CREATE_MULTIPLE_ORDER_PRODUCTS, {
+    // onCompleted: data => {
+    //   if (data.createMultipleOrderStore.success === true) {
+    //     router.push('/proceso-de-compra/finalizar')
+    //   }
+    // }
+  })
+  const { department, pais, uLocationKnow, city } = locationStr || {}
+  const { dName } = department || {}
+  const { cName } = city || {}
+  const { cName: country } = pais || {}
+  const objLocation = { dName, uLocationKnow, cName, country }
+  const newArray = dataShoppingCard?.getAllShoppingCard.map(x => { return { ShoppingCard: x.ShoppingCard, idStore: x.getStore.idStore } })
+  const [totalProductPrice, setTotalProductPrice] = useState(0)
+  const handleSubmitPedido = async () => {
+    const code = RandomCode(10)
+    if (!objLocation) return setAlertBox({ message: 'Elige una ubicación' })
+    await createMultipleOrderStore({
+      variables: {
+        input: {
+          setInput: newArray,
+          change: parseInt(dataForm?.change?.replace(/\./g, '')),
+          pickUp: 1,
+          totalProductsPrice: totalProductPrice,
+          pCodeRef: code,
+          payMethodPState: 1,
+          pPRecoger: 1,
+          locationUser: JSON.stringify(objLocation)
+        }
+      }, update: (cache, { data: { getAllShoppingCard } }) => {return updateCache({
+        cache,
+        query: GET_ALL_SHOPPING_CARD,
+        nameFun: 'getAllShoppingCard',
+        dataNew: getAllShoppingCard
+      })}
+    }).then(x => {
+      pushNotificationOrder({
+        variables: {
+          pCodeRef: code,
+          idStore: 'MjcyMDg4ODE0ODUxNTE2NDUw'
+        }
+      })
+    }).catch(err => {return setAlertBox({ message: `${err}`, duration: 7000 })})
+  }
+  // EFFECTS
+  useEffect(() => {
+    if (!loading && dataShoppingCard !== null) {
+      const dataProduct2 = Object.keys(result)
+      setSetKey(dataProduct2)
+      setCountItemProduct(dataShoppingCard?.getAllShoppingCard.length || 0)
+    }
+  }, [dataShoppingCard])
+  const sumProduct = (ProPrice, ProDelivery, cant) => {
+    const price = parseInt(ProPrice)
+    const priceFinal = cant * price
+
+    const delivery = parseInt(ProDelivery ? ProDelivery : 0)
+    return delivery ? priceFinal + delivery : priceFinal
+  }
+  const refs = useRef([React.createRef(), React.createRef()])
+  let total = 0
+  let suma = 0
+  useEffect(() => {
+    dataShoppingCard?.getAllShoppingCard.forEach((a) => {
+      const { productFood, cantProducts } = a || {}
+      const { ProPrice, ValueDelivery } = productFood || {}
+      let PriceFinal = (ProPrice * cantProducts) + ValueDelivery
+      suma += PriceFinal
+      setTotalProductPrice(suma)
+    })
+  }, [totalProductPrice, suma, total, dataShoppingCard])
+  console.log(dataShoppingCard)
+  // HANDLESS
+  const handleDeleteItemShopping = item => {
+    deleteOneItem({
+      variables: {
+        cState: item.cState,
+        ShoppingCard: item.ShoppingCard
+      }, update: (cache, { data: { getAllShoppingCard } }) => {return updateCache({
+        cache,
+        query: GET_ALL_SHOPPING_CARD,
+        nameFun: 'getAllShoppingCard',
+        dataNew: getAllShoppingCard
+      })}
+    })
+  }
+  const checkoutCart = active === 2
+  return (
+    <Body>
+      {dataShoppingCard?.getAllShoppingCard?.length > 0 ? <Card>
+        <RippleButton
+          active={active === 1}
+          bgColor='transparent'
+          borderRadius='0'
+          color='red'
+          label='Entrega'
+          margin='0px 5px'
+          onClick={() => {return active !== 1 && handleClick(1)}}
+          padding='10px'
+        />
+        {/* <RippleButton active={active === 2} margin='0px 5px' borderRadius='0' color="red" padding="10px" bgColor='transparent' label='Recoger' onClick={() => active !== 2 && handleClick(2)} /> */}
+        <ContentInfo>
+          <div className='ctn-location' onClick={() => {return setModalLocation(true)}}>
+            <button >
+              <IconGoogleLocation color={PColor} size={70} />
+            </button>
+            <div className='delivery-location' onClick={() => {return setModalLocation(true)}}>
+              <span ><IconLocationMap color={PColor} size={20} /> {uLocationKnow ? uLocationKnow : pais ? `${pais?.cName} ${department?.dName} ${city?.cName}` : null}</span>
+              <span className='sub-location'>{pais && `${pais?.cName} ${department?.dName} ${city?.cName}`}</span>
+            </div>
+          </div>
+          {active === 1 ?
+            <ContainerAnimation>
+              <InputHooks
+                error={errorForm?.change}
+                name='change'
+                onChange={handleChange}
+                required
+                title='cambio'
+                value={numberFormat(dataForm?.change)}
+                width={'100%'}
+              />
+            </ContainerAnimation> :
+            checkoutCart
+              &&
+              <ContainerAnimationTow>
+                <ProcessCheckoutCard />
+              </ContainerAnimationTow>
+              }
+          <RippleButton
+            disabled={false}
+            margin='20px auto'
+            onClick={() => {return handleSubmitPedido()}}
+            widthButton='100%'
+          >Hacer pedido</RippleButton>
+        </ContentInfo>
+      </Card> : <div>Carrito vacio</div>}
+      {dataShoppingCard?.getAllShoppingCard?.length > 0 && <Card>
+        <CardPro>
+          {dataShoppingCard?.getAllShoppingCard?.length > 0 ? key?.map((store, index) => {
+            return (
+              <div key={index}>
+                <div>
+                  <Text className='garnish-choices__title' size='30px'>{store}</Text>
+                </div>
+                <div key={store.store}>
+                  {dataShoppingCard?.getAllShoppingCard?.length > 0 ? result[store]?.map((product, idx) => {return (
+                    <CardProduct key={product.ShoppingCard}>
+                      <div className='item-line'>
+                        <Text margin={'40px 0'} size='20px'>{product.productFood?.pName}</Text>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>
+                          <Text color={APColor}> $ {numberFormat(product.productFood?.ProPrice)}</Text>
+                          <Text color={APColor}> Cantidad {numberFormat(product.cantProducts)}</Text>
+                          <Text
+                            line
+                            margin={'0 0 0 10px'}
+                            size='25px'
+                          >$ {numberFormat(product.productFood?.ProDescuento)}</Text>
+                        </div>
+                        <div className='footer' style={{ display: 'flex' }}>
+                          <Text color={PColor} >Editar</Text>
+                          <button onClick={() => {return handleDeleteItemShopping(product)}}>
+                            <Text color='#ccc' margin={'0 0 0 10px'} >Eliminar</Text>
+                          </button>
+                        </div>
+                      </div>
+                      <ContentTotal>
+                        <Text margin={'0 0 0 10px'} > Subtotal</Text>
+                        <Text margin={'0 0 0 10px'} >$ {numberFormat(product.productFood?.ProPrice)}</Text>
+                      </ContentTotal>
+                      <ContentTotal>
+                        <Text margin={'0 0 0 10px'} >Costo de envio</Text>
+                        {product.productFood?.ValueDelivery !== null || 0 ? <Text margin={'0 0 0 10px'} >$ {numberFormat(product.productFood?.ValueDelivery)}</Text> : <Text color={APColor}>Gratis</Text>}
+                        {/* <Text margin={'0 0 0 10px'} >{numberFormat(product.productFood?.ValueDelivery)}</Text> */}
+                      </ContentTotal>
+                      <ContentTotal>
+                        <Text margin={'0 0 0 10px'} >Costo Final</Text>
+                        <Text margin={'0 0 0 10px'} ref={refs.current[idx]}>$ {numberFormat(sumProduct(product.productFood?.ProPrice, product.productFood?.ValueDelivery, product.cantProducts))}</Text>
+                      </ContentTotal>
+                    </CardProduct>
+                  )}) : <div>Carro vació</div>}
+                </div>
+              </div>
+            )
+          }) : <div>Carrito vacio</div>}
+          <Wrapper styles={flex}>
+
+            <Text bold='900' size='30px' >Total</Text>
+            <Text
+              bold='900'
+              color={PColor}
+              size='30px'
+            >$ {numberFormat(dataShoppingCard?.getAllShoppingCard.length > 0 && totalProductPrice)}</Text>
+          </Wrapper>
+        </CardPro>
+
+      </Card>}
+    </Body>
+  )
+}
+
+
+const ProcessCheckoutCard = () => {
+  return (
+    <div>
+      <Wrapper border>
+        <Text>Estandar</Text>
+      </Wrapper>
+    </div>
+  )
+}
+
+ProcessCheckoutCard.propTypes = {}
