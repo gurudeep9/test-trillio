@@ -63,6 +63,7 @@ Checkbox.propTypes = {
   id: PropTypes.any,
   indeterminate: PropTypes.bool,
   label: PropTypes.any,
+  name: PropTypes.any,
   onChange: PropTypes.func
 }
 const checkboxCheck = keyframes`

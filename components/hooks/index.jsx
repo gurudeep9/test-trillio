@@ -1,6 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import PropTypes from 'prop-types'
 import React, { useState, useEffect, useRef } from 'react'
 
-export const FetchMoreInteractions = ({ render, fetchMore = true, callback = () => {} }) => {
+export const FetchMoreInteractions = ({
+  render,
+  fetchMore = true,
+  callback = () => {}
+}) => {
   const loadingRef = useRef()
 
   const useOnScreen = ref => {
@@ -28,4 +34,10 @@ export const FetchMoreInteractions = ({ render, fetchMore = true, callback = () 
   return <div ref={loadingRef}>
     {isVisible && fetchMore ? render || <div style={{ background: 'red' }} >Loading...{isVisible && 'lol'}</div> : <></>}
   </div>
+}
+
+FetchMoreInteractions.propTypes = {
+  callback: PropTypes.func,
+  fetchMore: PropTypes.bool,
+  render: PropTypes.any
 }

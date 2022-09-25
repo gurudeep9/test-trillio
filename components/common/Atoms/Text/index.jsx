@@ -2,7 +2,19 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const Text = ({ text, size, align, lineHeight, padding, margin, color, font, weight, textAlign, ...props }) => {
+const Text = ({
+  align,
+  color,
+  font,
+  lineHeight,
+  margin,
+  padding,
+  size,
+  text,
+  textAlign,
+  weight,
+  ...props
+}) => {
   return <TextView
     align={align}
     color={color}
@@ -22,6 +34,7 @@ const Text = ({ text, size, align, lineHeight, padding, margin, color, font, wei
 }
 
 Text.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
   align: PropTypes.any,
   color: PropTypes.any,
   font: PropTypes.any,
@@ -30,6 +43,7 @@ Text.propTypes = {
   padding: PropTypes.any,
   size: PropTypes.any,
   text: PropTypes.any,
+  textAlign: PropTypes.any,
   weight: PropTypes.any
 }
 export default Text
@@ -66,7 +80,7 @@ const TextView = styled.span`
     ${({ gridGap }) => { return gridGap && css`gap: ${gridGap};` }}
     ${({ Border }) => { return Border && css`border: ${Border};` }}
     ${({ textOverflow }) => { return textOverflow && css`text-overflow: ${textOverflow};` }}
-    ${({ BorderRadius }) => { return BorderRadius && css`border-radius: ${Border};` }}
+    ${({ BorderRadius }) => { return BorderRadius && css`border-radius: ${BorderRadius};` }}
     ${({ background }) => { return background && css`background: ${background};` }}
     ${({ backgroundColor }) => { return backgroundColor && css`background-color: ${backgroundColor};` }}
     ${({ backgroundImage }) => { return backgroundImage && css`background-image: ${backgroundImage};` }}

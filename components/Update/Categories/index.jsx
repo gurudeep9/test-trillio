@@ -1,6 +1,11 @@
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { InputHook } from './Input'
-import { APColor, PColor, PVColor } from 'public/colors'
+import {
+  APColor,
+  PColor,
+  PVColor
+} from 'public/colors'
 import { RippleButton } from '../../Ripple'
 import { Loading } from '../../Loading'
 import {
@@ -23,18 +28,23 @@ import {
   ContentProducts
 } from './styled'
 import { Skeleton } from '../../Skeleton/SkeletonCard'
-import { IconArrowRight, IconDelete, IconEdit, IconLove } from 'public/icons'
+import {
+  IconArrowRight,
+  IconDelete,
+  IconEdit,
+  IconLove
+} from 'public/icons'
 
 export const Categories = ({
-  search,
-  handleChangeFilter,
   data,
-  setShowMore,
-  values,
-  handleRegister,
   handleChange,
+  handleChangeFilter,
+  handleDelete,
+  handleRegister,
   loading,
-  handleDelete
+  search,
+  setShowMore,
+  values
 }) => {
   const [stateCard, setState] = useState(false)
   const handleClick = () => {
@@ -120,6 +130,24 @@ export const Categories = ({
     </Container>
   </div>
   )
+}
+
+Categories.propTypes = {
+  data: PropTypes.shape({
+    length: PropTypes.any,
+    map: PropTypes.func
+  }),
+  handleChange: PropTypes.any,
+  handleChangeFilter: PropTypes.any,
+  handleDelete: PropTypes.func,
+  handleRegister: PropTypes.any,
+  loading: PropTypes.any,
+  search: PropTypes.any,
+  setShowMore: PropTypes.func,
+  values: PropTypes.shape({
+    Metadata: PropTypes.any,
+    cpName: PropTypes.any
+  })
 }
 export const SkeletonP = () => {
   return <>

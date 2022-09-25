@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { useRef, useState, useEffect } from 'react'
 
 export default function useHover () {
@@ -21,7 +22,7 @@ export default function useHover () {
         }
       }
     },
-    [ref.current] // Recall only if ref changes
+    [] // Recall only if ref changes
   )
 
   return [ref, value]

@@ -309,7 +309,7 @@ export const FoodComponent = ({
                     <IconLove color={PVColor} size={20} />
                   </ContentIconFav>
                   {product.ProDescuento &&
-                  <span discount={product.ProDescuento} > {numberFormat(product.ProDescuento)}</span>
+                  <span> {numberFormat(product.ProDescuento)}</span>
                   }
                   <Title>{product.pName}</Title>
                   <Text>{numberFormat(product.ProPrice)}</Text>

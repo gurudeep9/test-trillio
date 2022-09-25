@@ -1,4 +1,9 @@
-import React, { memo, useState, useCallback } from 'react'
+import PropTypes from 'prop-types'
+import React, {
+  memo,
+  useState,
+  useCallback
+} from 'react'
 import SingleInput, { Content } from './SingleInput'
 
 export const OTPInputComponent = (props) => {
@@ -187,6 +192,17 @@ export const OTPInputComponent = (props) => {
         })}
     </Content>
   )
+}
+
+OTPInputComponent.propTypes = {
+  arrayCode: PropTypes.func,
+  autoFocus: PropTypes.any,
+  disabled: PropTypes.any,
+  inputClassName: PropTypes.any,
+  inputStyle: PropTypes.any,
+  isNumberInput: PropTypes.any,
+  length: PropTypes.number,
+  onChangeOTP: PropTypes.func
 }
 
 const OTPInput = memo(OTPInputComponent)

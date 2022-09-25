@@ -20,17 +20,16 @@ query road {
     rState
     rDatMod
     rDatCre
-    
   }
 }
 `
 export const EDIT_MUNICIPALITIES = gql`
 mutation cityeditMutation($input: IEditMunicipalities!){
-	editMunicipalities(input: $input){
-    cId
-    dId
-    cName
-    cState
-  }
+editMunicipalities(input: $input){
+  cId
+  dId
+  cName
+  cState
+}
 }
 `

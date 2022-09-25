@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { PColor } from '../../public/colors'
-// import { PColor } from '../../assets/colors'
 
 export const LoadEllipsis = ({ color }) => {
   return (
@@ -9,6 +9,10 @@ export const LoadEllipsis = ({ color }) => {
       <div></div><div></div><div></div><div></div>
     </EllipsisSpinner>
   )
+}
+
+LoadEllipsis.propTypes = {
+  color: PropTypes.any
 }
 
 const ldsEllipsis1 = keyframes`

@@ -14,7 +14,10 @@ const Input = ({ children, ...props }) => {
 }
 
 Input.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  value: PropTypes.string
 }
 
 export default Input

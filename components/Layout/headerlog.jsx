@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useContext, useEffect } from 'react'
 import ActiveLink from '../common/Link'
 import { IconLocationMap, IconLogo } from '../../public/icons'
@@ -43,6 +44,11 @@ export const HeaderMain = ({ menu, handleMenu }) => {
       {modalLocation && <Map setShowModal={setModalLocation} showModal={modalLocation} />}
     </div>
   )
+}
+
+HeaderMain.propTypes = {
+  handleMenu: PropTypes.any,
+  menu: PropTypes.any
 }
 export const ContentHeader = styled.div`
   width: 100%;

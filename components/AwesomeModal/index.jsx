@@ -1,6 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react'
+/* eslint-disable consistent-return */
+import React, {
+  useState,
+  useEffect,
+  useCallback
+} from 'react'
 import PropTypes from 'prop-types'
-import { Container, Wrapper, Modal, ModalHeader, ModalTitle, BtnClose, ModalBody, ModalFooter, BtnCancel, BtnConfirm } from './styled'
+import {
+  Container,
+  Wrapper,
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  BtnClose,
+  ModalBody,
+  ModalFooter,
+  BtnCancel,
+  BtnConfirm
+} from './styled'
 import { MODAL_SIZES, BUTTONS_TEXT } from './constanst'
 import { IconCancel } from '../../public/icons'
 import { BGColor } from '../../public/colors'
@@ -119,29 +135,29 @@ export const AwesomeModal = ({
 }
 
 AwesomeModal.propTypes = {
-  children: PropTypes.node.isRequired,
-  title: PropTypes.string,
-  size: PropTypes.string,
-  disabled: PropTypes.bool,
-  display: PropTypes.string || PropTypes.bool,
-  zIndex: PropTypes.string,
-  padding: PropTypes.string,
   backdrop: PropTypes.string,
-  useScroll: PropTypes.func,
-  keyboard: PropTypes.func,
-  footer: PropTypes.bool,
-  btnCancel: PropTypes.bool,
-  openLateral: PropTypes.bool || PropTypes.func,
-  btnConfirm: PropTypes.bool,
-  hideOnConfirm: PropTypes.func,
-  timeOut: PropTypes.func || PropTypes.number,
-  height: PropTypes.string || PropTypes.number,
-  submit: PropTypes.func,
-  header: PropTypes.bool,
-  closeIcon: PropTypes.object,
   borderRadius: PropTypes.string,
-  onHide: PropTypes.func || PropTypes.bool,
-  onCancel: PropTypes.func || PropTypes.bool,
-  onConfirm: PropTypes.func || PropTypes.bool
-
+  btnCancel: PropTypes.bool,
+  btnConfirm: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  closeIcon: PropTypes.object,
+  disabled: PropTypes.bool,
+  display: PropTypes.any,
+  footer: PropTypes.bool,
+  header: PropTypes.bool,
+  height: PropTypes.any,
+  hideOnConfirm: PropTypes.func,
+  keyboard: PropTypes.func,
+  onCancel: PropTypes.func,
+  onConfirm: PropTypes.func,
+  onHide: PropTypes.func,
+  openLateral: PropTypes.any,
+  padding: PropTypes.string,
+  show: PropTypes.any,
+  size: PropTypes.string,
+  submit: PropTypes.func,
+  timeOut: PropTypes.number,
+  title: PropTypes.string,
+  useScroll: PropTypes.func,
+  zIndex: PropTypes.string
 }

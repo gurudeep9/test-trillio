@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useSetState } from '../../hooks/useState'
 import { Container } from './styled'
 import Component from './landing'
@@ -42,7 +43,7 @@ export const Banner = ({ watch, settings }) => {
       <TextAnimation />
       {/* <TextHook /> */}
       <AnimatedText overlayColor='#fdc52c' textColor='#000000'>
-                React
+        React
       </AnimatedText>
       <>
         <code>
@@ -102,6 +103,11 @@ export const Banner = ({ watch, settings }) => {
       <Square />
     </Container>
   )
+}
+
+Banner.propTypes = {
+  settings: PropTypes.any,
+  watch: PropTypes.any
 }
 export const InputFile = styled.input`
     display: none;

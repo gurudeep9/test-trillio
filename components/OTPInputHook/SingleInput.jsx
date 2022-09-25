@@ -1,4 +1,10 @@
-import React, { memo, useRef, useLayoutEffect, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import React, {
+  memo,
+  useRef,
+  useLayoutEffect,
+  useEffect
+} from 'react'
 import styled from 'styled-components'
 const usePrevious = (value) => {
   const ref = useRef()
@@ -13,7 +19,11 @@ const usePrevious = (value) => {
 }
 
 export const SingleOTPInputComponent = (props) => {
-  const { focus, autoFocus, ...rest } = props
+  const {
+    focus,
+    autoFocus,
+    ...rest
+  } = props
   const inputRef = useRef(null)
   const prevFocus = usePrevious(!!focus)
   useLayoutEffect(() => {
@@ -33,6 +43,11 @@ export const SingleOTPInputComponent = (props) => {
       <Input ref={inputRef} {...rest} />
     </Content>
   )
+}
+
+SingleOTPInputComponent.propTypes = {
+  autoFocus: PropTypes.any,
+  focus: PropTypes.any
 }
 
 export const Content = styled.div`

@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable consistent-return */
 import React, {
   useCallback,
   useEffect,

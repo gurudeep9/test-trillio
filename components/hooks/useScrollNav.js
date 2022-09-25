@@ -72,7 +72,7 @@ export default function ScrollNav ({ navHeader }) {
     return () => {
       document.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [navHeader])
 
   return (
     <Content>

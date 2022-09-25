@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useMemo } from 'react'
 
 export const useCountLetters = () => {
@@ -19,7 +20,7 @@ export const useCountLetters = () => {
 
   // Memoize computeLetterCount so it uses cached return value if input array ...
   // ... values are the same as last time the function was run.
-  const letterCount = useMemo(() => { return computeLetterCount() }, [word])
+  const letterCount = useMemo(() => { return computeLetterCount() }, [computeLetterCount])
 
   // This would result in lag when incrementing the counter because ...
   // ... we'd have to wait for expensive function when re-rendering.
@@ -29,7 +30,7 @@ export const useCountLetters = () => {
       <h2>Compute number of letters (slow 🐌)</h2>
 
       <p>
-        "{word}" has {letterCount} letters
+        {word} has {letterCount} letters
       </p>
 
       <button

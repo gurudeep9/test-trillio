@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Link from '../common/Link'
 import styled, { css } from 'styled-components'
@@ -17,10 +18,6 @@ export const Options = ({ handleMenu }) => {
   const { itemProducts, setOpenMenuMobile, menuMobile, setStatus, status } = useContext(Context)
   const [show, setShow] = useState(false)
   const location = useRouter()
-  // const onClickLogout = () => {
-  //     client?.clearStore()
-  //     location.replace('/')
-  // }
 
   const onClickLogout = useCallback(async () => {
     localStorage.removeItem('location.data')
@@ -124,6 +121,10 @@ export const Options = ({ handleMenu }) => {
       </ContainerOption>
     </ContainerActions>
   )
+}
+
+Options.propTypes = {
+  handleMenu: PropTypes.func
 }
 export const Name = styled.span`
     font-weight: 500;

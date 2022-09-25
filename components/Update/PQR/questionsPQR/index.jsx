@@ -79,7 +79,7 @@ export const Questions = () => {
                           name='thpId'
                           onChange={handleChange}
                           optionName='thpName'
-                          options={data?.typopqr?.filter(x => { return x?.thpName === x?.thpName }) || []}
+                          options={data?.typopqr || []}
                           search
                           title='Categoría Pregunta'
                           value={values?.thpId || ''}

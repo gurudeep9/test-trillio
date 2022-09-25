@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import styled, { keyframes } from 'styled-components'
@@ -150,7 +151,7 @@ export const Countries = () => {
         </RippleButton>
       </Form>
       <Card>
-        {data?.countries ? data?.countries.map(index => {
+        {data?.countries && data?.countries.map(index => {
           return (
             <ContainerTask key={index.cId} show={show === index}>
               <OptionsFunction show={show === index}>
@@ -167,7 +168,7 @@ export const Countries = () => {
               <div style={{ display: 'contents' }}><Button onClick={() => { return setShow(index === show ? false : index) }}><IconDost color={show === index ? PColor : '#CCC'} size={30} /></Button></div>
             </ContainerTask>
           )
-        }) : <i>No hay ningún país en base de datos</i>}
+        })}
       </Card>
     </Container>
   </>
@@ -187,6 +188,11 @@ const Options = ({ icon, name }) => {
       </div>
     </React.Fragment>
   )
+}
+
+Options.propTypes = {
+  icon: PropTypes.any,
+  name: PropTypes.any
 }
 export const LabelInput = styled.span`
     position: absolute;

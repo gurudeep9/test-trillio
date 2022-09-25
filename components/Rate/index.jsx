@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types'
 import React, { useMemo, useState } from 'react'
 import { WColor } from '../../public/colors'

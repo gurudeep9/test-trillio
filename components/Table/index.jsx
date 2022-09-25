@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, {
   useEffect,
@@ -32,7 +33,17 @@ import { orderColumn } from './orderColumn'
 import { IconArrowBottom, IconArrowTop } from '../../public/icons'
 import { BColor } from '../../public/colors'
 
-export const Table = ({ titles = [], bgRow, data, pointer, renderBody = [], entryPerView, handleAdd, buttonAdd, labelBtn }) => {
+export const Table = ({
+  titles = [],
+  bgRow,
+  data,
+  pointer,
+  renderBody = [],
+  entryPerView,
+  handleAdd,
+  buttonAdd,
+  labelBtn
+}) => {
   const initialState = { selectedIndex: 0 }
 
   function reducer (state, action) {

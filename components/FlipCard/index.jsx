@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
 
-export const FlipCard = ({ frontChild, backChild, flipped, setFlipped }) => {
+export const FlipCard = ({
+  backChild,
+  flipped,
+  frontChild,
+  setFlipped
+}) => {
   return (
     <CardContainer>
       <div className={`flip-card ${flipped ? 'flipped' : ''}`}>
@@ -37,6 +43,13 @@ export const FlipCard = ({ frontChild, backChild, flipped, setFlipped }) => {
       </div>
     </CardContainer>
   )
+}
+
+FlipCard.propTypes = {
+  backChild: PropTypes.any,
+  flipped: PropTypes.any,
+  frontChild: PropTypes.any,
+  setFlipped: PropTypes.func
 }
 
 const CardContainer = styled.div`

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, {
   useCallback,
   useState,
@@ -91,14 +92,6 @@ export const MapStore = ({ showModal, setShowModal }) => {
   }
   const [{ lat, lng }, setMarkers] = useState(center)
   const [{ newLat, newLng }, setNewMarkers] = useState(center)
-  const onMapClick = useCallback(e => {
-    setMarkers(() => {
-      return {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng()
-      }
-    })
-  }, [])
   const onMapDrag = useCallback(e => {
     setMarkers(() => {
       return {
@@ -145,29 +138,6 @@ export const MapStore = ({ showModal, setShowModal }) => {
   const hableSearchLocation = () => {
     setModal(2)
     fetchData()
-  }
-  const onLoad = useCallback(
-    function onLoad (map) {
-      const bounds = new window.google.maps.LatLngBounds()
-      map.fitBounds(bounds)
-      const loc = new window.google.maps.LatLng()
-      const request = {
-        location: loc,
-        radius: '500',
-        type: ['restaurant']
-      }
-      function callback (results, status) {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-
-        }
-      }
-
-      const service = new window.google.maps.places.PlacesService(map)
-      service.nearbySearch(request, callback)
-      map.setZoom(7)
-    }, [])
-  const centerMoved = () => {
-
   }
   const circleRef = useRef()
   const [showCircle, setShowCircle] = useState(false)
@@ -468,13 +438,6 @@ export const MapStore = ({ showModal, setShowModal }) => {
                 anchor: new google.maps.Point(17, 46),
                 scaledSize: new google.maps.Size(26, 42)
               }}
-              // icon={{
-              //   url: 'https://lh3.googleusercontent.com/drive-viewer/AJc5JmRqAiH45rz7xgGUBq6Pr9--W5WgNGjNH5zmBZ0JpTgF2UaVk8_nDLxAxFoPdWpazyFaj2uyLSc=w1920-h961',
-              //   anchor: new google.maps.Point(17, 46),
-              //   size: new google.maps.Size(71, 71),
-              //   origin: new google.maps.Point(0, 0),
-              //   scaledSize: new google.maps.Size(25, 25)
-              // }}
               onDragEnd={onMapDrag}
               position={{
                 lat,
@@ -490,6 +453,11 @@ export const MapStore = ({ showModal, setShowModal }) => {
       </AwesomeModal>
     </ContainerModal>
   )
+}
+
+MapStore.propTypes = {
+  setShowModal: PropTypes.func,
+  showModal: PropTypes.any
 }
 
 export const Map = React.memo(MapStore)

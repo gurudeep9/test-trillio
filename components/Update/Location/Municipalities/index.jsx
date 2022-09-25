@@ -117,7 +117,7 @@ export const Municipalities = () => {
         </RippleButton>
       </Form>
       <Card>
-        {dataMunicipalities?.getCities ? dataMunicipalities?.getCities?.map(index => {
+        {dataMunicipalities && dataMunicipalities?.getCities?.map(index => {
           return (
             <ContainerTask key={index.ctId} show={show === index}>
               <OptionsFunction show={show === index}>
@@ -131,7 +131,7 @@ export const Municipalities = () => {
               <div style={{ display: 'contents' }}><Button onClick={() => { return setShow(index === show ? false : index) }}><IconDost color={show === index ? PColor : '#CCC'} size={30} /></Button></div>
             </ContainerTask>
           )
-        }) : <i>No hay ninguna cuidad en base de datos</i>}
+        })}
       </Card>
     </Container>
   </>
