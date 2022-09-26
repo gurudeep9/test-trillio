@@ -9,7 +9,6 @@ const nextConfig = {
   reactStrictMode: true
 }
 module.exports = (phase) => {
-
   // npm run dev or next dev
   const isDev = phase === PHASE_DEVELOPMENT_SERVER
   // npm run build or next build
@@ -19,7 +18,7 @@ module.exports = (phase) => {
   const env = {
     NAMEDB: (() => {
       if (isDev) return 'app'
-      if (isProd) return 'railway'
+      if (isProd) return 'app'
     })(),
     USERDB: (() => {
       if (isDev) return 'root'
@@ -27,11 +26,11 @@ module.exports = (phase) => {
     })(),
     PASSDB: (() => {
       if (isDev) return ''
-      if (isProd) return '8jpgm70bhVjWIxEFbsrt'
+      if (isProd) return ''
     })(),
     HOSTDB: (() => {
       if (isDev) return 'localhost'
-      if (isProd) return 'containers-us-west-65.railway.app'
+      if (isProd) return 'localhost'
     })(),
     DIALECTDB: 'mysql',
     SESSION_NAME: 'vp.client',
@@ -115,7 +114,7 @@ module.exports = (phase) => {
   return {
     env,
     swcMinify: false,
-    images, 
+    images,
     headers,
     optimizeFonts: false,
     nextConfig,

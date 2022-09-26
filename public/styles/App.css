@@ -1,5 +1,5 @@
 /* Inicio de Hoja de Normalización */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap'); */
 /* Normalizes margin, padding */
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote
     { margin : 0; padding : 0; width: 100%;      text-align: start;  }
@@ -49,7 +49,7 @@ code {
 }
 
 
-@font-face {
+/* @font-face {
   font-family: PFont-Bold;
   src: url('../fonts/Poppins-Bold.ttf')
 }
@@ -64,7 +64,7 @@ code {
 @font-face {
   font-family: PFont-Light;
   src: url('../fonts/Poppins-Light.ttf')
-}
+} */
 .text-blue {
   border-top: 1px solid #61d2b4;
   padding: 0px 10px;

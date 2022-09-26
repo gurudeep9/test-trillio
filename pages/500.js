@@ -3,7 +3,7 @@ import React from 'react'
 import { EmptyLayout } from './_app'
 
 const Error = ({ statusCode = null }) => {
-  return <p>{`failed ${statusCode}`}</p>
+  return <p>{`failed  ERROR 500 ${statusCode}`}</p>
 }
 
 Error.propTypes = {
