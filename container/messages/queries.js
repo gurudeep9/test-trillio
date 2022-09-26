@@ -36,12 +36,12 @@ query getAllStoreActiveChat($idStore: ID, $id: ID, $search: String,  $min: Int, 
     addressStore
     createdAt
     pais{
-      	cId
-        cName
-        cCalCod
-        cState
-        cDatCre
-        cDatMod
+      cId
+      cName
+      cCalCod
+      cState
+      cDatCre
+      cDatMod
     }
     city {
       ctId

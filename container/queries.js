@@ -53,7 +53,7 @@ query productFoodsOne($pId: ID){
           state
           pDatCre
           pDatMod
-    	}
+    }
     getStore {
         idStore
         cId
@@ -99,7 +99,7 @@ query productFoodsOne($pId: ID){
         cState
         cDatCre
         cDatMod
-      } 
+      }
       department {
         dId
         cId
@@ -109,8 +109,7 @@ query productFoodsOne($pId: ID){
         dDatMod
       }
     }
-    
-	}
+}
 }
 `
 export const GET_ONE_STORE_BY_ID = gql`
@@ -146,12 +145,12 @@ query getOneStore($StoreName: String, $idStore: ID){
     addressStore
     createdAt
     pais{
-      	cId
-        cName
-        cCalCod
-        cState
-        cDatCre
-        cDatMod
+      cId
+      cName
+      cCalCod
+      cState
+      cDatCre
+      cDatMod
     }
     city {
       ctId
@@ -321,7 +320,7 @@ query productFoodsOne($pId: ID){
           state
           pDatCre
           pDatMod
-    	}
+    }
     getStore {
         idStore
         cId
@@ -377,8 +376,7 @@ query productFoodsOne($pId: ID){
         dDatMod
       }
     }
-    
-	}
+}
 }
 `
 export const GET_ONE_SCHEDULE_STORE = gql`

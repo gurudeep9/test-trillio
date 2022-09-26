@@ -1,10 +1,15 @@
 import { useMemo } from 'react'
-import { ApolloClient, from, HttpLink, InMemoryCache, ApolloLink, split, createHttpLink } from '@apollo/client'
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  ApolloLink,
+  split
+} from '@apollo/client'
 import { concatPagination, getMainDefinition } from '@apollo/client/utilities'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import { URL_ADMIN, URL_ADMIN_SERVER, URL_BASE } from './urls'
-// import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import { onError } from '@apollo/client/link/error'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { createUploadLink } from 'apollo-upload-client'
@@ -13,7 +18,6 @@ import { createUploadLink } from 'apollo-upload-client'
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient
-let userAgent
 export const getDeviceId = async () => {
   // const fp = await FingerprintJS.load()
   // const result = await fp.get()
@@ -192,7 +196,7 @@ function createApolloClient () {
   })
 }
 
-export function initializeApollo (initialState = null, ctx) {
+export function initializeApollo (initialState = null) {
   const _apolloClient = apolloClient ?? createApolloClient()
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
