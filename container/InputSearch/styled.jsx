@@ -1,5 +1,11 @@
-import { BColor, BGColor, PColor, PLColor, SECBGColor } from "public/colors";
-import styled from "styled-components";
+import {
+  BColor,
+  BGColor,
+  DarkSilver,
+  PLColor,
+  SECBGColor
+} from 'public/colors'
+import styled from 'styled-components'
 
 export const ContentInputSearch = styled.div`
   display: flex;
@@ -32,7 +38,7 @@ export const SearchTarget = styled.div`
     box-shadow: 1px 0px 23px -10px rgb(0 0 0 / 38%);
     background-color: ${BGColor};
     border-radius: 8px;
-    display: ${({ values }) => values ? 'block' : 'none'};
+    display: ${({ values }) => { return values ? 'block' : 'none' }};
 
   button {
     border-bottom: 1px solid #d4d2d2;
@@ -46,7 +52,7 @@ export const SearchTarget = styled.div`
     cursor: pointer;
     span {
         font-size: .875rem;
-        color: #717171;
+        color: ${DarkSilver};
     }
     .recent {
         display: block;
@@ -56,7 +62,6 @@ export const SearchTarget = styled.div`
     display: none;
 }
     }
-    
     }
     .recent-span {
         color: ${BColor};

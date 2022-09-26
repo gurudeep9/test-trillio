@@ -31,7 +31,7 @@ export const Restaurant = () => {
   // HANDLES
   const handleAddProduct = elem => {
     handleMenu(1)
-    let includes = state_product_card?.PRODUCT.includes(elem)
+    const includes = state_product_card?.PRODUCT.includes(elem)
     if (includes) {
       setAlertBox({ message: 'El producto ya esta en la lista' })
     } else {

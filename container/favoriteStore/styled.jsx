@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { PColor } from '../../public/colors';
+import styled from 'styled-components'
+import { DarkSilver, PColor } from '../../public/colors'
 // import { PColor } from '../../assets/colors';
 
 export const Card = styled.div`
@@ -35,7 +35,7 @@ export const Paragraph = styled.p`
     line-height: 29px;
     text-align: justify;
     list-style: initial;
-    color: #717171;
+    color: ${DarkSilver};
     font-family:  PFont-Light;
     margin: 7px 0px;
     font-size: 14px;

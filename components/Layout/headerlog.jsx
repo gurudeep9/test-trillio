@@ -34,7 +34,12 @@ export const HeaderMain = ({ menu, handleMenu }) => {
           </ItemHeader>
           <ItemHeader>
             <div className='delivery-location' onClick={() => { return setModalLocation(!modalLocation) }}>
-              <button ><IconLocationMap color={PColor} size={20} /> {uLocationKnow || (pais ? `${pais?.cName} ${department?.dName} ${city?.cName}` : null)}</button>
+              <div className='delivery-location__content'>
+                <IconLocationMap color={PColor} size={20} />
+                <div className='delivery__address'>
+                  {uLocationKnow || (pais ? `${pais?.cName} ${department?.dName} ${city?.cName}` : null)}
+                </div>
+              </div>
               <span className='sub-location'>{pais && `${pais?.cName} ${department?.dName} ${city?.cName}`}</span>
             </div>
           </ItemHeader>
@@ -106,6 +111,10 @@ export const HeaderMainC = styled.header`
     display: flex;
     align-items: center;
     align-self: center;
+    .delivery-location__content {
+      display: flex;
+      flex-direction: row;
+    }
     @media(max-width: 768px){
       display: none;
     }
@@ -115,6 +124,13 @@ export const HeaderMainC = styled.header`
       .sub-location {
         font-family: PFont-Light;
         font-size: 10px;
+      }
+      .delivery__address {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
       }
     }
     `

@@ -1,11 +1,13 @@
 import styled, { css, keyframes } from 'styled-components'
-import { 
-  APColor, 
-  BGColor, 
+import {
+  APColor,
+  BGColor,
   PColor,
   BColor,
-  PLVColor
+  PLVColor,
+  DarkSilver
 } from '../../public/colors'
+
 export const Flex = styled.div`
   display: flex;
   width: 100%;
@@ -15,7 +17,7 @@ export const Flex = styled.div`
 
 export const Text = styled.h3`
     display: flex;
-    font-family: ${({ font }) => {return font || 'PFont-Light'}};
+    font-family: ${({ font }) => { return font || 'PFont-Light' }};
     word-break: break-word;
     font-size: 2em;
     font-weight: 400;
@@ -38,7 +40,7 @@ export const DisRestaurant = styled.div`
     padding: 15px;
     width: 100%;
     .dish-observation-form__label {
-      color: #717171;
+      color: ${DarkSilver};
       font-size: 1rem;
       font-weight: 500;
       line-height: 1.15;
@@ -135,7 +137,7 @@ export const ContentShare = styled.div`
     &:hover  > ${ContainerShare} {
         display: block;
     }
-` 
+`
 export const Wrapper = styled.div`
     width: 100%;
     max-width: 1366px;
@@ -224,12 +226,14 @@ export const FeedItem = styled.li`
     border-radius: 50%  ;
     background: #ffffff;
     border: 1px solid ${PColor};
-    ${props => {return props.pulse && css`
+    ${props => {
+    return props.pulse && css`
     border: 1px solid ${APColor};
     animation: ${pulse} 2s infinite; 
     background-color: ${APColor} ;
 
-    `}}
+    `
+  }}
 
 }
 `

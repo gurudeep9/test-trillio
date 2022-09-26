@@ -1,35 +1,36 @@
-import { CtnBox } from '../styled';
+import { CtnBox } from '../styled'
 import React from 'react'
 import Link from 'next/link'
-import styled from "styled-components";
-import { PColor } from "../../../public/colors";
-import {useCategoryStore}  from 'npm-pkg-hook'
+import styled from 'styled-components'
+import { PColor } from '../../../public/colors'
+import { useCategoryStore } from 'npm-pkg-hook'
+import Image from 'next/image'
 export const Categories = () => {
   const [getCatStore] = useCategoryStore()
   return (
     <Container>
       <List>
         {getCatStore?.getAllCatStore?.map(cat => {
-          const nameCat = cat?.cName?.replace(/\s/g, '-')?.toLowerCase();
+          const nameCat = cat?.cName?.replace(/\s/g, '-')?.toLowerCase()
           return (
             <CtnBox key={cat.catStore}>
               <Link href={`/categories/${nameCat}/${cat.catStore}`}>
                 <a>
                   <ItemCategory>
-                    <img src={cat.cPathImage} alt={cat.cName} />
-                    {/* <Image
-                      objectFit='contain'
-                      width={90}
+                    {/* <img alt={cat.cName} src={cat.cPathImage ?? '/images/cat1.png'} /> */}
+                    <Image
+                      alt='Picture of the author'
+                      blurDataURL='data:...'
                       height={90}
-                      src={'images/b70f2f6c-8afc-4d75-bdeb-c515ab4b7bdd_BRITS_GER85.jpg'}
-                      alt="Picture of the author"
-                      blurDataURL="data:..."
+                      objectFit='contain'
+                      placeholder='blur'
+                      src={cat.cPathImage ?? '/images/cat1.png'}
                       unoptimized={true}
-                      placeholder="blur" // Optional blur-up while loading
+                      width={90} // Optional blur-up while loading
 
-                    /> */}
+                    />
                   </ItemCategory>
-                  <h2 className="title-cat">{cat.cName}</h2>
+                  <h2 className='title-cat'>{cat.cName}</h2>
                 </a>
               </Link>
             </CtnBox>
@@ -79,4 +80,4 @@ export const List = styled.div`
         font-family: PFont-Light;
         font-weight: 400;
     }
-` 
+`

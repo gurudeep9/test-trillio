@@ -1,6 +1,5 @@
-import styled, { css } from 'styled-components';
-import { PColor } from '../../public/colors';
-// import { PColor } from '../../assets/colors';
+import styled, { css } from 'styled-components'
+import { DarkSilver, PColor } from '../../public/colors'
 
 export const Line = styled.div`
     width: calc(100% - 0.1px);
@@ -26,9 +25,11 @@ export const CreditCard = styled.div`
     background-size: cover;
     width: 335px;
     height: 208px;
-    /* ${props => props.backChild &&css`
+    /* ${props => {
+    return props.backChild && css`
    
-    `} */
+    `
+  }} */
 `
 export const Card = styled.div`
 @media (min-width: 768px) {
@@ -52,10 +53,10 @@ export const Container = styled.div`
 `
 export const Title = styled.h1`
 font-size: 1.625rem;
-    color: ${ PColor };
+    color: ${PColor};
     margin: 20px 0;
     text-align: center;
-    font-weight: 500; 
+    font-weight: 500;
     font-family:  PFont-Medium;
 `
 export const Paragraph = styled.p`
@@ -63,7 +64,7 @@ export const Paragraph = styled.p`
     line-height: 29px;
     text-align: justify;
     list-style: initial;
-    color: #717171;
+    color: ${DarkSilver};
     font-family:  PFont-Light;
     margin: 7px 0px;
     font-size: 14px;

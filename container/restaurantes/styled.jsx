@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { BColor, BGColor, BGVColor, SFVColor } from "../../public/colors";
+import styled from 'styled-components'
+import { BColor, BGColor, BGVColor, DarkSilver, SFVColor } from '../../public/colors'
 
-export  const ItemWrapper = styled.div`
+export const ItemWrapper = styled.div`
     height: min-content;
     padding: 10px;
     border-radius: 4px;
@@ -39,7 +39,7 @@ export  const ItemWrapper = styled.div`
         border: 1px solid #f2f2f2;
     }
 `
-export  const MerchantListWrapper = styled.div`
+export const MerchantListWrapper = styled.div`
     @media only screen and (min-width: 560px) {
         grid-template-columns: repeat(auto-fill,minmax(360px,1fr));
     }
@@ -48,7 +48,7 @@ export  const MerchantListWrapper = styled.div`
     grid-gap: 0;
     gap: 0;
 `
-export  const Content = styled.div`
+export const Content = styled.div`
     margin: auto;
     font-size: 16px;
     display: flex;
@@ -58,7 +58,7 @@ export  const Content = styled.div`
     width: 100%;
     max-width: 1366px!important;
 `
-export  const Section = styled.div`
+export const Section = styled.div`
   margin: 30px 0;
 
 
@@ -105,7 +105,7 @@ export const ItemCategory = styled.div`
     display: grid;
     /* width: 100px ; */
     height: 130px ;
-` 
+`
 export const ContentStores = styled.div`
     width: 100%;
     display: grid;  
@@ -157,7 +157,7 @@ export const List = styled.div`
         font-family: PFont-Light;
         font-weight: 400;
     }
-` 
+`
 export const ContainerFilter = styled.div` 
     margin: 30px 0;
     display: flex;
@@ -168,7 +168,7 @@ export const WrapFlex = styled.div`
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-` 
+`
 export const ItemFilter = styled.button` 
     display: flex;
     margin-left: 5px;
@@ -179,19 +179,19 @@ export const ItemFilter = styled.button`
     border: 1px solid #dcdcdc;
     border-radius: 20px;
     padding: 7px 14px;
-    color: #717171;
+    color: ${DarkSilver};
     font-size: 0.875rem;
     cursor: pointer;
     min-width: 5.375rem;
     font-family: PFont-Light;
 `
-export  const CardProduct = styled.div`
+export const CardProduct = styled.div`
     height: 300px;
     width: 100%;
     border-radius: 2%;
     box-shadow: 1px 1px 3px #7c7c7c54;
 `
-export  const ContainerCardProduct = styled.div`
+export const ContainerCardProduct = styled.div`
     display: grid;
     gap: 5px;
     grid-template-columns: 23% repeat(auto-fill, 23%);

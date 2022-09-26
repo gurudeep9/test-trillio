@@ -49,7 +49,7 @@ code {
 }
 
 
-/* @font-face {
+@font-face {
   font-family: PFont-Bold;
   src: url('../fonts/Poppins-Bold.ttf')
 }
@@ -59,12 +59,12 @@ code {
 }
 @font-face {
   font-family: PFont-Regular;
-  src: url('../fonts/Poppins-Regular.ttf')
+  src: url('../fonts/RCTextos-Light.woff2')
 }
 @font-face {
   font-family: PFont-Light;
   src: url('../fonts/Poppins-Light.ttf')
-} */
+}
 .text-blue {
   border-top: 1px solid #61d2b4;
   padding: 0px 10px;

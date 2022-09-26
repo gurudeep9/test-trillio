@@ -1,6 +1,13 @@
-import styled, { css } from "styled-components";
-import { FadeDown } from "../../components/animations";
-import { BColor, BGColor, EColor, PColor, SECBGColor } from "../../public/colors";
+import styled, { css } from 'styled-components'
+import { FadeDown } from '../../components/animations'
+import {
+  BColor,
+  BGColor,
+  DarkSilver,
+  EColor,
+  PColor,
+  SECBGColor
+} from '../../public/colors'
 import Link from 'next/link'
 
 export const Body = styled.div`
@@ -113,8 +120,8 @@ export const Anchor = styled.a`
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    background: ${({ BgColor }) => BgColor ? '#fff' : 'transparent'};
-    color: ${({ color }) => color ? BColor : PColor} ;
+    background: ${({ BgColor }) => { return BgColor ? '#fff' : 'transparent' }};
+    color: ${({ color }) => { return color ? BColor : PColor }} ;
     font-size: 1rem;
     line-height: 1.25em;
     padding: 0;
@@ -126,14 +133,18 @@ export const Anchor = styled.a`
     display: grid;
    
     &&:hover{
-        ${props => props.hover ? css`
+        ${props => {
+    return props.hover
+      ? css`
             color: ${PColor};
             
-            ` : css`
+            `
+      : css`
             color: ${BGColor};
             background-color:${PColor};
             
-        `}
+        `
+  }}
     }
     
 `
@@ -163,7 +174,7 @@ export const Box = styled.div`
     padding: 20px;
     grid-column-gap: 20px;
     margin: 0;
-    display: ${({ close }) => close ? 'none' : 'grid'} ;
+    display: ${({ close }) => { return close ? 'none' : 'grid' }} ;
     grid-column: 3;
     justify-self: end;
     .landing-sign-up-voucher__texts__description{
@@ -171,7 +182,7 @@ export const Box = styled.div`
         box-sizing: border-box;
         font-size: 1rem;
         line-height: 1rem;
-        color: #717171;
+        color: ${DarkSilver};
         font-weight: 400;
         padding-bottom: 13px;
         margin: 0;
@@ -214,13 +225,11 @@ export const Box = styled.div`
     `
 export const BoxJr = styled.div`
 
-        
     `
 export const Text = styled.h2`
     font-size: 1rem;
     font-family: SulSans,Helvetica,sans-serif;
-    
-    `
+`
 export const ScrollbarContainer = styled.div`
     height: 100%;
     margin-top: 50px;
@@ -242,7 +251,7 @@ export const ScrollbarContainer = styled.div`
         position: relative;
         overflow: hidden;
         cursor: pointer;
-        color: #717171;
+        color: ${DarkSilver};
         height: 30px;
         background: none;
         border: 1px solid #dcdcdc;
@@ -341,12 +350,12 @@ export const HeaderContent = styled.div`
     
 
 `
-export const ContentImgs= styled.div`
+export const ContentImgs = styled.div`
     display: flex;
 
     .contentimg {
         background-image: url("/images/company-finance.jpg");
-        /* background-image: url(${({  })}); */
+        /* background-image: url(${({ })}); */
         background-size: cover;
         background-repeat: no-repeat;
         width: 33%;

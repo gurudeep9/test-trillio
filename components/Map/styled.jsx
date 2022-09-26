@@ -1,4 +1,4 @@
-import { BColor, BGColor } from 'public/colors'
+import { BColor, BGColor, DarkSilver } from 'public/colors'
 import styled, { css } from 'styled-components'
 
 export const Card = styled.div`
@@ -23,7 +23,7 @@ export const Address = styled.div`
     flex-grow: 1;
     transition: all .2s ease-in-out;
     word-break: break-word;
-    color: #717171;
+    color: ${DarkSilver};
     margin: 10px;
     span {
       color: #a6a6a6;
@@ -32,7 +32,7 @@ export const Address = styled.div`
       font-size: 14px;
     }
     .main_text--location {
-      color: #717171;
+      color: ${DarkSilver};
       word-break: break-word;
       font-size: 16px;
     }

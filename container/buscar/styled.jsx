@@ -1,5 +1,11 @@
-import styled from 'styled-components';
-import { BGColor, PColor, SECBGColor } from '../../public/colors';
+import styled from 'styled-components'
+import {
+  BGColor,
+  DarkSilver,
+  PColor,
+  SECBGColor
+} from '../../public/colors'
+
 export const MerchantBannerWrapperInfo = styled.div`
     line-height: 1.15;
     text-rendering: optimizeLegibility;
@@ -21,7 +27,7 @@ export const MerchantBannerWrapperInfo = styled.div`
     background-blend-mode: overlay;
     max-width: 1366px;
     margin: auto ;
-    background-image: ${({ bannerImage }) => bannerImage && (bannerImage)};
+    background-image: ${({ bannerImage }) => { return bannerImage }};
     .merchant-banner__status-description {
       line-height: 1.15;
       font-size: 16px;
@@ -66,19 +72,15 @@ export const Card = styled.div`
 }
 `
 export const Container = styled.div`
-max-width: 1366px;
-margin: auto;
-    /* width: 100%;
-    padding: 0 30px;
-
-    max-width: 900px;   */
+  max-width: 1366px;
+  margin: auto;
 `
 export const Title = styled.h1`
 font-size: 1.625rem;
-    color: ${ PColor };
+    color: ${PColor};
     margin: 20px 0;
     text-align: center;
-    font-weight: 500; 
+    font-weight: 500;
     font-family:  PFont-Medium;
 `
 export const Paragraph = styled.p`
@@ -86,7 +88,7 @@ export const Paragraph = styled.p`
     line-height: 29px;
     text-align: justify;
     list-style: initial;
-    color: #717171;
+    color: ${DarkSilver};
     font-family:  PFont-Light;
     margin: 7px 0px;
     font-size: 14px;

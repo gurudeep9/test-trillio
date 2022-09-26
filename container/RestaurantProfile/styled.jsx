@@ -1,5 +1,5 @@
-import styled, { css, keyframes } from "styled-components";
-import { BColor, BGColor, BGVColor, EColor, PColor, SECBGColor } from "../../public/colors";
+import styled, { css, keyframes } from 'styled-components'
+import { BColor, BGColor, BGVColor, DarkSilver, EColor, PColor, SECBGColor } from '../../public/colors'
 import Link from 'next/link'
 export const Container = styled.div`
   /* max-width: 1366px; */
@@ -33,12 +33,12 @@ export const ContainerCarrusel = styled.div`
 export const ContentCategoryProducts = styled.div`
     margin: 30px 0;
 `
-const hollow = `%3Csvg width='24' height='22' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.88 1.168a5.87 5.87 0 013.622.269 5.435 5.435 0 012.634 2.314h0L12 5.234l.864-1.482a5.414 5.414 0 012.635-2.306 5.907 5.907 0 013.634-.267c1.112.273 2.133.874 2.845 1.795C22.618 3.8 23 4.882 23 6.192c0 3.891-4.231 7.784-9.305 12.741-.554.542-1.12 1.095-1.695 1.66a590.654 590.654 0 00-1.7-1.664C5.23 13.973 1 10.082 1 6.192c0-1.31.384-2.394 1.027-3.223.714-.923 1.737-1.527 2.852-1.8z' fill-rule='nonzero' stroke='%23232323' stroke-width='2' fill='none'/%3E%3C/svg%3E`;
-const filled = `%3Csvg width='24' height='22' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 3.248C8.852-2.154 0-.577 0 6.192 0 10.853 5.571 15.619 12 22c6.43-6.381 12-11.147 12-15.808C24-.6 15.125-2.114 12 3.248z' fill='red' fill-rule='nonzero'/%3E%3C/svg%3E`;
+const hollow = `%3Csvg width='24' height='22' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.88 1.168a5.87 5.87 0 013.622.269 5.435 5.435 0 012.634 2.314h0L12 5.234l.864-1.482a5.414 5.414 0 012.635-2.306 5.907 5.907 0 013.634-.267c1.112.273 2.133.874 2.845 1.795C22.618 3.8 23 4.882 23 6.192c0 3.891-4.231 7.784-9.305 12.741-.554.542-1.12 1.095-1.695 1.66a590.654 590.654 0 00-1.7-1.664C5.23 13.973 1 10.082 1 6.192c0-1.31.384-2.394 1.027-3.223.714-.923 1.737-1.527 2.852-1.8z' fill-rule='nonzero' stroke='%23232323' stroke-width='2' fill='none'/%3E%3C/svg%3E`
+const filled = `%3Csvg width='24' height='22' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 3.248C8.852-2.154 0-.577 0 6.192 0 10.853 5.571 15.619 12 22c6.43-6.381 12-11.147 12-15.808C24-.6 15.125-2.114 12 3.248z' fill='red' fill-rule='nonzero'/%3E%3C/svg%3E`
 const pop = keyframes`
   from { opacity: 1; transform: scale(1) }
   to { opacity: 0; transform: scale(2) }
-`;
+`
 
 export const ButtonLike = styled.button`
   appearance: none;
@@ -50,7 +50,7 @@ export const ButtonLike = styled.button`
   background: url("data:image/svg+xml,${hollow}") no-repeat center bottom;
   background-size: 100%;
   cursor: pointer;
-  opacity: ${(props) => (props.isLiked ? 1 : 0.5)};
+  opacity: ${(props) => { return (props.isLiked ? 1 : 0.5) }};
   transition: opacity .25s ease;
 
   :hover {
@@ -70,11 +70,11 @@ export const ButtonLike = styled.button`
     background-size: 100%;
     top: 0;
     left: 0;
-    opacity: ${(props) => (props.isLiked ? 1 : 0)};
+    opacity: ${(props) => { return (props.isLiked ? 1 : 0) }};
   }
 
-  ${(props) =>
-    props.isLiked &&
+  ${(props) => {
+    return props.isLiked &&
     css`
     ::after {
       content: "";
@@ -89,7 +89,8 @@ export const ButtonLike = styled.button`
       animation: ${pop} .5s ease;
       animation-direction: forward;
     }
-  `}
+  `
+  }}
   
 `
 export const HeadCategory = styled.div`
@@ -136,7 +137,7 @@ export const MerchantBannerWrapperInfo = styled.div`
     background-blend-mode: overlay;
     max-width: 1366px;
     margin: 50px auto 20px;
-    background-image: ${({ bannerImage }) => bannerImage && (bannerImage)};
+    background-image: ${({ bannerImage }) => { return bannerImage && (bannerImage) }};
     .merchant-banner__status-description {
       line-height: 1.15;
       font-size: 16px;
@@ -307,7 +308,7 @@ export const ContentShare = styled.div`
     &:hover  > ${ContainerShare} {
         display: block;
     }
-` 
+`
 export const ContentInfo = styled.div` 
     width: 100%;
     flex-direction: column;
@@ -333,7 +334,7 @@ export const Title = styled.h1`
   margin-right: 10px;
   font-weight: 400;
   letter-spacing: -1px;
-  font-size: ${({ size })=> size || '2.25rem'};
+  font-size: ${({ size }) => { return size || '2.25rem' }};
   line-height: 44px;
   margin-bottom: 0;
   width: fit-content;
@@ -381,7 +382,7 @@ export const DisRestaurant = styled.div`
     line-height: 1.15;
     font-weight: 500;
     font-size: 1rem;
-    color: #717171;
+    color: ${DarkSilver};
   }
   .dish-restaurant__header {
     line-height: 1.15;
@@ -401,15 +402,15 @@ export const DisRestaurant = styled.div`
   }
 `
 export const Text = styled.span`
-    font-size: ${({ size }) => size || '12px'};
-    text-align:  ${({ align }) => align || 'start'};
-    ${({ lineHeight }) => lineHeight && css`line-height: ${lineHeight};`}
-    ${({ padding }) => padding && css`padding: ${padding};`}
-    margin: ${({ margin }) => margin || '0'};
-    color: ${({ color }) => color || BColor};
-    /* justify-content: ${({ justify }) => justify || 'flex-start'}; */
+    font-size: ${({ size }) => { return size || '12px' }};
+    text-align:  ${({ align }) => { return align || 'start' }};
+    ${({ lineHeight }) => { return lineHeight && css`line-height: ${lineHeight};` }}
+    ${({ padding }) => { return padding && css`padding: ${padding};` }}
+    margin: ${({ margin }) => { return margin || '0' }};
+    color: ${({ color }) => { return color || BColor }};
+    /* justify-content: ${({ justify }) => { return justify || 'flex-start' }}; */
     display: flex;
-    font-family: ${({ font }) => font || 'PFont-Regular'};
+    font-family: ${({ font }) => { return font || 'PFont-Regular' }};
     word-break: break-word;
 `
 export const CardsComponent = styled.div`
@@ -463,7 +464,7 @@ export const GarnishChoicesHeader = styled.div`
         font-size: .875rem;
         line-height: 17px;
         display: block;
-        color: #717171;
+        color: ${DarkSilver};
     }
      .marmita-minitag{
         -webkit-text-size-adjust: 100%;
@@ -484,15 +485,13 @@ export const GarnishChoicesHeader = styled.div`
     font-variant-numeric: tabular-nums;
     font-size: .5625rem;
     line-height: 1;
-    background-color: #717171;
+    background-color: ${DarkSilver};
     color: #f5f0eb;
     border: none;
     padding: 6px 6px 4px;
-     }
-     .garnish-choices {
+    }
+    .garnish-choices {
             justify-content: space-around;
             display: flex;
-            
-
-     }
+    }
 `

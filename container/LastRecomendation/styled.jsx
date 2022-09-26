@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { BColor, PColor } from '../../public/colors';
+import styled from 'styled-components'
+import { BColor, DarkSilver, PColor } from '../../public/colors'
 // import { PColor } from '../../assets/colors';
 
 export const Card = styled.div`
@@ -29,7 +29,7 @@ grid-template-columns: repeat(auto-fill,minmax(275px,1fr));
 
 `
 export const Title = styled.h2`
-    color: ${ BColor };
+    color: ${BColor};
     margin: 20px 0;
     text-align: start;
     font-weight: 500; 
@@ -43,9 +43,8 @@ export const Paragraph = styled.p`
     line-height: 29px;
     text-align: justify;
     list-style: initial;
-    color: #717171;
+    color: ${DarkSilver};
     font-family:  PFont-Light;
     margin: 7px 0px;
     font-size: 14px;
-
 `

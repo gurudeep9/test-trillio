@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 import {
   BGColor,
+  DarkSilver,
   PColor,
   PLColor
 } from '../../../public/colors'
@@ -40,7 +41,7 @@ export const Copyright = styled.li`
     font-size: 0.6875rem;
     line-height: 1.35;
     font-weight: 300;
-    color: #717171;
+    color: ${DarkSilver};
     margin: 0;
     list-style: none;
 `
@@ -50,7 +51,7 @@ export const CopyrightInformation = styled.li`
     font-size: 0.6875rem;
     line-height: 1.35;
     font-weight: 300;
-    color: #717171;
+    color: ${DarkSilver};
     margin: 0;
     list-style: none;
 `

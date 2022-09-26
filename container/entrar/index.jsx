@@ -30,7 +30,7 @@ const Login = ({ watch, settings }) => {
   const fetchData = async () => {
     const API = `https://maps.googleapis.com/maps/api/geocode/json?address=${latitude} ${longitude}&key=AIzaSyDSp8cfGhQ1oykqVyVbIc1vWkURQTf4fzA`
     fetch(API)
-      .then(response => {return response.json()})
+      .then(response => { return response.json() })
       .then(response => {
         setLocationFormat(response?.results)
       })
@@ -84,7 +84,7 @@ const Login = ({ watch, settings }) => {
       <Form>
         <Text size='30px'>¡Falta poco para saciar tu hambre!</Text>
         <Text size='15px'>¿Cómo deseas continuar?</Text>
-        <button onClick={(e) => {return responseGoogle(e)}}>Login falso</button>
+        <button onClick={(e) => { return responseGoogle(e) }}>Login falso</button>
         {/* <GoogleLogin
                     autoLoad={false}
                     clientId='58758655786-u323tp1dpi6broro865rrm488gh4mnpu.apps.googleusercontent.com'
@@ -94,7 +94,7 @@ const Login = ({ watch, settings }) => {
                     render={renderProps => (
                         <div>
 
-                            <ButtonSubmit size='14px' colorFont='#717171' height='40px' color='2' onClick={renderProps.onClick} disabled={renderProps.disabled}><IconGoogleFullColor size='30px' /> Continue with Google<div style={{ width: 'min-content' }} /> </ButtonSubmit>
+                            <ButtonSubmit size='14px' colorFont={DarkSilver} height='40px' color='2' onClick={renderProps.onClick} disabled={renderProps.disabled}><IconGoogleFullColor size='30px' /> Continue with Google<div style={{ width: 'min-content' }} /> </ButtonSubmit>
                         </div>
                     )}
                 />

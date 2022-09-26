@@ -1,4 +1,4 @@
-import { BGColor } from 'public/colors'
+import { BGColor, DarkSilver } from 'public/colors'
 import styled from 'styled-components'
 
 export const Card = styled.div`
@@ -56,7 +56,7 @@ export const Card = styled.div`
     list-style: none;
     cursor: pointer;
     font-weight: lighter;
-    color: #717171;
+    color: ${DarkSilver};
     word-break: break-word;
     margin-bottom: 10px;
     font-size: .875rem;

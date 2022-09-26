@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { BGColor } from '../../public/colors'
+import { BGColor, DarkSilver } from '../../public/colors'
 import { SideIn, SlideInLeft } from '../animations'
 
 export const ActionPay = styled.div`
@@ -108,7 +108,7 @@ export const Content = styled.div`
 }
 
     .restaurant-cart-header {
-        color: #717171;
+        color: ${DarkSilver};
         font-weight: 300;
         font-size: 1.5em;
         width: 100%;
@@ -137,7 +137,7 @@ export const GarnishChoicesHeader = styled.div`
         font-size: .875rem;
         line-height: 17px;
         display: block;
-        color: #717171;
+        color: ${DarkSilver};
     }
      .marmita-minitag{
         -webkit-text-size-adjust: 100%;
@@ -158,7 +158,7 @@ export const GarnishChoicesHeader = styled.div`
     font-variant-numeric: tabular-nums;
     font-size: .5625rem;
     line-height: 1;
-    background-color: #717171;
+    background-color: ${DarkSilver};
     color: #f5f0eb;
     border: none;
     padding: 6px 6px 4px;

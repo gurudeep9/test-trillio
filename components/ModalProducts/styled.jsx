@@ -2,6 +2,7 @@ import {
   BColor,
   BGColor,
   BGVColor,
+  DarkSilver,
   PColor
 } from 'public/colors'
 import styled, { css } from 'styled-components'
@@ -113,7 +114,7 @@ export const Text = styled.span`
     list-style: none;
     cursor: pointer;
     font-weight: lighter;
-    color: #717171;
+    color: ${DarkSilver}
     word-break: break-word;
     margin-bottom: 10px;
     font-size: .875rem;
@@ -157,7 +158,7 @@ export const DisRestaurant = styled.div`
     line-height: 1.15;
     font-weight: 500;
     font-size: 1rem;
-    color: #717171;
+    color: ${DarkSilver}
   }
   .dish-restaurant__header {
     line-height: 1.15;
@@ -200,7 +201,7 @@ export const GarnishChoicesHeader = styled.div`
         font-size: .875rem;
         line-height: 17px;
         display: block;
-        color: #717171;
+        color: ${DarkSilver}
     }
      .marmita-minitag{
         -webkit-text-size-adjust: 100%;
@@ -221,17 +222,15 @@ export const GarnishChoicesHeader = styled.div`
     font-variant-numeric: tabular-nums;
     font-size: .5625rem;
     line-height: 1;
-    background-color: #717171;
+    background-color: ${DarkSilver};
     color: #f5f0eb;
     border: none;
     padding: 6px 6px 4px;
-     }
-     .garnish-choices {
+    }
+    .garnish-choices {
             justify-content: space-around;
             display: flex;
-            
-
-     }
+    }
 `
 export const CardsComponent = styled.div`
     background-color: ${BGColor};

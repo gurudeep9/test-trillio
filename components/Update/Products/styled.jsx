@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { BGColor, PColor } from '../../../public/colors'
+import { BGColor, DarkSilver, PColor } from '../../../public/colors'
 
 export const Button = styled.button`
     position: absolute;
@@ -268,7 +268,7 @@ export const ItemFilter = styled.button`
     border: 1px solid #dcdcdc;
     border-radius: 20px;
     padding: 7px 14px;
-    color: #717171;
+    color: ${DarkSilver};
     font-size: 0.875rem;
     cursor: pointer;
     min-width: 5.375rem;
@@ -276,7 +276,7 @@ export const ItemFilter = styled.button`
 `
 export const ContainerBurger = styled.div`
    margin: 0 10px 0 auto;
-    width: min-content; 
+    width: min-content;
     .BurgerMenu__container {
     display: flex;
     margin: 0 10px 0 auto;

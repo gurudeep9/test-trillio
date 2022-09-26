@@ -1,6 +1,6 @@
-import styled, { css, keyframes } from "styled-components";
-import { FadeDown } from "../../components/animations";
-import { BColor, BGColor, EColor, PColor, SECColor } from "../../public/colors";
+import styled, { css, keyframes } from 'styled-components'
+import { FadeDown } from '../../components/animations'
+import { BColor, BGColor, DarkSilver, EColor, PColor, SECColor } from '../../public/colors'
 import Link from 'next/link'
 
 
@@ -18,7 +18,7 @@ font-size: 16px;
 height: 100%;
 scroll-behavior: auto;
 
-${({ bg }) => bg && css`background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="10" y="30%"   height="200px"><text x="15" y="27%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1">${bg}</text> <text x="5" y="60%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1">${bg}</text> <text x="10" y="90%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1">${bg}</text>  </svg>');`}
+${({ bg }) => { return bg && css`background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="10" y="30%"   height="200px"><text x="15" y="27%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1">${bg}</text> <text x="5" y="60%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1">${bg}</text> <text x="10" y="90%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1">${bg}</text>  </svg>');` }}
 background-position: center 25px;
 /* transition: all .3s .3s; */
 /* transition-property: background-color,background-image; */
@@ -28,7 +28,7 @@ background-position: center 25px;
     transition: all .3s .3s; */
 
 /* 
-${ ({ bg }) => bg && css`background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="15" y="27%"  viewBox="0 0 350 90"  height="200px"><text x="0" y="60%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1"> ${ bg } </text></svg>');` }
+${({ bg }) => { return bg && css`background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" x="15" y="27%"  viewBox="0 0 350 90"  height="200px"><text x="0" y="60%" font-size="4rem" font-weight="800" font-family="Roobert,Helvetica Neue,Helvetica,Arial,sans-serif" fill="red" opacity="0.1"> ${bg} </text></svg>');` }}
   */
 `
 export const Content = styled.div`
@@ -62,12 +62,12 @@ export const Container = styled.div`
 export const LabelInput = styled.span`
     position: absolute;
     text-align: left;
-    font-size: ${ ({ value }) => value ? '16px' : '16px' };
-    top: ${ ({ value }) => value ? '5px' : '10px' };
+    font-size: ${({ value }) => { return value ? '16px' : '16px' }};
+    top: ${({ value }) => { return value ? '5px' : '10px' }};
     left: 15px;;
-    left: ${ ({ left }) => left ? left : '17px' };
+    left: ${({ left }) => { return left || '17px' }};
     transition: .2s;
-    background-color: ${ BGColor };
+    background-color: ${BGColor};
     color:  #CCC;
     pointer-events: none;
     font-family: PFont-Light;
@@ -83,14 +83,14 @@ export const Input = styled.input`
     width: 100%;
     border-radius: 5px;
     font-family: PFont-Light;  
-    &:focus ~ ${ LabelInput } {
+    &:focus ~ ${LabelInput} {
         font-size: 16px;
         color: #CCC;
         padding: 0px 5px ;
     }  
     &::selection{
         background-color: red;
-        color: ${ BGColor }
+        color: ${BGColor}
     }
     &:disabled{
         color: #808080;
@@ -98,12 +98,12 @@ export const Input = styled.input`
 `
 export const BoxInput = styled.div`
     position: relative;
-    padding: ${ ({ padding }) => padding ? padding : '10px 5px' };
-    width: ${ ({ width }) => width ? width : '100%' };
+    padding: ${({ padding }) => { return padding || '10px 5px' }};
+    width: ${({ width }) => { return width || '100%' }};
 `
 export const Title = styled.h1`
 font-size: 1.625rem;
-    color: ${ PColor };
+    color: ${PColor};
     margin: 20px 0;
     text-align: center;
     font-weight: 500; 
@@ -114,7 +114,7 @@ export const Paragraph = styled.p`
     line-height: 29px;
     text-align: justify;
     list-style: initial;
-    color: #717171;
+    color: ${DarkSilver};
     font-family:  PFont-Light;
     margin: 7px 0px;
     font-size: 14px;
@@ -142,11 +142,11 @@ export const AnimationLeft = keyframes`
 }
 `
 export const ContainerAnimation = styled.div`
-${ props=> props.active === 1 ? css`animation: ${ AnimationRight } 200ms;` : css`animation: ${ AnimationRight } 200ms;` }
+${props => { return props.active === 1 ? css`animation: ${AnimationRight} 200ms;` : css`animation: ${AnimationRight} 200ms;` }}
 
 `
 export const ContainerAnimationTow = styled.div`
-${ props=> props.active === 2 ? css`animation: ${ AnimationLeft } 200ms;` : css`animation: ${ AnimationLeft } 200ms;` }
+${props => { return props.active === 2 ? css`animation: ${AnimationLeft} 200ms;` : css`animation: ${AnimationLeft} 200ms;` }}
 
 `
 export const CardDevice = styled.button`
@@ -190,7 +190,7 @@ export const CardDevice = styled.button`
     font-weight: 500;
     }
     .device__localization {
-      color: #717171;
+      color: ${DarkSilver};
       font-size: .875rem;
     line-height: 1.25rem;
     }
