@@ -28,10 +28,9 @@ const nearestIndex = (
         sectionPositionArray[endIndex].headerRef.current.offsetTop -
           currentPosition
       )
-    )
-    {return startIndex}
+    ) { return startIndex }
     return endIndex
-  } 
+  }
   const nextNearest = ~~((startIndex + endIndex) / 2)
   const a = Math.abs(
     sectionPositionArray[nextNearest].headerRef.current.offsetTop -
@@ -48,18 +47,16 @@ const nearestIndex = (
       startIndex,
       nextNearest
     )
-  } 
+  }
   return nearestIndex(
     currentPosition,
     sectionPositionArray,
     nextNearest,
     endIndex
   )
-        
-    
 }
 
-export default function ScrollNav({ navHeader }) {
+export default function ScrollNav ({ navHeader }) {
   const [activeIndex, setActiveIndex] = useState(0)
   useEffect(() => {
     const handleScroll = () => {
@@ -80,15 +77,17 @@ export default function ScrollNav({ navHeader }) {
 
   return (
     <Content>
-      {navHeader.map((header, index) => {return (
-        <Anchor
-          href={`#${ header.headerID }`}
-          key={index + header.headerID}
-          style={{ color: activeIndex === index ? 'red' : 'green' }}
-        >
-          {header.headerTitle}
-        </Anchor>
-      )})}
+      {navHeader.map((header, index) => {
+        return (
+          <Anchor
+            href={`#${header.headerID}`}
+            key={index + header.headerID}
+            style={{ color: activeIndex === index ? 'red' : 'green' }}
+          >
+            {header.headerTitle}
+          </Anchor>
+        )
+      })}
     </Content>
   )
 }
@@ -98,7 +97,7 @@ const Anchor = styled.a`
     font-size: 11px;
     font-weight: 100;
     line-height: 1.29;
-    color: ${ PColor };
+    color: ${PColor};
     display: block;
     padding: 11px 55px;
     font-family: PFont-Light;

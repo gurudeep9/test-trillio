@@ -172,7 +172,7 @@ const Provider = ({ children }) => {
         )
     })
     return () => { return body.removeEventListener('keyup', () => { }) }
-  }, [openProductModal, setOpenProductModal])
+  }, [])
 
   const [hidden, setHidden] = useState(false)
   const [selectedStore, setSelectedStore] = useState(null)

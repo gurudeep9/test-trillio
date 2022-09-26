@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const PUSH_RECOMMENDED = gql`
 mutation pushOneRecommendation($input:  RecommendationInput) {
@@ -13,7 +13,6 @@ mutation pushOneRecommendationProduct($input:  RecommendationInput) {
   pushOneRecommendationProduct(input: $input) {
     id
     carProId
-    
   }
 }
 `
@@ -24,7 +23,7 @@ query getAllMatchesStoreRecommended($catStore: ID, $min: Int, $max: Int){
       cId
       id
       ctId
-    	catStore
+    catStore
       dId
       cateStore{
       catStore
@@ -41,15 +40,12 @@ query getAllMatchesStoreRecommended($catStore: ID, $min: Int, $max: Int){
         dId
         cId
         dName
-        
       }
       pais {
         cId
         cName
-        
       }
     }
-    
 }
 `
 
@@ -67,23 +63,23 @@ query productFoodsAllRecommended($search: String, $min: Int, $max: Int, $gender:
     pName
     ProPrice
     ProDescuento
-	  ProUniDisponibles
-	  ProDescription
-	  ProProtegido
-	  ProAssurance
-	  ProStar
+  ProUniDisponibles
+  ProDescription
+  ProProtegido
+  ProAssurance
+  ProStar
     sTateLogistic
-	  ProImage
-	  ProWidth
-	  ProHeight
-	  ProLength
-	  ProWeight
-	  ProQuantity
-	  ProOutstanding
-    pDatCre
+  ProImage
+  ProWidth
+  ProHeight
+  ProLength
+  ProWeight
+  ProQuantity
+  ProOutstanding
+  pDatCre
     pDatMod
-	  ProDelivery
-	  ProVoltaje
+  ProDelivery
+  ProVoltaje
     pState
     feat {
       fId

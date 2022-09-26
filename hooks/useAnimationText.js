@@ -12,9 +12,9 @@ const useAnimatedText = textMessage => {
       window.requestAnimationFrame(() => {
         // eslint-disable-next-line
                 setText(text => text + fullTextRef.current[index]);
-        setIndex(() => {return index + 1})
+        setIndex(() => { return index + 1 })
       })
-    }    
+    }
   }, [index])
   useEffect(() => {
     fullText.current = textMessage
@@ -23,7 +23,7 @@ const useAnimatedText = textMessage => {
   return text
 }
 
-export default function TextHook() {
+export default function TextHook () {
   const text = useAnimatedText(fullText)
 
   return <span>{text} </span>

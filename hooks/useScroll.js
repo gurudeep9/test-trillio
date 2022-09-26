@@ -3,22 +3,22 @@ import { useEffect, useState } from 'react'
 export const useScrollY = () => {
   // Función scroll Para mover verticalmente
   const [offsetY, setOffsetY] = useState(0)
-  const handleScroll = () => {return setOffsetY(window.pageYOffset)}
+  const handleScroll = () => { return setOffsetY(window.pageYOffset) }
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
-    return () => {return window.removeEventListener('scroll', handleScroll)}
+    return () => { return window.removeEventListener('scroll', handleScroll) }
   }, [])
   return {
     offsetY
   }
 }
 // Función scroll Para rotar
-export function useScrollRotate() {
+export function useScrollRotate () {
   const [position, setPosition] = useState(0)
 
   useEffect(() => {
-    const handleScroll = () => {return setPosition(window.scrollY)}
+    const handleScroll = () => { return setPosition(window.scrollY) }
     window.addEventListener('scroll', handleScroll)
     return () => {
       window.removeEventListener('scroll', handleScroll)
@@ -45,7 +45,7 @@ export const useScrollColor = () => {
   }
 }
 
-export default function useScrollHook() {
+export default function useScrollHook () {
   const [style, setStyle] = useState({})
 
   useEffect(() => {

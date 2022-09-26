@@ -9,5 +9,5 @@ export const sessionOptions = {
 }
 export default withIronSessionApiRoute(() => {
   // eslint-disable-next-line no-console
-  console.log('') 
+  console.log('')
 }, sessionOptions)

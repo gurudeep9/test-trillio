@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const GET_ALL_BANNERS = gql`
 query getAllMasterBanners($search: String, $min: Int, $max: Int) {
@@ -20,7 +20,7 @@ query getAllPromoBanners($search: String, $min: Int, $max: Int) {
     bpId
     description
     createAt
-    name 
+    name
     updateAt
   }
 }

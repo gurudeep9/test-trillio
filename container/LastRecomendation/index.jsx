@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useLazyQuery, useQuery } from '@apollo/client'
 import { Container, Title } from './styled'
 import { GET_ONE_STORE_IN_CATEGORY } from 'container/categoryStores/queries'
@@ -29,10 +30,10 @@ export const LastRecommended = ({ ID_CATEGORIE }) => {
       variables: {
         catStore: ID_CATEGORIE
       }
-    }).catch(() => { return })
+    }).catch(() => { })
     setDataCatStore(dataCatSto?.getOneCatStore)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ID_CATEGORIE, dataStoreRecommended, dataCatSto ])
+  }, [ID_CATEGORIE, dataStoreRecommended, dataCatSto])
   const { cName } = categoryStores || {}
   return (
     <Container>
@@ -62,36 +63,46 @@ export const ItMayInterestYou = ({ PRODUCT_NAME_COOKIE }) => {
           search: name
         }
   })
+
   return (
     <Column margin={'50px auto'} maxWidth='1366px'>
-      {(dataProduct?.productFoodsAllRecommended?.length > 0) && <Title>Te puede interesar {name} </Title>}
+      {(dataProduct?.productFoodsAllRecommended?.length > 0) &&
+      <Title>Te puede interesar {name}
+      </Title>
+      }
       <Row
         display={'grid'}
         gridGap='10px'
-        gridTemplateColumns='repeat(auto-fill,minmax(390px,1fr))'
+        gridTemplateColumns='repeat(auto-fill,minmax(280px,1fr))'
       >
-        {dataProduct?.productFoodsAllRecommended?.length > 0 && dataProduct?.productFoodsAllRecommended?.map((food, i) => {return (
-          <div key={i + 1}>
-            <Link
-              href={{
-                pathname: `/restaurantes`,
-                query: { plato: food.pId }
-              }}
-              passHref
-              replace
-              shallow
-            >
-              <a>
-                <CardProduct
-                  food={food}
-                  key={food.pId}
-                  onClick={() => {return setOpenProductModal(!openProductModal)}}
-                />
-              </a>
-            </Link>
-          </div>
-        )})}
+        {dataProduct?.productFoodsAllRecommended?.length > 0 && dataProduct?.productFoodsAllRecommended?.map((food, i) => {
+          return (
+            <div key={i + 1}>
+              <Link
+                href={{
+                  pathname: `/restaurantes`,
+                  query: { plato: food.pId }
+                }}
+                passHref
+                replace
+                shallow
+              >
+                <a>
+                  <CardProduct
+                    food={food}
+                    key={food.pId}
+                    onClick={() => { return setOpenProductModal(!openProductModal) }}
+                  />
+                </a>
+              </Link>
+            </div>
+          )
+        })}
       </Row>
     </Column>
   )
+}
+
+ItMayInterestYou.propTypes = {
+  PRODUCT_NAME_COOKIE: PropTypes.string
 }

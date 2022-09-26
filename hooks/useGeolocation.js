@@ -2,8 +2,8 @@ import Cookies from 'js-cookie'
 import { getCurrentDomain } from 'utils'
 import debounce from 'lodash.debounce'
 import { trigger } from './useEvents'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
+
 // EXAMPLE
 // https://codesandbox.io/s/nextjs-cart-system-tfg1e?file=/pages/_app.js
 
@@ -31,7 +31,7 @@ export const useGeolocation = () => {
     if (typeof cart === 'string' && cart !== 'undefined') {
       const cartData = JSON.parse(cart)
       const total = cartData.reduce(
-        (total, item) => {return total + item.price * item.quantity},
+        (total, item) => { return total + item.price * item.quantity },
         0
       )
 
@@ -46,38 +46,42 @@ export const useGeolocation = () => {
   const handleAdd = (item) => {
     // check for item already in cart
     // if not in cart, add item else if item is found increment quantity
-    const itemExists = cart.items.find((i) => {return i.pId === item.pId})
+    const itemExists = cart.items.find((i) => { return i.pId === item.pId })
 
     if (!itemExists) {
-      setCart((prevCart) => {return {
-        items: [...prevCart.items, { ...item, quantity: 1 }],
-        total: prevCart.total + item.price
-      }})
+      setCart((prevCart) => {
+        return {
+          items: [...prevCart.items, { ...item, quantity: 1 }],
+          total: prevCart.total + item.price
+        }
+      })
 
       return
     }
 
-    setCart((prevCart) => {return {
-      items: prevCart.items.map((i) => {
-        if (i.pId === item.pId) {
-          return { ...i, quantity: i.quantity + 1 }
-        }
+    setCart((prevCart) => {
+      return {
+        items: prevCart.items.map((i) => {
+          if (i.pId === item.pId) {
+            return { ...i, quantity: i.quantity + 1 }
+          }
 
-        return i
-      }),
-      total: prevCart.total + item.price
-    }})
+          return i
+        }),
+        total: prevCart.total + item.price
+      }
+    })
     updateCart(cart)
   }
 
   const deleteProductCart = (item) => {
     setCart((prevCart) => {
       const items = prevCart.items
-      const index = items.findIndex((i) => {return i.pId === item.pId})
+      const index = items.findIndex((i) => { return i.pId === item.pId })
 
       items.splice(index, 1)
 
-      const total = items.reduce((t, i) => {return t + i.quantity * i.price}, 0)
+      const total = items.reduce((t, i) => { return t + i.quantity * i.price }, 0)
 
       return { items, total }
     })
@@ -86,7 +90,7 @@ export const useGeolocation = () => {
   const decreaseItemFromCart = (item) => {
     // check for item already in cart
     // if quantity is more then  in cart, subtract item else remove item
-    const itemInCart = cart.items.find((i) => {return i.pId === item.pId})
+    const itemInCart = cart.items.find((i) => { return i.pId === item.pId })
 
     if (!itemInCart) {
       return
@@ -98,16 +102,18 @@ export const useGeolocation = () => {
       return
     }
 
-    setCart((prevCart) => {return {
-      items: prevCart.items.map((i) => {
-        if (i.pId === item.pId) {
-          return { ...i, quantity: item.quantity - 1 }
-        }
+    setCart((prevCart) => {
+      return {
+        items: prevCart.items.map((i) => {
+          if (i.pId === item.pId) {
+            return { ...i, quantity: item.quantity - 1 }
+          }
 
-        return i
-      }),
-      total: prevCart.total - item.price
-    }})
+          return i
+        }),
+        total: prevCart.total - item.price
+      }
+    })
   }
 
   const clearCart = () => {

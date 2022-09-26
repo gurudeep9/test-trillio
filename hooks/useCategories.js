@@ -7,8 +7,7 @@ export const useCategories = () => {
   const [categories, setCategories] = useState(data)
   useEffect(() => {
     setCategories(categories)
-    if (error) return 
-    
+    if (error) return
   }, [categories, data, error])
   return [data, { loading }]
 }

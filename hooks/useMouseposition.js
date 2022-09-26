@@ -4,7 +4,7 @@ const HookMouse = () => {
   const [x, setX] = useState(0)
   const [y, setY] = useState(0)
 
-  function logMousePosition(e) {
+  function logMousePosition (e) {
     setX(e.clientX)
     setY(e.clientY)
   }

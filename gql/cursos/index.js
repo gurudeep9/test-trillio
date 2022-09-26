@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const GET_COURSES = gql`
     query getCourses {
@@ -8,5 +8,5 @@ export const GET_COURSES = gql`
           description
           topic
     }
-  }  
+  }
 `

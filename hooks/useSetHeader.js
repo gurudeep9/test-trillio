@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useStickyState } from '../../context/contextsticky'
 
 
-function useSentinelOffsets(topSentinelRef) {
+function useSentinelOffsets (topSentinelRef) {
   const { stickyRefs } = useStickyState()
   const [bottomSentinelHeight, setBottomSentinelHeight] = useState('')
   const [topSentinelMarginTop, setTopSentinelMarginTop] = useState('')
@@ -18,7 +18,7 @@ function useSentinelOffsets(topSentinelRef) {
  * @param {React.MutableRefObject<T>} topSentinelRef Ref to underlying TOP sentinel
  */
 // https://developers.google.com/web/updates/2017/09/sticky-headers
-function useObserveTopSentinels(
+function useObserveTopSentinels (
   topSentinelRef,
   {
     /**
@@ -44,7 +44,7 @@ function useObserveTopSentinels(
         const targetInfo = entry.boundingClientRect
         const rootBoundsInfo = entry.rootBounds
 
-        let type = undefined
+        let type
         // Started sticking.
         if (targetInfo.bottom < rootBoundsInfo.top) {
           type = 'stuck'
@@ -76,7 +76,7 @@ function useObserveTopSentinels(
  * Observe the BOTTOM sentinel and dispatch sticky events
  * @param {React.MutableRefObject<T>} topSentinelRef Ref to underlying BOTTOM sentinel
  */
-function useObserveBottomSentinels(
+function useObserveBottomSentinels (
   bottomSentinelRef,
   {
     /**
@@ -103,7 +103,7 @@ function useObserveBottomSentinels(
         const rootBounds = entry.rootBounds
         const intersectionRatio = entry.intersectionRatio
 
-        let type = undefined
+        let type
 
         if (
           bottomSentinelRect.top >= rootBounds.top &&

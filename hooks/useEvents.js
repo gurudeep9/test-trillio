@@ -16,12 +16,12 @@ export const trigger = ({ eventType, data }) => {
   const event = new CustomEvent(eventType, { detail: data })
   document.dispatchEvent(event)
 }
-//This function is used to subscribe components an any event
+// This function is used to subscribe components an any event
 export const useEvents = ({ eventType, callBack }) => {
   useEffect(() => {
-    on({ eventType, callBack: callBack })
+    on({ eventType, callBack })
     return () => {
-      off({ eventType, callBack: callBack })
+      off({ eventType, callBack })
     }
   }, [eventType, callBack])
 }

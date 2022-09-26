@@ -1,11 +1,11 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const UPDATE_IDENTITY = gql`
 mutation createTypeIdentity($input: ITypeIdentity){
   createTypeIdentity(input: $input){
     tiId
     tiName
-    tiState    
+    tiState
   }
 }
 `

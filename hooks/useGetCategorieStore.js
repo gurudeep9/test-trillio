@@ -12,7 +12,6 @@ export const useGetCategorieStore = ({ catStoreId }) => {
     },
     onError: () => {
       setAlertBox({ message: '', duration: 5000 })
-
     }
   })
   const [categories, setCategorieStore] = useState([])

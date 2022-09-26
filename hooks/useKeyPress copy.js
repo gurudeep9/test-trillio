@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 
-export default function useKeyPress(targetKey) {
+export default function useKeyPress (targetKey) {
   // State for keeping track of whether key is pressed
   const [keyPressed, setKeyPressed] = useState(false)
 
   // If pressed key is our target key then set to true
-  function downHandler({ key }) {
+  function downHandler ({ key }) {
     if (key === targetKey) {
       setKeyPressed(true)
     }
@@ -62,15 +62,17 @@ export const App = () => {
   )
 }
 
-const Label = ({ value, isBold }) => {return (
-  <div
-    style={{
-      display: 'inline-block',
-      margin: '15px',
-      fontSize: '42px',
-      fontWeight: isBold ? 'bold' : 'normal'
-    }}
-  >
-    {value}
-  </div>
-)}
+const Label = ({ value, isBold }) => {
+  return (
+    <div
+      style={{
+        display: 'inline-block',
+        margin: '15px',
+        fontSize: '42px',
+        fontWeight: isBold ? 'bold' : 'normal'
+      }}
+    >
+      {value}
+    </div>
+  )
+}

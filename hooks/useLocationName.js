@@ -11,7 +11,6 @@ export const LocationName = () => {
 }
 
 const Search = ({ children, Text }) => {
-
   return (
     <ContainerSearch>
       <Link> Buscado por</Link>

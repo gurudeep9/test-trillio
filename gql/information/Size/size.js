@@ -1,15 +1,15 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const UPDATE_SIZE = gql`
 mutation createSize($input: ISizeEdit){
-	create(input: $input){
-    sizeId
-    sizeName
-    sizeState
-    cDatCre
-    cDatMod
+    create(input: $input){
+      sizeId
+      sizeName
+      sizeState
+      cDatCre
+      cDatMod
+    }
   }
-}
 `
 export const GET_ALL_SIZE = gql`
 query getSizes {
@@ -17,7 +17,6 @@ query getSizes {
     sizeId
     sizeName
     sizeState
-    
   }
 }
 `

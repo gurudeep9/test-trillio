@@ -17,7 +17,6 @@ export const Categories = () => {
               <Link href={`/categories/${nameCat}/${cat.catStore}`}>
                 <a>
                   <ItemCategory>
-                    {/* <img alt={cat.cName} src={cat.cPathImage ?? '/images/cat1.png'} /> */}
                     <Image
                       alt='Picture of the author'
                       blurDataURL='data:...'
@@ -26,7 +25,7 @@ export const Categories = () => {
                       placeholder='blur'
                       src={cat.cPathImage ?? '/images/cat1.png'}
                       unoptimized={true}
-                      width={90} // Optional blur-up while loading
+                      width={90}
 
                     />
                   </ItemCategory>
@@ -66,14 +65,13 @@ export const ItemCategory = styled.div`
 `
 export const List = styled.div`
     width: 100%;
-    display: grid;  
+    display: grid;
     gap: 5px;
     grid-auto-flow: column;
     place-content: space-around;
     overflow: hidden;
-    grid-template-columns: 9% repeat(auto-fill, 9%);
-    /* margin: 0 30px 30px auto; */
-   
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+
     .title-cat {
         margin-top: 10px;
         font-size: 14px;

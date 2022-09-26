@@ -7,7 +7,7 @@ export const useGetAreas = () => {
   const [areas, setAreas] = useState(data)
   useEffect(() => {
     setAreas(areas)
-    if (error) return 
+    if (error) return
   }, [areas, data, error])
   return [data, { loading }]
 }

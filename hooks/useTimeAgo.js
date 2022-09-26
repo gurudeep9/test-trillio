@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 const DATE_UNITS = [
-  ["day", 86400],
-  ["hour", 3600],
-  ["minute", 60],
-  ["second", 1],
+  ['day', 86400],
+  ['hour', 3600],
+  ['minute', 60],
+  ['second', 1]
 ]
 
 const getDateDiffs = (timestamp) => {
-  console.log("getDateDiffs")
+  console.log('getDateDiffs')
   const now = Date.now()
   const elapsed = (timestamp - now) / 1000
 
   for (const [unit, secondsInUnit] of DATE_UNITS) {
-    if (Math.abs(elapsed) > secondsInUnit || unit === "second") {
+    if (Math.abs(elapsed) > secondsInUnit || unit === 'second') {
       const value = Math.round(elapsed / secondsInUnit)
       return { value, unit }
     }
   }
 }
 
-export default function useTimeAgo(timestamp) {
-  const [timeago, setTimeago] = useState(() => getDateDiffs(timestamp))
+export default function useTimeAgo (timestamp) {
+  const [timeago, setTimeago] = useState(() => { return getDateDiffs(timestamp) })
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,10 +29,10 @@ export default function useTimeAgo(timestamp) {
       setTimeago(newTimeAgo)
     }, 5000)
 
-    return () => clearInterval(interval)
+    return () => { return clearInterval(interval) }
   }, [timestamp])
 
-  const rtf = new Intl.RelativeTimeFormat("es", { style: "short" })
+  const rtf = new Intl.RelativeTimeFormat('es', { style: 'short' })
 
   const { value, unit } = timeago
 

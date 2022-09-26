@@ -41,7 +41,7 @@ export const usePosition = (watch = false, settings = defaultSettings) => {
       navigator.geolocation.getCurrentPosition(onChange, onError, settings)
     }
 
-    return () => {return watcher && navigator.geolocation.clearWatch(watcher)}
+    return () => { return watcher && navigator.geolocation.clearWatch(watcher) }
   }, [
     settings,
     settings.enableHighAccuracy,

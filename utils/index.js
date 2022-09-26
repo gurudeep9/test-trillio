@@ -38,7 +38,7 @@ export const rangeLength = (dato, min, max) => {
     if ((dato.length < min) || (dato.length > max)) {
       return true
     } return false
-  } return false 
+  } return false
 }
 
 export const Match = (dato1, dato2) => {
@@ -54,16 +54,16 @@ export const isEmail = email => {
   } return false
 }
 
-export const passwordConfirm = (value, valueConfirm) => {return !(value === valueConfirm)}
+export const passwordConfirm = (value, valueConfirm) => { return !(value === valueConfirm) }
 // export const numberFormat = value => value ? (parseInt(value) ? new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(parseFloat(`${value}`.replace(/\./g, ''))) : '') : (value === 0 ? 0 : '')
 
 // var options = { style: 'currency', currency: 'GBP' };
 // export const numberFormat = value => value && parseFloat(value) && new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value)
 // export const numberFormat = value => value ? (parseInt(value) ? new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(parseFloat(`${value}`.replace(/\./g, ''))) : '') : (value === 0 ? 0 : '')
-export const numberFormat = value => {return value ? (parseInt(value) ? new Intl.NumberFormat('de-DE').format(parseFloat(`${value}`.replace(/\./g, ''))) : '') : (value === 0 ? 0 : '')}
+export const numberFormat = value => { return value ? (parseInt(value) ? new Intl.NumberFormat('de-DE').format(parseFloat(`${value}`.replace(/\./g, ''))) : '') : (value === 0 ? 0 : '') }
 
 // valida los inputs
-export const dateFormat = value => {return moment(value).format('DD-MM-YYYY')}
+export const dateFormat = value => { return moment(value).format('DD-MM-YYYY') }
 export const validations = (e, typeNull, typeLetters, typeNumeric, typeRange, minRange, maxRange, typeEmail, typeFormat) => {
   let { value } = e.target
   const { nextSibling } = e.target
@@ -202,7 +202,7 @@ export const validationsSelect = v => {
   return false
 }
 
-export const validationImg = file => {return (/\.(jpg|png|gif|jpeg)$/i).test(file.name)}
+export const validationImg = file => { return (/\.(jpg|png|gif|jpeg)$/i).test(file.name) }
 
 export const CalcularDigitoVerificacion = value => {
   let x = 0; let y = 0; let i = 0; let myNit
@@ -350,7 +350,7 @@ export const filterKeyObjectOLD = (data, filters) => {
 }
 export const filterObject = (obj, filters) => {
   let values = {}
-  values = Object.keys(obj).filter((key) => {return !key.includes(filters)}).reduce((cur, key) => { return Object.assign(cur, { [key]: obj[key] }) }, {})
+  values = Object.keys(obj).filter((key) => { return !key.includes(filters) }).reduce((cur, key) => { return Object.assign(cur, { [key]: obj[key] }) }, {})
   return values
 }
 /**
@@ -414,7 +414,7 @@ export const getDataLS = jsonValue => {
     return jsonValue
   }
 }
-export function parse(str) {
+export function parse (str) {
   if (Array.isArray(str)) {
     alert()
     // eslint-disable-next-line
@@ -432,7 +432,7 @@ export function parse(str) {
 export const updateCache = async ({ cache, query, nameFun, dataNew }) => {
   return cache.modify({
     fields: {
-      [nameFun](dataOld = {}) {
+      [nameFun] (dataOld = {}) {
         return cache.writeQuery({ query, data: { ...dataOld, data: { ...(dataOld?.data || {}), ...(dataNew?.data || {}) } } })
       }
     }
@@ -448,10 +448,10 @@ export const updateCacheMod = async ({ cache, query, nameFun, dataNew, type, id 
   return cache.modify({
     fields: {
       // eslint-disable-next-line consistent-return
-      [nameFun](dataOld = []) {
+      [nameFun] (dataOld = []) {
         if (type === 1) return cache.writeQuery({ query, data: [...(dataOld || []), { ...(dataNew || {}) }] })
         if (type === 2) return cache.writeQuery({ query, data: { ...(dataOld || {}), ...(dataNew || {}) } })
-        if (type === 3) return cache.writeQuery({ query, data: dataOld.filter(x => {return x === id}) })
+        if (type === 3) return cache.writeQuery({ query, data: dataOld.filter(x => { return x === id }) })
       }
     }
   })
@@ -461,24 +461,24 @@ export const updateCacheMod = async ({ cache, query, nameFun, dataNew, type, id 
  * @returns {null} no hay retorno
  */
 const TOKEN = 'sma.sv1'
-export function setToken(token) {
+export function setToken (token) {
   if (token === null) return false
   else if (token !== null) return JSON.parse
-  return {} 
+  return {}
 }
 /**
  * obtiene el token del usuario
  * @returns {null} no hay retorno
  */
-export function getToken({ restaurant }) {
+export function getToken ({ restaurant }) {
   return localStorage.getItem(restaurant || TOKEN)
 }
 // obtiene el token del usuario y lo descodifica
-export function decodeToken(token) {
+export function decodeToken (token) {
   return decode(token)
 }
 const now = Date.now().valueOf() / 1000
-export function getTokenState(token) {
+export function getTokenState (token) {
   if (!token) {
     return { valid: false, needRefresh: true }
   }
@@ -487,12 +487,11 @@ export function getTokenState(token) {
     return { valid: false, needRefresh: true }
   } else if (decoded.exp && jwt.decode(token)?.exp < now) {
     return { valid: true, needRefresh: true }
-  } 
+  }
   return { valid: true, needRefresh: false }
-  
 }
 // Obtiene el token y lo elimina
-export function removeToken() {
+export function removeToken () {
   return localStorage.removeItem(TOKEN)
 }
 export const validateEmail = email => {
@@ -505,7 +504,7 @@ export const validateEmail = email => {
  * @param {string} value valor en numeros
  * @return {string} nuevo formato en teléfono
  */
-export const upperCase = value => {return `${value || ''}`.toUpperCase()}
+export const upperCase = value => { return `${value || ''}`.toUpperCase() }
 
 /**
  * Transforma un numero en formato de teléfono
@@ -933,13 +932,13 @@ export const mongoObjectId = function () {
   }).toLowerCase()
 }
 
-export default function useKeypress(key, action) {
+export default function useKeypress (key, action) {
   useEffect(() => {
-    function onKeyup(e) {
+    function onKeyup (e) {
       if (e.key === key) action()
     }
     window.addEventListener('keyup', onKeyup)
-    return () => {return window.removeEventListener('keyup', onKeyup)}
+    return () => { return window.removeEventListener('keyup', onKeyup) }
   }, [])
 }
 export const CalculateIva = (quantity, rate, iPercentage, state) => {
@@ -955,10 +954,9 @@ export const CalculateIva = (quantity, rate, iPercentage, state) => {
     const PercentageNumber = parseInt(iPercentage)
     TotalIva = SubTotal ? (SubTotal * PercentageNumber) / 100 : 0
     return TotalIva
-  } 
+  }
   TotalIva = 0
   return TotalIva
-  
 }
 /**
  *
@@ -1012,29 +1010,29 @@ export const roundToTwo = (num) => {
 export const NewDateFormat = (date) => {
   try {
     // const dateString = new Date(dateString)
-    const dateString = date => {return new Date(date).toString() !== 'Invalid Date'}
+    const dateString = date => { return new Date(date).toString() !== 'Invalid Date' }
     const newDate = dateString instanceof Date && !isNaN(dateString)
     // return new Date(date).toISOString().slice(0, 10).replace(/-/g,"");
     return date
-
   } catch (error) {
     console.log(error)
   }
 }
 
-export const convertBase64 = file =>
-{return new Promise((resolve, reject) => {
-  const reader = new FileReader()
-  if (file) {
-    reader.readAsDataURL(file)
-  }
-  reader.onload = () => {
-    resolve(reader.result)
-  }
-  reader.onerror = error => {
-    reject(error)
-  }
-})}
+export const convertBase64 = file => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+    reader.onload = () => {
+      resolve(reader.result)
+    }
+    reader.onerror = error => {
+      reject(error)
+    }
+  })
+}
 /**
  * OBTIENE EL TAMAÑO DE EL ARCHIVO
  */
@@ -1045,25 +1043,25 @@ export const getFileSizeByUnit = (file, unit = 'B') => {
   }
   const unitStr = unit.toUpperCase()
   const unitFormula = {
-    B: size => {return size},
-    KB: size => {return size / 1024},
-    MB: size => {return size / (1024 * 1024)},
-    GB: size => {return size / (1024 * 1024 * 1024)},
-    TB: size => {return size / (1024 * 1024 * 1024 * 1024)}
+    B: size => { return size },
+    KB: size => { return size / 1024 },
+    MB: size => { return size / (1024 * 1024) },
+    GB: size => { return size / (1024 * 1024 * 1024) },
+    TB: size => { return size / (1024 * 1024 * 1024 * 1024) }
   }
   return [unitFormula[unitStr] ? unitFormula[unitStr](originFileSize) : 0, { unit }]
 }
-export function RandomCode(length) {
+export function RandomCode (length) {
   let result = ''
-  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let charactersLength = characters.length
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charactersLength = characters.length
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() *
       charactersLength))
   }
   return result
 }
-export function getActiveToken(input, cursorPosition) {
+export function getActiveToken (input, cursorPosition) {
   // recuperamos la posición actual del cursor
   if (cursorPosition === undefined) return undefined
   // creamos un array temporal para guardar las palabras
@@ -1082,7 +1080,7 @@ export function getActiveToken(input, cursorPosition) {
   })
   // buscamos en qué palabra estamos dependiendo de la posición del cursor
   return words.find(
-    ({ range }) => {return range[0] <= cursorPosition && range[1] >= cursorPosition}
+    ({ range }) => { return range[0] <= cursorPosition && range[1] >= cursorPosition }
   )
 }
 
@@ -1130,7 +1128,7 @@ export const CARD_TYPES = {
 
 export const getCardType = (cardNum) => {
   let payCardType = ''
-  let regexMap = [
+  const regexMap = [
     { regEx: /^4[0-9]{5}/gi, cardType: 'VISA' },
     { regEx: /^5[1-5][0-9]{4}/gi, cardType: 'MASTERCARD' },
     { regEx: /^3[47][0-9]{3}/gi, cardType: 'AMEX' },
@@ -1149,11 +1147,11 @@ export const getCardType = (cardNum) => {
     cardNum.indexOf('60') === 0 ||
     cardNum.indexOf('65') === 0
   ) {
-    let g = '508500-508999|606985-607984|608001-608500|652150-653149'
-    let i = g.split('|')
+    const g = '508500-508999|606985-607984|608001-608500|652150-653149'
+    const i = g.split('|')
     for (let d = 0; d < i.length; d++) {
-      let c = parseInt(i[d].split('-')[0], 10)
-      let f = parseInt(i[d].split('-')[1], 10)
+      const c = parseInt(i[d].split('-')[0], 10)
+      const f = parseInt(i[d].split('-')[1], 10)
       if (
         cardNum.substr(0, 6) >= c &&
         cardNum.substr(0, 6) <= f &&
@@ -1167,8 +1165,8 @@ export const getCardType = (cardNum) => {
   return payCardType
 }
 
-export function copyToClipboard(text) {
-  let data = [new ClipboardItem({ 'text/plain': new Blob([text || ''], { type: 'text/plain' }) })]
+export function copyToClipboard (text) {
+  const data = [new ClipboardItem({ 'text/plain': new Blob([text || ''], { type: 'text/plain' }) })]
   navigator.clipboard.write(data).then(function () {
     console.log('Copied to clipboard successfully!')
   }, function () {
@@ -1195,10 +1193,10 @@ export function copyToClipboard(text) {
 // d.setMonth(d.getMonth() -3);
 // console.log(todayDate)
 // console.log(d.toISOString().slice(0, 10));
-let threeMonthsAgo = moment().subtract(3, 'months')
+const threeMonthsAgo = moment().subtract(3, 'months')
 
 console.log(threeMonthsAgo.format()) // 2015-10-13T09:37:35+02:00
-let d = new Date(); d.setMonth(d.getMonth() - 3)
+const d = new Date(); d.setMonth(d.getMonth() - 3)
 console.log(d)
 
 const BASE_URL = 'http://localhost:3000/'
@@ -1232,7 +1230,7 @@ export const getUserFromToken = token => {
   try {
     if (tokenState?.needRefresh === true || !tokenState?.valid || !tokenState) {
       return error = true
-    } 
+    }
     return error = false
   } catch {
     user = null
