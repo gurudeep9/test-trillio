@@ -15,7 +15,13 @@ import { ContainerActions, ContainerBurger, OnlyMovil } from 'components/Update/
 
 export const Options = ({ handleMenu }) => {
   const { client } = useApolloClient()
-  const { itemProducts, setOpenMenuMobile, menuMobile, setStatus, status } = useContext(Context)
+  const {
+    itemProducts,
+    setOpenMenuMobile,
+    menuMobile,
+    setStatus,
+    status
+  } = useContext(Context)
   const [show, setShow] = useState(false)
   const location = useRouter()
 

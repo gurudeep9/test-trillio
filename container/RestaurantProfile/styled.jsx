@@ -338,6 +338,9 @@ export const Title = styled.h1`
   line-height: 44px;
   margin-bottom: 0;
   width: fit-content;
+  @media only screen and (min-width: 960px) {
+    font-size: 1.125rem;
+    }
 `
 export const Flex = styled.div`
   display: flex;
