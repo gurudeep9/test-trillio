@@ -42,14 +42,14 @@ export const LateralModal = styled.div`
     ${({ show }) => {
     return show
       ? css`
-                 animation-name: ${SideIn};
-                 visibility: visible;
-                 opacity: 1;
-                 transform: translateY(0);
-                 `
+            animation-name: ${SideIn};
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        `
       : css`
             animation-name: ${SlideInLeft};
-              `
+    `
   }}
     @media(max-width: 768px){
     width: 100vw;
