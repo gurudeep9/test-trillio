@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { BColor, BGColor, BGVColor, DarkSilver, SFVColor } from '../../public/colors'
 
 export const ItemWrapper = styled.div`
@@ -10,6 +10,21 @@ export const ItemWrapper = styled.div`
     cursor: pointer;
     display: grid;
     padding: 16px;
+    .close {
+        font-weight: bold;
+    }
+    ${props => {
+    return props.isOpen
+      ? css`
+      filter: none;
+      opacity: 1;
+    `
+      : css`
+      filter: grayscale(1);
+      opacity: .3;
+    
+    `
+  }}
     /* background-color: ${BGColor}!important; */
     &:hover {
         background-color: ${`${SFVColor}69`};

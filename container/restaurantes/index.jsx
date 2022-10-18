@@ -1,43 +1,29 @@
-import React, { useContext } from 'react'
+import { useRouter } from 'next/router'
 import { AwesomeModal } from '../../components/AwesomeModal'
 import { useSetState } from '../../components/hooks/useState'
+import { Range } from '../../components/InputRange'
 import { RippleButton } from '../../components/Ripple'
-import { Context } from '../../context'
+import Tabs from '../../components/Tabs'
 import { PColor } from '../../public/colors'
 import { IconLogo } from '../../public/icons'
-import { ContainerFilter, Content, ContentFilter, CtnItemFilter, H2, ItemFilter, WrapFlex } from './styled'
-import Tabs from '../../components/Tabs'
-import { Range } from '../../components/InputRange'
-import { useQuery } from '@apollo/client'
-import {
-  GET_ALL_SHOPPING_CARD,
-  GET_ALL_RESTAURANT,
-  GET_ALL_CAT_STORE
-} from './queries'
+import { BestRestaurant } from './BestRestaurant'
 import { Categories } from './categories'
 import { PromoBannerStores } from './PromosBanner'
-import { BestRestaurant } from './BestRestaurant'
-import { useRouter } from 'next/router'
+import {
+  ContainerFilter,
+  Content,
+  ContentFilter,
+  CtnItemFilter,
+  H2,
+  ItemFilter,
+  WrapFlex
+} from './styled'
 
 export const Restaurant = () => {
   // STATES
   const router = useRouter()
-  const { dispatch, setAlertBox, state_product_card, handleMenu } = useContext(Context)
   const OPEN_MODAL_ORGANICE = useSetState(0)
   const OPEN_MODAL_FILTER = useSetState(0)
-  const { data: dataRestaurant } = useQuery(GET_ALL_RESTAURANT)
-  const { data: getCatStoreLOL } = useQuery(GET_ALL_SHOPPING_CARD)
-  const { data: getCatStore } = useQuery(GET_ALL_CAT_STORE)
-  // HANDLES
-  const handleAddProduct = elem => {
-    handleMenu(1)
-    const includes = state_product_card?.PRODUCT.includes(elem)
-    if (includes) {
-      setAlertBox({ message: 'El producto ya esta en la lista' })
-    } else {
-      dispatch({ type: 'ADD_PRODUCT', payload: elem })
-    }
-  }
   return (
     <Content>
       <ContainerFilter>
@@ -51,8 +37,8 @@ export const Restaurant = () => {
       <Categories />
       {/* BEST RESTAURANT */}
       <PromoBannerStores />
-      <H2>Los mejores restaurantes para ti</H2>
-      <BestRestaurant />
+      {/* <H2>Los mejores restaurantes para ti</H2> */}
+      {/* <BestRestaurant /> */}
       <AwesomeModal
         borderRadius='10px'
         btnCancel={false}

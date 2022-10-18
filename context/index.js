@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable camelcase */
-import React, {
+import { useRouter } from 'next/router'
+import { useUpdateCart } from 'npm-pkg-hook'
+import PropTypes from 'prop-types'
+import {
   createContext,
   useCallback,
   useContext,
@@ -9,9 +12,6 @@ import React, {
   useReducer,
   useState
 } from 'react'
-import PropTypes from 'prop-types'
-import { useRouter } from 'next/router'
-import { useUpdateCart } from 'npm-pkg-hook'
 
 export const Context = createContext()
 
@@ -142,7 +142,7 @@ const Provider = ({ children }) => {
     if (!location) {
       setLocationActive(true)
     }
-  }, [locationStr, modalLocation, setModalLocation, setLocationString])
+  }, [])
 
   const [menuMobile, setOpenMenuMobile] = useState(false)
   const [status, setStatus] = useState('close')
@@ -156,23 +156,23 @@ const Provider = ({ children }) => {
   // MODAL PRODUCT
   const [openProductModal, setOpenProductModal] = useState(false)
   const handleProductModal = index => { return setOpenProductModal(index === openProductModal ? false : index) }
-  useEffect(() => {
-    const body = document.body
-    body.addEventListener('keyup', e => {
-      return e.code === 'Escape' &&
-        router.push(
-          {
-            href: window.location.href,
-            query: {}
-          },
-          undefined,
-          {
-            shallow: true
-          }
-        )
-    })
-    return () => { return body.removeEventListener('keyup', () => { }) }
-  }, [])
+  // useEffect(() => {
+  //   const body = document.body
+  //   body.addEventListener('keyup', e => {
+  //     return e.code === 'Escape' &&
+  //       router.push(
+  //         {
+  //           href: window.location.href,
+  //           query: {}
+  //         },
+  //         undefined,
+  //         {
+  //           shallow: true
+  //         }
+  //       )
+  //   })
+  //   return () => { return body.removeEventListener('keyup', () => { }) }
+  // }, [])
 
   const [hidden, setHidden] = useState(false)
   const [selectedStore, setSelectedStore] = useState(null)
@@ -236,3 +236,4 @@ Provider.propTypes = {
 const useAuth = () => { return useContext(Context) }
 
 export { Provider as default, useAuth }
+

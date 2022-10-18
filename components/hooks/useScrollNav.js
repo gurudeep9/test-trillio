@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { PColor } from '../../public/colors'
 
@@ -32,11 +32,11 @@ const nearestIndex = (
   }
   const nextNearest = ~~((startIndex + endIndex) / 2)
   const a = Math.abs(
-    sectionPositionArray[nextNearest].headerRef.current.offsetTop -
+    sectionPositionArray[nextNearest]?.headerRef?.current?.offsetTop -
         currentPosition
   )
   const b = Math.abs(
-    sectionPositionArray[nextNearest + 1].headerRef.current.offsetTop -
+    sectionPositionArray[nextNearest + 1]?.headerRef.current.offsetTop -
         currentPosition
   )
   if (a < b) {

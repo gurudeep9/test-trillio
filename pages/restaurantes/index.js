@@ -1,33 +1,31 @@
-import PropTypes from 'prop-types'
-import Head from 'next/head'
 import {
   gql,
   useMutation,
   useSubscription
 } from '@apollo/client'
-import { Restaurant } from '../../container/restaurantes'
+import { RippleButton } from 'components/Ripple'
+import { FavoriteStore } from 'container/favoriteStore'
+import { ItMayInterestYou, LastRecommended } from 'container/LastRecomendation'
+import { withIronSessionSsr } from 'iron-session/next'
+import Head from 'next/head'
+import { useRestaurant } from 'npm-pkg-hook'
+import PropTypes from 'prop-types'
+import {
+  BGColor, PColor, PVColor,
+  SECBGColor
+} from 'public/colors'
 import {
   useContext,
   useEffect,
   useState
 } from 'react'
-import { PromosBanner } from '../../container/restaurantes/PromosBanner'
-import { Section } from '../../container/restaurantes/styled'
-import { ListRestaurant } from '../../container/restaurantes/restaurant'
-import { RippleButton } from 'components/Ripple'
-import { FavoriteStore } from 'container/favoriteStore'
-import { ItMayInterestYou, LastRecommended } from 'container/LastRecomendation'
-import {
-  BColor,
-  BGColor,
-  PColor,
-  PVColor
-} from 'public/colors'
-import { Context } from '../../context'
-import { withIronSessionSsr } from 'iron-session/next'
-import { cookie } from 'utils'
 import styled from 'styled-components'
-import { useRestaurant } from 'npm-pkg-hook'
+import { cookie } from 'utils'
+import { Restaurant } from '../../container/restaurantes'
+import { PromosBanner } from '../../container/restaurantes/PromosBanner'
+import { ListRestaurant } from '../../container/restaurantes/restaurant'
+import { Section } from '../../container/restaurantes/styled'
+import { Context } from '../../context'
 import styles from '../../styles/Home.module.css'
 
 export default function RestaurantHome ({
@@ -81,8 +79,8 @@ mutation setCookie($name: String, $value: String) {
       </Section>
       <RippleButton
         bgColor={BGColor}
-        border={`1px solid ${PColor}`}
-        color={BColor}
+        border={`1px solid ${SECBGColor}`}
+        color={PColor}
         onClick={() => {
           setShowMore(showMore + 100)
           fetchMore({
@@ -96,6 +94,7 @@ mutation setCookie($name: String, $value: String) {
             }
           })
         }}
+        overColor={PColor}
         widthButton='100%'
       >
         Ver más

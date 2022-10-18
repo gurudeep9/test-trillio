@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { BGColor } from '../../public/colors'
 
@@ -51,6 +51,7 @@ export const RippleButton = props => {
       height={props.height}
       margin={ props.margin }
       onClick={onClick}
+      overColor={ props.overColor }
       padding={ props.padding }
       ref={button}
       size={props.size}
@@ -103,6 +104,11 @@ const Button = styled.button`
     font-size: 11px !important;
     font-family: PFont-Light !important;`
   }
+}
+&&:hover {
+  background-color: ${({ overColor }) => { return overColor || 'transparent' }};
+  color: ${({ overColor }) => { return overColor && BGColor }}
+
 }
  ${({ widthButton }) => {
     return widthButton && css`

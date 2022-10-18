@@ -1,16 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useApolloClient } from '@apollo/client'
+import { Context } from 'context'
 import PropTypes from 'prop-types'
-import React, {
-  useEffect,
-  Fragment,
-  useState,
-  useCallback,
-  useContext
+import {
+  Fragment, useCallback,
+  useContext, useEffect, useState
 } from 'react'
 import { getUserFromToken } from 'utils'
 import { OUR_URL_BASE } from './urls'
-import { useApolloClient } from '@apollo/client'
-import { Context } from 'context'
 
 export default function Auth ({ children }) {
   const { setSessionActive } = useContext(Context)
@@ -43,7 +40,7 @@ export default function Auth ({ children }) {
     if (session && expiredSession === true) {
       // onClickLogout()
     }
-  }, [token, redirect])
+  }, [])
 
   return (
     <Fragment>

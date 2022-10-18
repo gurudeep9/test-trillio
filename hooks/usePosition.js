@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const defaultSettings = {
   enableHighAccuracy: false,
@@ -30,24 +30,24 @@ export const usePosition = (watch = false, settings = defaultSettings) => {
       return
     }
 
-    let watcher = null
+    const watcher = null
     if (watch) {
-      watcher = navigator.geolocation.watchPosition(
-        onChange,
-        onError,
-        settings
-      )
+      // watcher = navigator.geolocation.watchPosition(
+      //   onChange,
+      //   onError,
+      //   settings
+      // )
     } else {
-      navigator.geolocation.getCurrentPosition(onChange, onError, settings)
+      // navigator.geolocation.getCurrentPosition(onChange, onError, settings)
     }
 
     return () => { return watcher && navigator.geolocation.clearWatch(watcher) }
   }, [
-    settings,
-    settings.enableHighAccuracy,
-    settings.timeout,
-    settings.maximumAge,
-    watch
+    // settings,
+    // settings.enableHighAccuracy,
+    // settings.timeout,
+    // settings.maximumAge,
+    // watch
   ])
 
   return { ...position, error }

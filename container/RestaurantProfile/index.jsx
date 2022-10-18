@@ -1,64 +1,38 @@
-import { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
+import { useQuery, useSubscription } from '@apollo/client'
+import { Skeleton } from 'components/Skeleton'
+import { GET_STATE_ORDER } from 'container/checkout/queries'
+import moment from 'moment'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
+import { useEffect, useRef, useState } from 'react'
+import { copyToClipboard, numberFormat } from 'utils'
+import { AwesomeModal } from '../../components/AwesomeModal'
+import InputHooks from '../../components/InputHooks/InputHooks'
+import { Rate } from '../../components/Rate'
+import { RippleButton } from '../../components/Ripple'
 import {
   APColor,
   BGColor,
   PLColor,
   WColor
 } from '../../public/colors'
-import InputHooks from '../../components/InputHooks/InputHooks'
-import CardProduct from './CardProducts'
-import { AwesomeModal } from '../../components/AwesomeModal'
-import { RippleButton } from '../../components/Ripple'
 import {
-  IconMiniCheck,
-  IconPlus,
-  IconLike,
-  IconDisLike,
-  IconTicker,
-  IconRate,
-  IconWhatsApp,
-  IconFacebook,
-  IconTwitter,
-  IconEnlace
+  IconDisLike, IconEnlace, IconFacebook, IconLike, IconMiniCheck,
+  IconPlus, IconRate, IconTicker, IconTwitter, IconWhatsApp
 } from '../../public/icons'
+import { GET_ONE_SCHEDULE_STORE } from '../queries'
+import { Story } from '../story'
+import CardProduct from './CardProducts'
 import {
   Sticky,
   StickyBoundary,
   StickyViewport
 } from './stickyheader'
-import ScrollNav from '../../components/hooks/useScrollNav'
-import { GET_ONE_SCHEDULE_STORE } from '../queries'
-import { useQuery, useSubscription } from '@apollo/client'
-import moment from 'moment'
 import {
-  MerchantBannerWrapperInfo,
-  Container,
-  ContainerCarrusel,
-  ContentCategoryProducts,
-  CtnItemFilter,
-  CardProductsModal,
-  ContentInfo,
-  HeadSticky,
-  Text,
-  Flex,
-  DisRestaurant,
-  ActionButton,
-  GarnishChoicesHeader,
-  CardsComponent,
-  ContentSearch,
-  ButtonLike,
-  CardItemRating,
-  Title,
-  ContentShare,
-  ContainerShare
+  ActionButton, ButtonLike,
+  CardItemRating, CardProductsModal, CardsComponent, Container,
+  ContainerCarrusel, ContainerShare, ContentCategoryProducts, ContentInfo, ContentSearch, ContentShare, CtnItemFilter, DisRestaurant, Flex, GarnishChoicesHeader, HeadSticky, MerchantBannerWrapperInfo, Text, Title
 } from './styled'
-import { Story } from '../story'
-import { Rate } from '../../components/Rate'
-import { copyToClipboard, numberFormat } from 'utils'
-import { GET_STATE_ORDER } from 'container/checkout/queries'
-import { Skeleton } from 'components/Skeleton'
 import SvgComponent from './svg'
 export const RestaurantProfile = ({
   src,
@@ -165,7 +139,7 @@ export const RestaurantProfile = ({
               : <Skeleton height={200} numberObject={2} />}
           </ContainerCarrusel>
         </StickyBoundary>
-        <ScrollNav navHeader={Nav || []} />
+        {/* <ScrollNav navHeader={Nav || []} /> */}
       </div>)
   }
   )

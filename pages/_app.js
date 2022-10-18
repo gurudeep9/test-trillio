@@ -1,19 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Layout as MainLayout } from '../components/Layout'
-import Context from '../context'
-import Auth from '../apollo/Auth'
+/* eslint-disable react/prop-types */
+import { API_GOOGLE_MAPS } from '@/apollo/urls'
 import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../apollo/apolloClient'
-import { GlobalStyle } from '../public/styles/GlobalStyle'
-import '../public/styles/App.css'
+import Script from 'next/script'
+import PropTypes from 'prop-types'
 import 'swiper/css'
-
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
-import { API_GOOGLE_MAPS } from '@/apollo/urls'
-import Script from 'next/script'
+import { useApollo } from '../apollo/apolloClient'
+import Auth from '../apollo/Auth'
+import { Layout as MainLayout } from '../components/Layout'
+import Context from '../context'
+import '../public/styles/App.css'
+import { GlobalStyle } from '../public/styles/GlobalStyle'
 
 function MyApp ({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps)
@@ -36,13 +35,6 @@ function MyApp ({ Component, pageProps }) {
       </ApolloProvider>
     </Context >
   )
-}
-
-MyApp.propTypes = {
-  Component: PropTypes.shape({
-    getLayout: PropTypes.func
-  }),
-  pageProps: PropTypes.any
 }
 
 export default MyApp

@@ -36,8 +36,8 @@ module.exports = (phase) => {
     SESSION_NAME: 'vp.client',
     SESSION_KEY: '12ba105efUaGjihGrh0LfJHTGIBGu6jXa',
     URL_BASE: (() => {
-      if (isDev) return 'http://localhost:3001/app/'
-      if (isProd) return 'http://localhost:3001/app/'
+      if (isDev) return 'http://localhost:3001/'
+      if (isProd) return 'http://localhost:3001/'
       // if (isStaging) return 'Title Stg'
     })(),
     MAIN_URL_BASE: (() => {
