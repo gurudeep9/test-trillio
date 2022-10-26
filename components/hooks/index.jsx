@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types'
-import React, { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const FetchMoreInteractions = ({
   render,
@@ -28,11 +28,13 @@ export const FetchMoreInteractions = ({
   const isVisible = useOnScreen(loadingRef)
 
   useEffect(() => {
-    if (isVisible && fetchMore) callback()
-  }, [isVisible, callback, fetchMore])
+    if (isVisible && fetchMore && callback) callback()
+  }, [isVisible, fetchMore])
 
   return <div ref={loadingRef}>
-    {isVisible && fetchMore ? render || <div style={{ background: 'red' }} >Loading...{isVisible && 'lol'}</div> : <></>}
+    {
+      isVisible && fetchMore ? render || <div style={{ background: 'red' }} >Loading...{isVisible && 'lol'}</div> : <></>
+    }
   </div>
 }
 
