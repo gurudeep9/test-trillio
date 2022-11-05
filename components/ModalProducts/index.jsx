@@ -1,53 +1,44 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useState
-} from 'react'
-import {
-  IconMiniCheck,
-  IconPlus,
-  IconArrowBottom
-} from 'public/icons'
-import { numberFormat, updateCache } from 'utils'
-import { useRouter } from 'next/router'
-import Image from 'next/image'
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { CREATE_SHOPPING_CARD } from 'components/AsideCheckout/querys'
+import { useFormTools } from 'components/BaseForm'
+import { useSetState } from 'components/hooks/useState'
 import InputHooks from 'components/InputHooks/InputHooks'
 import { RippleButton } from 'components/Ripple'
+import { GET_EXTRAS_PRODUCT_FOOD_OPTIONAL, GET_ONE_PRODUCTS_FOOD } from 'container/queries'
+import { GET_ALL_SHOPPING_CARD } from 'container/restaurantes/queries'
+import { Context } from 'context'
+import { useEvents } from 'hooks/useEvents'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import {
   APColor,
   BGColor,
   PColor,
   PLColor
 } from 'public/colors'
-import { useFormTools } from 'components/BaseForm'
-import { GET_EXTRAS_PRODUCT_FOOD_OPTIONAL, GET_ONE_PRODUCTS_FOOD } from 'container/queries'
-import { useLazyQuery, useMutation } from '@apollo/client'
 import {
-  BtnClose,
-  CardProductsModal,
-  CardsComponent,
-  ContentInfo,
-  ContainerModal,
-  DisRestaurant,
+  IconArrowBottom, IconMiniCheck,
+  IconPlus
+} from 'public/icons'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
+import { numberFormat, updateCache } from 'utils'
+import {
+  BtnClose, BtnCloseMobile, CardProductsModal,
+  CardsComponent, ContainerButtonAction, ContainerModal, ContentInfo, DisRestaurant,
   Flex,
-  GarnishChoicesHeader,
-  HeadSticky,
+  GarnishChoicesHeader, Header, HeadSticky,
   Modal,
-  Text,
-  BtnCloseMobile,
-  Header,
-  ContainerButtonAction
+  Text
 } from './styled'
-import Link from 'next/link'
-import { CREATE_SHOPPING_CARD } from 'components/AsideCheckout/querys'
-import { useSetState } from 'components/hooks/useState'
-import { GET_ALL_SHOPPING_CARD } from 'container/restaurantes/queries'
-import { Context } from 'context'
-import { useEvents } from 'hooks/useEvents'
 
 export const ModalProduct = () => {
   const router = useRouter()
@@ -64,7 +55,7 @@ export const ModalProduct = () => {
   const [handleChange, _handleSubmit, _setDataValue, { dataForm, errorForm }] = useFormTools()
   const { increase, state, decrease } = useSetState(1)
   const [filter, setFilter] = useState({ subOptional: [] })
-  const [setSearchFilter] = useState({ subOptional: [] })
+  const [_, setSearchFilter] = useState({ subOptional: [] })
 
   const location = useRouter()
   const { plato } = location.query

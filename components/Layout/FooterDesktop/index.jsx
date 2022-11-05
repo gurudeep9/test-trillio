@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PColor } from '../../../public/colors'
-import { IconLogo, Facebook, IconTwitter, IconInstagram, IconYoutube } from '../../../public/icons'
-import { Container, Enlace, Content, Copyright, CopyrightInformation, ContainerLogo, ContainerSocial, ContentSocial, Title } from './styled'
+import { Facebook, IconInstagram, IconLogo, IconTwitter, IconYoutube } from '../../../public/icons'
+import { Container, ContainerLogo, ContainerSocial, Content, ContentSocial, Copyright, CopyrightInformation, Enlace, Title } from './styled'
 export const FooterDesktop = () => {
   const [year, setYear] = useState(false)
   useEffect(() => {
@@ -9,10 +9,10 @@ export const FooterDesktop = () => {
     setYear(fecha.getFullYear())
   }, [])
 
-  // const onClickTop = e => {
-  //     e.preventDefault()
-  //     window.scrollTo({ top: 0, behavior: 'smooth' })
-  // }
+  const onClickTop = e => {
+    e.preventDefault()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   return (<>
     <ContainerSocial>
       <ContentSocial>
