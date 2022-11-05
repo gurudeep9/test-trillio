@@ -21,26 +21,51 @@ export const ListRestaurant = ({
   const [pushOneRecommendation] = useMutation(PUSH_RECOMMENDED, {
     context: { clientName: 'main' }
   })
-  function dateObj (d) {
-    if (!d) return null
-    const parts = d.split(/:|\s/)
-    const date = new Date()
-    if (parts.pop().toLowerCase() == 'pm') parts[0] = (+parts[0]) + 12
-    date.setHours(+parts.shift())
-    date.setMinutes(+parts.shift())
-    return date
-  }
 
   // eslint-disable-next-line
   const handleOpenStore = (schedule) => {
     if (schedule) {
       const currentSchedule = schedule.find((date) => { return date?.schDay && date?.schDay === showTiming })
       const { schHoSta, schHoEnd } = currentSchedule || {}
-      const now2 = new Date()
-      const startDate = dateObj(schHoSta)
-      const endDate = dateObj(schHoEnd)
-      const open = !!(now2 < endDate && now2 > startDate)
-      return !!open
+      // https://codereview.stackexchange.com/questions/268899/find-when-the-shop-will-next-open-or-close
+      const openings = {
+        openingMon: `${schHoSta} - ${schHoEnd}`,
+        openingTue: `${schHoSta} - ${schHoEnd}`,
+        openingWed: `${schHoSta} - ${schHoEnd}`,
+        openingThu: `${schHoSta} - ${schHoEnd}`,
+        openingFri: `${schHoSta} - ${schHoEnd}`,
+        openingSat: `${schHoSta} - ${schHoEnd}`,
+        openingSun: `${schHoSta} - ${schHoEnd}`
+      }
+      const timeToInt = function (text) {
+        const hour = parseInt(text.substring(0, 2))
+        const minute = parseInt(text.substring(3))
+        return hour * 60 + minute
+      }
+      const date = new Date()
+      const currentTime = date.getHours() * 60 + date.getMinutes()
+      const startDay = date.getDay()
+      let dayOfWeek = startDay
+      const weekDayLookup = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      let nextTime = false
+      for (; ;) {
+        const dayName = weekDayLookup[dayOfWeek % 7]
+        const opening = openings && openings['opening' + dayName.substring(0, 3)]
+        const timeSpans = opening?.split(';').map(item => { return item.trim() })
+        for (const span of timeSpans) {
+          const hours = span.split('-').map(item => { return item.trim() })
+          if (!nextTime) {
+            const openTime = timeToInt(hours[0])
+            const closeTime = timeToInt(hours[1])
+            if (currentTime >= openTime && currentTime <= closeTime) { return true }
+            nextTime = true
+          } else {
+            return false
+          }
+        }
+        dayOfWeek++
+        if (dayOfWeek > 14 || !schHoSta || !schHoEnd) { return false }
+      }
     }
   }
   const stores = data.map((store) => {
@@ -63,6 +88,7 @@ export const ListRestaurant = ({
           nameStore = nameStore?.replace(/\s/g, '-').toLocaleLowerCase()
           const city = like && store?.getOneStore?.city?.cName.toLocaleLowerCase()
           let suma = 0
+          // eslint-disable-next-line
           const avg = store?.getAllRatingStar?.map((store, index) => { return (suma += store.rScore) / (index + 1) })
           return (
             <div key={store.idStore || store.fIStoreId}>
