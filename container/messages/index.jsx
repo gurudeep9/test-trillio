@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 import {
-  useLazyQuery,
-  useSubscription,
-  useMutation,
-  useQuery
+  useLazyQuery, useMutation,
+  useQuery, useSubscription
 } from '@apollo/client'
 import { useUser } from 'components/hooks/useUser'
 import { MessageComp } from 'components/Messages'
@@ -15,7 +13,7 @@ import {
   NEW_MESSAGE,
   SEND_MESSAGES
 } from 'gql/Messages'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Context } from '../../context/index'
 import { GET_ALL_STORY_ACTIVE_MESSAGE_ORDER } from './queries'
 
@@ -61,19 +59,19 @@ export const Messages = () => {
     pollInterval: 10,
     onSubscriptionComplete: () => {
       // const dataMessage = client.readQuery({ query: GET_MESSAGES })
-    },
-    onSubscriptionData: ({ subscriptionData }) => {
-      // client.writeQuery({
-      //     query: GET_MESSAGES,
-      //     // data: {
-      //     //     ...messageData?.getMessages,
-      //     //     getMessages: [
-      //     //         ...messageData?.getMessages,
-      //     //         newMessage,
-      //     //     ]
-      //     // }
-      // })
     }
+    // onSubscriptionData: ({ subscriptionData }) => {
+    // client.writeQuery({
+    //     query: GET_MESSAGES,
+    //     // data: {
+    //     //     ...messageData?.getMessages,
+    //     //     getMessages: [
+    //     //         ...messageData?.getMessages,
+    //     //         newMessage,
+    //     //     ]
+    //     // }
+    // })
+    // }
   })
   // const { data: LOL } = useSubscription(NEW_STORE, {
   //     pollInterval: 10,
