@@ -13,7 +13,7 @@ import {
 } from './styled'
 
 export const ListRestaurant = ({
-  data,
+  data = [],
   catStoreId,
   like
 }) => {

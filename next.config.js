@@ -3,7 +3,6 @@
 const {
   PHASE_DEVELOPMENT_SERVER,
   PHASE_PRODUCTION_BUILD
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require('next/constants')
 const nextConfig = {
   reactStrictMode: true
@@ -58,7 +57,8 @@ module.exports = (phase) => {
     REFRESH_TOKEN_EXPIRY: '604800',
     AUTHO_USER_KEY: '12ba105efUaGjihGrh0LfJHTGIBGu6jXV',
     ACCESS_SID_TWILIO: 'AC7c9ccbdb50400c504faf629e35aea8e4',
-    REACT_APP_API_KEY_GOOGLE_MAPS: 'AIzaSyAy0SY1G3OFqesWSTQRHJvzyJzNgURPoN8',
+    // REACT_APP_API_KEY_GOOGLE_MAPS: 'AIzaSyAy0SY1G3OFqesWSTQRHJvzyJzNgURPoN8', mio
+    REACT_APP_API_KEY_GOOGLE_MAPS: 'AIzaSyDE9qovkvsvIAg-IOJY7_YPo4guCvSzjnE',
     ACCESS_TOKEN_AUTH_TWILIO: '22e090d4d776ace7bb596ca77cba6b18'
   }
 

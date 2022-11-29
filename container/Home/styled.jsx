@@ -81,7 +81,6 @@ export const Section = styled.section`
 `
 export const ContentHeader = styled.div`
     background-color: #f5f3f4;
-    height: 60vh;
 `
 export const Header = styled.header`
 

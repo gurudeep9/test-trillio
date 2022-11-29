@@ -23,11 +23,11 @@ export const AnimationLeft = keyframes`
 }
 `
 export const ContainerAnimation = styled.div`
-${props => {return props.active === 1 ? css`animation: ${AnimationRight} 200ms;` : css`animation: ${AnimationRight} 200ms;`}}
+${props => { return props.active === 1 ? css`animation: ${AnimationRight} 200ms;` : css`animation: ${AnimationRight} 200ms;` }}
 
 `
 export const ContainerAnimationTow = styled.div`
-${props => {return props.active === 2 ? css`animation: ${AnimationLeft} 200ms;` : css`animation: ${AnimationLeft} 200ms;`}}
+${props => { return props.active === 2 ? css`animation: ${AnimationLeft} 200ms;` : css`animation: ${AnimationLeft} 200ms;` }}
 
 `
 export const Anchor = styled.div`
@@ -38,9 +38,9 @@ export const Anchor = styled.div`
     font-size: 12px;
 `
 export const Text = styled.div`
-    font-size: ${({ size }) => {return size || '1.7123rem'}};
-    text-align: ${({ align }) => {return align || 'start'}};
-    color: ${({ color }) => {return color}};
+    font-size: ${({ size }) => { return size || '1.7123rem' }};
+    text-align: ${({ align }) => { return align || 'start' }};
+    color: ${({ color }) => { return color }};
 `
 export const Card = styled.div`
     padding: 30px;
@@ -57,9 +57,9 @@ export const Column = css`
     flex-direction: column;
 `
 export const Wrapper = styled.div`
-    border: ${({ border }) => {return border && `1px solid ${PColor}`}};
+    border: ${({ border }) => { return border && `1px solid ${PColor}` }};
     border-radius: 5px;
-    ${props => {return props.styles && props.styles}}
+    ${props => { return props.styles && props.styles }}
 `
 
 export const ContentInfo = styled.div`

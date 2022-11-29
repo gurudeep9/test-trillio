@@ -4,7 +4,12 @@ import { Checkout } from '../../container/checkout'
 import { Context } from '../../context'
 
 export default function ProcessView () {
-  const { setAlertBox, setCountItemProduct, locationStr, setModalLocation } = useContext(Context)
+  const {
+    setAlertBox,
+    setCountItemProduct,
+    locationStr,
+    setModalLocation
+  } = useContext(Context)
   return (
     <div >
       <Head>

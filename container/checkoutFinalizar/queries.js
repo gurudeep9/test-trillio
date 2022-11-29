@@ -26,7 +26,6 @@ Image
 pais {
   cId
   cName
-  
 }
 city {
   ctId
@@ -37,25 +36,23 @@ department {
   dId
   cId
   dName
-  
 }
-      
     }
     pDatCre
     locationUser
     pDatMod
     getAllPedidoStore{
         pdpId
-      	pId
-      	idStore
-      	ShoppingCard
+        pId
+        idStore
+        ShoppingCard
         pCodeRef
         pPStateP
         payMethodPState
         pPRecoger
         pDatCre
         pDatMod
-      	getAllShoppingCard {
+        getAllShoppingCard {
           ShoppingCard
           comments
           cantProducts

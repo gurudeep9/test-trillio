@@ -1,17 +1,27 @@
-import PropTypes from 'prop-types'
 import Column from 'components/common/Atoms/Column'
 import Text from 'components/common/Atoms/Text'
 import { RippleButton } from 'components/Ripple'
 import { useRouter } from 'next/router'
-import { BGColor, PColor, SECColor } from 'public/colors'
-import React from 'react'
+import PropTypes from 'prop-types'
+import {
+  BGColor,
+  PColor,
+  SECColor
+} from 'public/colors'
 
 const NotFount = ({
   error = '¡Algo salió mal! Parece que la página que buscas ya no está disponible',
   errorType = '404',
+  fixed = false,
   redirect = '/restaurantes'
 }) => {
   const router = useRouter()
+  const positionFixed = {
+    position: 'fixed',
+    right: 0,
+    top: 0,
+    zIndex: 9999
+  }
   return (
     <Column
       background={BGColor}
@@ -23,10 +33,7 @@ const NotFount = ({
       left='0'
       padding='0 0 0 70px'
       placeContent='center'
-      position='fixed'
-      right='0'
-      top='0'
-      zIndex='9999'
+      style={fixed ? positionFixed : null}
     >
       <Column display='grid'>
         <Text
@@ -52,7 +59,8 @@ const NotFount = ({
 NotFount.propTypes = {
   error: PropTypes.string,
   errorType: PropTypes.string,
-  redirect: PropTypes.string
+  redirect: PropTypes.string,
+  fixed: PropTypes.bool
 }
 
 export default NotFount
