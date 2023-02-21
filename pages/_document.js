@@ -2,7 +2,6 @@ import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
-import Noscript from '../components/Noscript'
 
 class MyDocument extends Document {
   static async getInitialProps (ctx) {
@@ -56,14 +55,6 @@ class MyDocument extends Document {
           ></link>
         </Head>
         <body>
-          <Noscript>
-            <iframe
-              height='0'
-              src={`https://www.googletagmanager.com/ns.html?id=GTM-59SFH7N`}
-              style={{ display: 'none', visibility: 'hidden' }}
-              width='0'
-            />
-          </Noscript>
           <Main />
           <NextScript />
           <div id='portal'></div>
