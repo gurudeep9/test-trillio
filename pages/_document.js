@@ -2,7 +2,7 @@ import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
-import Noscript from '@/components/Noscript'
+import Noscript from '../components/Noscript'
 
 class MyDocument extends Document {
   static async getInitialProps (ctx) {
