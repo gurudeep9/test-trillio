@@ -417,7 +417,13 @@ export const MapStore = ({ showModal, setShowModal }) => {
               scaleControl: false,
               streetViewControl: false,
               zoomControl: false,
-              styles: mapStyle
+              styles: mapStyle,
+              disableDefaultUI: true,
+              draggable: true,
+              backgroundColor: '#fff',
+              scrollwheel: false,
+              disableDoubleClickZoom: true,
+              mapTypeId: 'roadmap'
             }}
             zoom={15}
           >
@@ -447,7 +453,7 @@ export const MapStore = ({ showModal, setShowModal }) => {
             </Marker>
           </GoogleMap>
           {modal === 2 && <ContentButton>
-            <RippleButton onClick={handleSave} style={{ width: '40%' }}>Confirmar</RippleButton>
+            <RippleButton onClick={handleSave} style={{ width: '40%' }}>Confirsssssssmar</RippleButton>
           </ContentButton>}
         </ContainerMap>
       </AwesomeModal>

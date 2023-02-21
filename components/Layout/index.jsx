@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useRouter } from 'next/router'
 import { usePosition } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'

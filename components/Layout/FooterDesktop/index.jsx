@@ -9,6 +9,7 @@ export const FooterDesktop = () => {
     setYear(fecha.getFullYear())
   }, [])
 
+  // eslint-disable-next-line
   const onClickTop = e => {
     e.preventDefault()
     window.scrollTo({ top: 0, behavior: 'smooth' })
