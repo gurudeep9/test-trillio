@@ -59,7 +59,7 @@ const authLink = async (_) => {
 // Create Second Link
 const wsLink = process.browser
   ? new WebSocketLink({
-    uri: process.env.NODE_ENV === 'development' ? 'ws://localhost:4000/graphql' : '',
+    uri: `ws:${process.env.URL_ADMIN_SERVER}graphql`,
     options: {
       reconnect: true,
       lazy: true,

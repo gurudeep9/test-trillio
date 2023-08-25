@@ -1,5 +1,5 @@
 import { ApolloProvider } from '@apollo/client'
-import Script from 'next/script'
+// import Script from 'next/script'
 import PropTypes from 'prop-types'
 
 import { useApollo } from '../apollo/apolloClient'
@@ -8,7 +8,7 @@ import { Layout as MainLayout } from '../components/Layout'
 import Context from '../context'
 import { GlobalStyle } from '../public/styles/GlobalStyle'
 
-import { API_GOOGLE_MAPS } from '@/apollo/urls'
+// import { API_GOOGLE_MAPS } from '@/apollo/urls'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -22,10 +22,10 @@ function MyApp ({ Component, pageProps }) {
     <Context>
       {/* https://developers.google.com/maps/documentation/javascript/places */}
       {/* https://github.com/wellyshen/use-places-autocomplete#load-the-library */}
-      <Script
+      {/* <Script
         src={`https://maps.googleapis.com/maps/api/js?key=${API_GOOGLE_MAPS}&libraries=places`}
         strategy='beforeInteractive'
-      />
+      /> */}
       <GlobalStyle />
       <ApolloProvider client={apolloClient}>
         <Auth>
