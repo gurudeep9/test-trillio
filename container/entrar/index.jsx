@@ -125,7 +125,7 @@ const Login = ({ watch, settings }) => {
       <Form>
         <Text size='30px'>¡Falta poco para saciar tu hambre!</Text>
         <Text size='15px'>¿Cómo deseas continuar?</Text>
-        <button onClick={(e) => { return responseGoogle(e) }}>Login falso</button>
+        {dev && <button onClick={(e) => { return responseGoogle(e) }}>Login falso</button>}
         <GoogleLogin
           autoLoad={false}
           clientId='58758655786-u323tp1dpi6broro865rrm488gh4mnpu.apps.googleusercontent.com'
