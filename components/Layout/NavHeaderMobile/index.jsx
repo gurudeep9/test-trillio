@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types'
 import { useApolloClient } from '@apollo/client'
-import { OUR_URL_BASE } from 'apollo/urls'
 import { ActiveLink } from 'pkg-components'
 import { useUser } from 'npm-pkg-hook'
-import { PColor } from 'public/colors'
 import {
   IconLogout,
   IconLove,
@@ -16,6 +14,8 @@ import {
   NavHeaderMenuMobileContent,
   Anchor
 } from './styled'
+import { OUR_URL_BASE } from '@/apollo/urls'
+import { PColor } from 'public/colors'
 
 export const NavHeaderMobile = ({ menuMobile }) => {
   const [dataUser] = useUser()

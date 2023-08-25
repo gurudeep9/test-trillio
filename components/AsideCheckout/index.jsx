@@ -24,7 +24,6 @@ import {
   ActionPay,
   ContentTotal
 } from './styled'
-import { Flex } from 'container/checkoutFinalizar/styled'
 
 export const AsideCheckout = ({ menu }) => {
   const { setAlertBox, setCountItemProduct, handleMenu } = useContext(Context)
@@ -120,7 +119,7 @@ export const AsideCheckout = ({ menu }) => {
                               >{product.getStore.storeName}</Text>
                             </a>
                           </Link>
-                          <Flex>
+                          <div>
                             <Image
                               alt={'Picture of the author'}
                               blurDataURL='/images/DEFAULTBANNER.png'
@@ -131,7 +130,7 @@ export const AsideCheckout = ({ menu }) => {
                               src={'/images/DEFAULTBANNER.png'}
                               width={100}
                             />
-                          </Flex>
+                          </div>
                           <div className='item-line'>
                             <Text margin={'40px 0'} size='20px'>{product.productFood?.pName}</Text>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>

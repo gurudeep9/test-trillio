@@ -3,10 +3,9 @@ import Head from 'next/head'
 import { CategoryStores } from 'container/categoryStores'
 import { cookie } from 'utils'
 import { withIronSessionSsr } from 'iron-session/next'
-import { useGetCategorieStore } from 'hooks/useGetCategorieStore'
 
 export default function HomeView ({ catStoreId }) {
-  const [data] = useGetCategorieStore({ catStoreId })
+  const data = []
   return (
     <div >
       <Head>
