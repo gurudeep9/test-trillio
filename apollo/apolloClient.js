@@ -9,22 +9,14 @@ import {
   ApolloLink,
   split
 } from '@apollo/client'
-import {
-  concatPagination,
-  getMainDefinition
-} from '@apollo/client/utilities'
+import { concatPagination, getMainDefinition } from '@apollo/client/utilities'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { onError } from '@apollo/client/link/error'
 
-import {
-  URL_ADMIN,
-  URL_ADMIN_SERVER,
-  URL_BASE
-} from './urls'
-
+import { URL_ADMIN, URL_ADMIN_SERVER, URL_BASE } from './urls'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -56,20 +48,30 @@ const authLink = async (_) => {
   return ''
 }
 
-// Create Second Link
-const wsLink = process.browser
+// Define la URL del servidor GraphQL
+const graphqlUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'ws://localhost:4000/graphql' // Si estás en desarrollo
+    : 'wss://front-back-server.fly.dev/graphql' // Si estás en producción y usando WSS
+
+// Comprueba si el código se está ejecutando en un navegador
+const isBrowser = typeof window !== 'undefined'
+
+// Crea el WebSocketLink solo si se está en un navegador
+const wsLink = isBrowser
   ? new WebSocketLink({
-    uri: process.env.NODE_ENV === 'development' ? 'ws://localhost:4000/graphql' : 'ws://front-back-server.fly.dev/graphql',
+    uri: graphqlUrl,
     options: {
       reconnect: true,
       lazy: true,
       connectionParams: () => {
-        return { headers: { Authorization: 'Bearer TOKEN' } }
+        return {
+          headers: { Authorization: 'Bearer TOKEN' } // Agrega tus encabezados de autorización
+        }
       }
     }
   })
   : null
-
 
 const getLink = async (operation) => {
   // await splitLink({ query: operation.query })
@@ -89,7 +91,6 @@ const getLink = async (operation) => {
   return link.request(operation)
 }
 
-
 /**
  * Creates an Apollo Client instance based on the current environment and operation type.
  *
@@ -108,7 +109,9 @@ function createApolloClient () {
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
         graphQLErrors.map(({ message, location, path }) => {
-          console.log(`[GraphQL error]: Message: ${message}, Location: ${location}, Path: ${path}`)
+          console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${location}, Path: ${path}`
+          )
         })
       }
 
@@ -119,12 +122,16 @@ function createApolloClient () {
 
     if (ssrMode) {
       return ApolloLink.split(
-        () => { return true },
-        operation => { return getLink(operation) }
+        () => {
+          return true
+        },
+        (operation) => {
+          return getLink(operation)
+        }
       )
     } else if (typeof window !== 'undefined') {
       return split(
-        operation => {
+        (operation) => {
           const definition = getMainDefinition(operation.query)
           return (
             definition.kind === 'OperationDefinition' &&
@@ -133,15 +140,23 @@ function createApolloClient () {
         },
         wsLink,
         ApolloLink.split(
-          () => { return true },
-          operation => { return getLink(operation) }
+          () => {
+            return true
+          },
+          (operation) => {
+            return getLink(operation)
+          }
         ),
         errorLink
       )
     }
     return ApolloLink.split(
-      () => { return true },
-      operation => { return getLink(operation) }
+      () => {
+        return true
+      },
+      (operation) => {
+        return getLink(operation)
+      }
     )
   }
 
@@ -177,8 +192,11 @@ export function initializeApollo (ctx, initialState = null) {
       arrayMerge: (destinationArray, sourceArray) => {
         return [
           ...sourceArray,
-          ...destinationArray.filter(d => { return sourceArray.every(s => { return !isEqual(d, s) }) }
-          )
+          ...destinationArray.filter((d) => {
+            return sourceArray.every((s) => {
+              return !isEqual(d, s)
+            })
+          })
         ]
       }
     })
@@ -204,6 +222,8 @@ export function addApolloState (client, pageProps) {
 
 export function useApollo (pageProps) {
   const state = pageProps[APOLLO_STATE_PROP_NAME]
-  const store = useMemo(() => { return initializeApollo(state, pageProps) }, [state])
+  const store = useMemo(() => {
+    return initializeApollo(state, pageProps)
+  }, [state])
   return store
 }
