@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { useState, useEffect } from 'react'
+
 import { useStickyState } from '../../context/contextsticky'
 
 function useSentinelOffsets () {

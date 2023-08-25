@@ -1,4 +1,5 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
+
 import { newRegisterUser } from '../lib/resolvers/users/user'
 
 export default withIronSessionApiRoute(

@@ -23,7 +23,7 @@ export const Categories = () => {
                       height={90}
                       objectFit='contain'
                       placeholder='blur'
-                      src={cat.cPathImage ?? '/images/cat1.png'}
+                      src={'/images/cat1.png'}
                       unoptimized={true}
                       width={90}
 

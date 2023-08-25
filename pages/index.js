@@ -1,4 +1,5 @@
 import Head from 'next/head'
+
 import { Home } from '../container/Home'
 
 export default function HomeView () {

@@ -1,20 +1,39 @@
-import { BColor, BGColor, PColor, PLColor, PVColor } from 'public/colors'
-import { useEffect, useReducer, useRef, useState } from 'react'
-import { Title } from './story-item'
+import PropTypes from 'prop-types'
+import {
+  BColor,
+  BGColor,
+  PLColor,
+  PVColor
+} from 'public/colors'
+import {
+  useEffect,
+  useReducer,
+  useRef,
+  useState
+} from 'react'
 import ReactDOM from 'react-dom'
-import styled, { css } from 'styled-components'
-import { IconCancel, IconFacebook, IconTwitter, IconWhatsApp, IconEnlace, IconSendMessage, IconSendMessageTwo } from 'public/icons'
+import styled from 'styled-components'
+import {
+  IconCancel,
+  IconEnlace,
+  IconFacebook,
+  IconTwitter,
+  IconWhatsApp
+} from 'public/icons'
 import CustomSlider from 'components/Slider'
 import { SwiperSlide } from 'swiper/react'
-import useTimeAgo from 'components/hooks/useTimeAgo'
 import { CLIENT_URL_BASE } from 'apollo/urls'
 import { useRouter } from 'next/router'
-import { copyToClipboard, decodeToken, updateCache, updateCacheMod } from 'utils'
+import {
+  copyToClipboard,
+  decodeToken,
+  updateCacheMod
+} from 'utils'
 import { Flex } from 'container/RestaurantProfile/styled'
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { useTimeAgo, useUser } from 'npm-pkg-hook'
+
 import { GET_ALL_COMMENT_STORY, REGISTER_COMMENT_STORY } from './queries'
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { RippleButton } from 'components/Ripple'
-import { useUser } from 'components/hooks/useUser'
 
 export const SlideStory = ({ closeModal, OpenModalInfo, dataItem }) => {
   const { nameStore, createAt, stoId } = OpenModalInfo.state || {}
@@ -25,7 +44,7 @@ export const SlideStory = ({ closeModal, OpenModalInfo, dataItem }) => {
   const [registerStoryComment] = useMutation(REGISTER_COMMENT_STORY)
   const [getAllComment, { data: dataComment }] = useLazyQuery(GET_ALL_COMMENT_STORY,
     {
-      notifyOnNetworkStatusChange: true,
+      notifyOnNetworkStatusChange: true
       // pollInterval: 1000
     })
   const input = useRef(null)
@@ -38,33 +57,36 @@ export const SlideStory = ({ closeModal, OpenModalInfo, dataItem }) => {
   const decode = decodeToken(user)
   const [dataUser] = useUser()
   const [message, setMessage] = useState({
-    stoId: stoId,
+    stoId,
     comments: '',
     from: window.localStorage.getItem('usuario'),
-    username: dataUser?.username?.slice(0, 3).toUpperCase(),
+    username: dataUser?.username?.slice(0, 3).toUpperCase()
   })
   const onSend = () => {
     if (message.comments.length > 0) {
       registerStoryComment({
         variables: {
           input: message
-        }, update: (cache, { data: { getAllStoryComment } }) => updateCacheMod({
-          cache,
-          type: 2,
-          query: GET_ALL_COMMENT_STORY,
-          nameFun: 'getAllStoryComment',
-          dataNew: getAllStoryComment
-        }),
-      });
+        },
+        update: (cache, { data: { getAllStoryComment } }) => {
+          return updateCacheMod({
+            cache,
+            type: 2,
+            query: GET_ALL_COMMENT_STORY,
+            nameFun: 'getAllStoryComment',
+            dataNew: getAllStoryComment
+          })
+        }
+      })
     }
     setMessage({
       ...message,
-      comments: '',
-    });
+      comments: ''
+    })
     input.current.focus()
     input.current.value = ''
     // messagesEndRef?.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }
 
   useEffect(() => {
     setBrowser(true)
@@ -74,31 +96,32 @@ export const SlideStory = ({ closeModal, OpenModalInfo, dataItem }) => {
       case 'NEXT':
         return {
           ...state,
-          currentIndex: state?.currentIndex + (1 % state?.data?.length),
+          currentIndex: state?.currentIndex + (1 % state?.data?.length)
 
-        };
+        }
       case 'PREV':
         return {
           ...state,
           currentIndex: state?.currentIndex - (1 % state?.data?.length)
-        };
+        }
       case 'GOTO':
         return {
           ...state,
           currentIndex: action?.index
-        };
+        }
       case 'RESET':
-        return { ...state, currentIndex: 0, currentPosition: 0, };
+        return { ...state, currentIndex: 0, currentPosition: 0 }
 
       default:
-        return { state };
+        return { state }
     }
   }
   const dataArr = dataItem?.map(x => { return ({ id: x.iStoId, name: x.itemImage, image: x.itemImage }) })
-  const [state, dispatch] = useReducer(reducer, {
+  const [state] = useReducer(reducer, {
     currentIndex: 0, data: dataArr
-  });
-  const [share, setShare] = useState(false)
+  })
+  // eslint-disable-next-line no-unused-vars
+  const [_, setShare] = useState(false)
 
   const handlerShare = index => {
     if (index === 1) {
@@ -120,62 +143,81 @@ export const SlideStory = ({ closeModal, OpenModalInfo, dataItem }) => {
     <ContentPortal>
       <Card>
         <button className='btn btn-close' onClick={closeModal}>
-          <IconCancel size='20px' color={BGColor} />
+          <IconCancel color={BGColor} size='20px' />
         </button>
         <BlurBg bannerImage={dataItem[0]?.itemImage}>
         </BlurBg>
         <CustomSlider
-          spaceBetween={35}
-          centeredSlides
-          infinite={true}
           autoplay={true}
+          centeredSlides
+          direction='horizontal'
+          infinite={true}
           slidesToShow={1}
-          direction='horizontal' >
-          {dataItem && dataItem?.map((item, i) => (
-            <SwiperSlide
-              key={item.iStoId}>
-              <ContentSlider>
-                <Img src={item.itemImage} />
-              </ContentSlider>
-            </SwiperSlide>
-          ))}
+          spaceBetween={35}
+        >
+          {dataItem && dataItem?.map((item, i) => {
+            return (
+              <SwiperSlide
+                key={item.iStoId}
+              >
+                <ContentSlider>
+                  <Img src={item.itemImage} />
+                </ContentSlider>
+              </SwiperSlide>
+            )
+          })}
         </CustomSlider>
       </Card>
-      <Card margin={'0 auto'} flex='0 0 544px' padding='0' bgColor='transparent'>
+      <Card
+        bgColor='transparent'
+        flex='0 0 544px'
+        margin={'0 auto'}
+        padding='0'
+      >
         <Header>
           <h2>{nameStore}</h2>
           <date>{timeAgo}</date>
           <ContentShare>
             compartir
             <ContainerShare>
-              <button onClick={() => handlerShare(2)}> <div className='icon facebook'><IconFacebook color={BGColor} size='20px' /></div>  </button>
-              <button onClick={() => handlerShare(3)}> <div className='icon whatsApp'><IconWhatsApp color={BGColor} size='20px' /> </div></button>
-              <button onClick={() => handlerShare(4)}> <div> <IconTwitter color={'#00acee '} size='20px' /> </div></button>
-              <button onClick={() => copyToClipboard(`${CLIENT_URL_BASE}${location.asPath.slice(1, -1)}`)}> <div> <IconEnlace size='20px' /> </div></button>
+              <button onClick={() => { return handlerShare(2) }}> <div className='icon facebook'><IconFacebook color={BGColor} size='20px' /></div>  </button>
+              <button onClick={() => { return handlerShare(3) }}> <div className='icon whatsApp'><IconWhatsApp color={BGColor} size='20px' /> </div></button>
+              <button onClick={() => { return handlerShare(4) }}> <div> <IconTwitter color={'#00acee '} size='20px' /> </div></button>
+              <button onClick={() => { return copyToClipboard(`${CLIENT_URL_BASE}${location.asPath.slice(1, -1)}`) }}> <div> <IconEnlace size='20px' /> </div></button>
             </ContainerShare>
           </ContentShare>
           <CopyLink>
-            <input value={`${CLIENT_URL_BASE}${location.asPath.slice(1, -1)}`} className='input-copy' />
-            <button className='' onClick={() => copyToClipboard(`${CLIENT_URL_BASE}${location.asPath.slice(1, -1)}`)}>Copiar enlace</button>
+            <input className='input-copy' value={`${CLIENT_URL_BASE}${location.asPath.slice(1, -1)}`} />
+            <button className='' onClick={() => { return copyToClipboard(`${CLIENT_URL_BASE}${location.asPath.slice(1, -1)}`) }}>Copiar enlace</button>
           </CopyLink>
         </Header>
         <ContainerCom>
-          {dataComment?.getAllStoryComment?.length ? dataComment?.getAllStoryComment.map(comment => (
-            <div className='item-comment' key={comment?.cStoId}>
-              <UserCircle>
-                {comment.username.slice(0, 1).toUpperCase()}
-              </UserCircle>
-              <div>
-                <span className='user'>{comment.username}</span>
-                <p>{comment.comments}</p>
-              </div>
-            </div>
-          )) : <span>No hay comentarios aun</span>}
+          {dataComment?.getAllStoryComment?.length
+            ? dataComment?.getAllStoryComment.map(comment => {
+              return (
+                <div className='item-comment' key={comment?.cStoId}>
+                  <UserCircle>
+                    {comment.username.slice(0, 1).toUpperCase()}
+                  </UserCircle>
+                  <div>
+                    <span className='user'>{comment.username}</span>
+                    <p>{comment.comments}</p>
+                  </div>
+                </div>
+              )
+            })
+            : <span>No hay comentarios aun</span>}
           <div ref={messagesEndRef} />
         </ContainerCom>
         <ContentInput>
           <Flex>
-            <Input ref={input} placeholder='Aa' value={state.content} onChange={evt => setMessage({ ...message, comments: evt.target.value })} onKeyUp={evt => { if (evt.key === 'Enter') { onSend(); } }} />
+            <Input
+              onChange={evt => { return setMessage({ ...message, comments: evt.target.value }) }}
+              onKeyUp={evt => { if (evt.key === 'Enter') { onSend() } }}
+              placeholder='Aa'
+              ref={input}
+              value={state.content}
+            />
             <ButtonSend onClick={() => { onSend() }}>Publicar</ButtonSend>
           </Flex>
         </ContentInput>
@@ -185,10 +227,18 @@ export const SlideStory = ({ closeModal, OpenModalInfo, dataItem }) => {
   if (browser) {
     return ReactDOM.createPortal(portalContent,
       document.getElementById('portal'))
-  } else {
-    return null
-
   }
+  return null
+}
+
+SlideStory.propTypes = {
+  OpenModalInfo: PropTypes.shape({
+    state: PropTypes.object
+  }),
+  closeModal: PropTypes.any,
+  dataItem: PropTypes.shape({
+    map: PropTypes.func
+  })
 }
 export const ButtonSend = styled.button`
   color: rgba(22, 24, 35, 0.34);
@@ -402,19 +452,19 @@ const BlurBg = styled.div`
     top: 50%;
     transform: scale(11);
     opacity: 0.3;
-    background-image: ${({ bannerImage }) => bannerImage && `url(${bannerImage})`};
+    background-image: ${({ bannerImage }) => { return bannerImage && `url(${bannerImage})` }};
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
 `
 const Card = styled.div`
-    flex: ${({ flex }) => flex || '.9 0 96px'};
-    background-color: ${({ bgColor }) => bgColor || BColor};
+    flex: ${({ flex }) => { return flex || '.9 0 96px' }};
+    background-color: ${({ bgColor }) => { return bgColor || BColor }};
     position: relative;
     overflow: hidden;
-    padding: ${({ padding }) => padding || '0px 80px'};
-    padding: ${({ padding }) => padding || '0px 80px'};
-    margin: ${({ margin }) => margin || '0'};
+    padding: ${({ padding }) => { return padding || '0px 80px' }};
+    padding: ${({ padding }) => { return padding || '0px 80px' }};
+    margin: ${({ margin }) => { return margin || '0' }};
     .btn-close {
       position: absolute;
     display: flex;

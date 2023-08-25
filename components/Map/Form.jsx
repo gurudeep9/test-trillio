@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import InputHooks from '../InputHooks/InputHooks'
 import { Container, Text } from './styled'
-import NewSelect from '../NewSelectHooks/NewSelect'
-import { RippleButton } from '../Ripple'
+import {
+  NewSelect,
+  RippleButton,
+  InputHooks
+} from 'pkg-components'
 
 export const Form = ({
   errors,

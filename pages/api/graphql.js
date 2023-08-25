@@ -1,11 +1,12 @@
 /* eslint-disable consistent-return */
 import { ApolloServer } from 'apollo-server-micro'
-import httpHeadersPlugin from './lib/hooks/apollo-plugin-http-header'
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
-import withSession from '../../apollo/session'
 import Cors from 'micro-cors'
-import typeDefs from '../api/lib/typeDefs'
 import jwt from 'jsonwebtoken'
+
+import httpHeadersPlugin from './lib/hooks/apollo-plugin-http-header'
+import withSession from '../../apollo/session'
+import typeDefs from '../api/lib/typeDefs'
 import resolvers from '../api/lib/resolvers/index'
 
 const cors = Cors()

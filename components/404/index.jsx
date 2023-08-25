@@ -1,6 +1,8 @@
-import Column from 'components/common/Atoms/Column'
-import Text from 'components/common/Atoms/Text'
-import { RippleButton } from 'components/Ripple'
+import {
+  Column,
+  Text,
+  RippleButton
+} from 'pkg-components'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import {

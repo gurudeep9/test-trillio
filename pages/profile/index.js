@@ -2,6 +2,7 @@
 import Head from 'next/head'
 import { withIronSessionSsr } from 'iron-session/next'
 import { cookie, defaultReturnObject } from 'utils'
+
 import { Profile } from '../../container/profile'
 
 export default function ProfileView () {

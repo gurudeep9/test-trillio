@@ -1,4 +1,5 @@
 import Head from 'next/head'
+
 import { CheckoutFinalizar } from '../../../container/checkoutFinalizar'
 
 export default function procesoFinalView () {

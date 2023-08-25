@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types'
 import { gql, ApolloClient, InMemoryCache } from '@apollo/client'
-import { URL_BASE } from '../apollo/urls'
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws'
 import ws from 'ws'
+
+import { URL_BASE } from '../apollo/urls'
 const SSR = ({ items }) => {
   return (
     <div>{items}</div>

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+
 import { EmptyLayout } from './_app'
 
 const Error = ({ statusCode = null }) => {

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { ApolloError } from 'apollo-server-micro'
+
 import Users from '../../models/Users'
 import { generateToken } from '../../utils'
 

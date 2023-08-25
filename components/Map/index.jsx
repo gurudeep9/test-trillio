@@ -49,8 +49,6 @@ import {
   GET_ALL_LOCATIONS,
   SAVE_LOCATION_USER
 } from './queries'
-import { RippleButton } from '../Ripple'
-import { useFormTools } from '../BaseForm'
 import {
   GET_ALL_CITIES,
   GET_ALL_COUNTRIES,
@@ -62,14 +60,17 @@ import {
 } from '../../gql/Location'
 import { filterKeyObject, updateCache } from '../../utils'
 import { Context } from '../../context'
-import { usePosition } from '../hooks/usePosition'
 import { API_GOOGLE_MAPS } from '../../apollo/urls'
 import { Form } from './Form'
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete'
 import { Input } from '@/container/InputSearch/styled'
 import { ContainerModal } from '../ModalProducts/styled'
-import Row from '../common/Atoms/Row'
-import Column from '../common/Atoms/Column'
+import {
+  RippleButton,
+  Row,
+  Column
+} from 'pkg-components'
+import { useFormTools, usePosition } from 'npm-pkg-hook'
 
 export const MapStore = ({ showModal, setShowModal }) => {
   const [modal, setModal] = useState(0)
@@ -453,7 +454,7 @@ export const MapStore = ({ showModal, setShowModal }) => {
             </Marker>
           </GoogleMap>
           {modal === 2 && <ContentButton>
-            <RippleButton onClick={handleSave} style={{ width: '40%' }}>Confirsssssssmar</RippleButton>
+            <RippleButton onClick={handleSave} style={{ width: '40%' }}>Confirmar</RippleButton>
           </ContentButton>}
         </ContainerMap>
       </AwesomeModal>

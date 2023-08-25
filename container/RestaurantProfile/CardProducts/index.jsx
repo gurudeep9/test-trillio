@@ -24,7 +24,7 @@ const CardProduct = ({ food, onClick }) => {
         layout='responsive'
         objectPosition='cover'
         priority
-        src={`${food.ProImage}`}
+        src='/images/b70f2f6c-8afc-4d75-bdeb-c515ab4b7bdd_BRITS_GER85.jpg'
         width={100}
       />
     </Card>

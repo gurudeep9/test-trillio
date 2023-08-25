@@ -27,7 +27,6 @@ export const ListRestaurant = ({
     if (schedule) {
       const currentSchedule = schedule.find((date) => { return date?.schDay && date?.schDay === showTiming })
       const { schHoSta, schHoEnd } = currentSchedule || {}
-      // https://codereview.stackexchange.com/questions/268899/find-when-the-shop-will-next-open-or-close
       const openings = {
         openingMon: `${schHoSta} - ${schHoEnd}`,
         openingTue: `${schHoSta} - ${schHoEnd}`,
@@ -113,7 +112,7 @@ export const ListRestaurant = ({
                         alt='Picture of the author'
                         className='store_image'
                         height={100}
-                        src={store?.Image || store?.getOneStore?.Image || '/images/b70f2f6c-8afc-4d75-bdeb-c515ab4b7bdd_BRITS_GER85.jpg'}
+                        src='/images/b70f2f6c-8afc-4d75-bdeb-c515ab4b7bdd_BRITS_GER85.jpg'
                         width={100}
                       />
                     </div>

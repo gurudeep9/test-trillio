@@ -3,14 +3,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { CREATE_SHOPPING_CARD } from 'components/AsideCheckout/querys'
-import { useFormTools } from 'components/BaseForm'
+import { useFormTools, useEvents } from 'npm-pkg-hook'
 import { useSetState } from 'components/hooks/useState'
-import InputHooks from 'components/InputHooks/InputHooks'
-import { RippleButton } from 'components/Ripple'
+import { InputHooks, RippleButton } from 'pkg-components'
 import { GET_EXTRAS_PRODUCT_FOOD_OPTIONAL, GET_ONE_PRODUCTS_FOOD } from 'container/queries'
 import { GET_ALL_SHOPPING_CARD } from 'container/restaurantes/queries'
 import { Context } from 'context'
-import { useEvents } from 'hooks/useEvents'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -21,7 +19,8 @@ import {
   PLColor
 } from 'public/colors'
 import {
-  IconArrowBottom, IconMiniCheck,
+  IconArrowBottom,
+  IconMiniCheck,
   IconPlus
 } from 'public/icons'
 import {
@@ -32,10 +31,18 @@ import {
 } from 'react'
 import { numberFormat, updateCache } from 'utils'
 import {
-  BtnClose, BtnCloseMobile, CardProductsModal,
-  CardsComponent, ContainerButtonAction, ContainerModal, ContentInfo, DisRestaurant,
+  BtnClose,
+  BtnCloseMobile,
+  CardProductsModal,
+  CardsComponent,
+  ContainerButtonAction,
+  ContainerModal,
+  ContentInfo,
+  DisRestaurant,
   Flex,
-  GarnishChoicesHeader, Header, HeadSticky,
+  GarnishChoicesHeader,
+  Header,
+  HeadSticky,
   Modal,
   Text
 } from './styled'
@@ -168,7 +175,7 @@ export const ModalProduct = () => {
               height={450}
               objectFit='contain'
               placeholder='blur'
-              src={ProImage || '/images/hamb.jpg'}
+              src={'/images/hamb.jpg'}
               width={450}
             />
           </ContentInfo>

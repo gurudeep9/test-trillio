@@ -11,8 +11,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import InputHooks from '../../components/InputHooks/InputHooks'
-import { RippleButton } from '../../components/Ripple'
+import { RippleButton, InputHooks } from 'pkg-components'
 import { PColor } from '../../public/colors'
 import { IconGoogleLocation, IconLocationMap } from '../../public/icons'
 import {

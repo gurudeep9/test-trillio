@@ -12,8 +12,7 @@ import { ListRestaurant } from 'container/restaurantes/restaurant'
 import CardProduct from 'container/RestaurantProfile/CardProducts'
 import { Context } from 'context'
 import Link from 'next/link'
-import Row from 'components/common/Atoms/Row'
-import Column from '@/components/common/Atoms/Column'
+import { Row, Column } from 'pkg-components'
 
 // It may interest you
 // eslint-disable-next-line react/prop-types

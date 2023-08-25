@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
-import { AwesomeModal } from '../../components/AwesomeModal'
+import {
+  RippleButton,
+  AwesomeModal,
+  Range
+} from 'pkg-components'
 import { useSetState } from '../../components/hooks/useState'
-import { Range } from '../../components/InputRange'
-import { RippleButton } from '../../components/Ripple'
 import Tabs from '../../components/Tabs'
 import { PColor } from '../../public/colors'
 import { IconLogo } from '../../public/icons'
-import { BestRestaurant } from './BestRestaurant'
 import { Categories } from './categories'
 import { PromoBannerStores } from './PromosBanner'
 import {
@@ -38,7 +39,6 @@ export const Restaurant = () => {
       {/* BEST RESTAURANT */}
       <PromoBannerStores />
       {/* <H2>Los mejores restaurantes para ti</H2> */}
-      {/* <BestRestaurant /> */}
       <AwesomeModal
         borderRadius='10px'
         btnCancel={false}

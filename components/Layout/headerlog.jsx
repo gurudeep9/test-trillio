@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types'
 import React, { useContext, useEffect } from 'react'
-import ActiveLink from '../common/Link'
+import { useScrollY } from 'npm-pkg-hook'
+import { InputSearch } from 'container/InputSearch'
+import styled from 'styled-components'
 import { IconLocationMap, IconLogo } from '../../public/icons'
 import { PColor } from '../../public/colors'
-import styled from 'styled-components'
-import { useScrollY } from '../hooks/useScroll'
 import { Options } from './options'
-import { Map } from '../Map'
 import { Context } from '../../context'
-import { InputSearch } from 'container/InputSearch'
+import { ActiveLink } from 'pkg-components'
+
 
 export const HeaderMain = ({ menu, handleMenu }) => {
-  const { modalLocation, setModalLocation, setLocationString, locationStr } = useContext(Context)
+  const {
+    modalLocation,
+    setModalLocation,
+    setLocationString,
+    locationStr
+  } = useContext(Context)
   const { offsetY } = useScrollY()
   useEffect(() => {
     const location = localStorage.getItem('location.data')
@@ -46,7 +51,7 @@ export const HeaderMain = ({ menu, handleMenu }) => {
           <Options handleMenu={handleMenu} menu={menu} />
         </HeaderMainC>
       </ContentHeader>
-      {modalLocation && <Map setShowModal={setModalLocation} showModal={modalLocation} />}
+      {/* {modalLocation && <Map setShowModal={setModalLocation} showModal={modalLocation} />} */}
     </div>
   )
 }

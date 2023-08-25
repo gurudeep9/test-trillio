@@ -1,17 +1,13 @@
-import React from 'react'
+import { RegisterUser } from '@/container/Register'
 
-const Register = () => {
-  return <p>{'regfister'}</p>
+export default function RegisterView () {
+  return <RegisterUser />
 }
 
-export default Register
-
-Register.getLayout = function getLayout (page) {
+RegisterView.getLayout = (page) => {
   return (
     <>
       {page}
     </>
   )
 }
-
-

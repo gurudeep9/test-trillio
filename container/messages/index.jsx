@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 import {
-  useLazyQuery, useMutation,
-  useQuery, useSubscription
+  useLazyQuery,
+  useMutation,
+  useQuery,
+  useSubscription
 } from '@apollo/client'
-import { useUser } from 'components/hooks/useUser'
+import { useUser } from 'npm-pkg-hook'
 import { MessageComp } from 'components/Messages'
 import { ContainerContextMessage } from 'components/Messages/styled'
 import { } from 'container/profile/queries'
@@ -13,7 +15,13 @@ import {
   NEW_MESSAGE,
   SEND_MESSAGES
 } from 'gql/Messages'
-import { useContext, useEffect, useRef, useState } from 'react'
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
+
 import { Context } from '../../context/index'
 import { GET_ALL_STORY_ACTIVE_MESSAGE_ORDER } from './queries'
 

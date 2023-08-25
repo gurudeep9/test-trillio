@@ -303,6 +303,7 @@ export const validationFormTwo = (inputs, error) => {
 export const validationsSelectTwo = v => {
   if (!v) return
   const s = document.getElementById(v.target.name)
+  // eslint-disable-next-line consistent-return
   if (s) { return validationsTF(s.parentNode, s.parentNode.firstChild.nextSibling, s.parentNode.firstChild.nextSibling.nextSibling, s.nextSibling, false, false) }
 }
 

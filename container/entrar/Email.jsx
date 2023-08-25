@@ -1,17 +1,23 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
-import React, { useState } from 'react'
-import { RippleButton } from '../../components/Ripple'
+import React, { useState, useEffect } from 'react'
 import {
   BColor,
   EColor,
   PLColor
-} from '../../public/colors'
-import InputHooks from '../../components/InputHooks/InputHooks'
-import { useFormTools } from '../../components/BaseForm'
-import OTPInput from '../../components/OTPInputHook'
+} from 'public/colors'
+import {
+  InputHooks,
+  RippleButton,
+  Loading,
+  InputOTPHook,
+  validateEmail
+} from 'pkg-components'
+import {
+  useFormTools,
+  useManageQueryParams,
+  fetchJson
+} from 'npm-pkg-hook'
 import { useMutation } from '@apollo/client'
-import { IconArrowLeft } from '../../public/icons'
+import { IconArrowLeft } from 'public/icons'
 import {
   Content,
   Form,
@@ -22,90 +28,184 @@ import {
 import { useRouter } from 'next/router'
 import { EMAIL_SESSION } from './queries'
 import { URL_BASE } from '../../apollo/urls'
-import fetchJson from '../../components/hooks/fetchJson'
+import { getDeviceId } from 'apollo/apolloClient'
 
 export const Email = () => {
-  const [handleChange, handleSubmit, setDataValue, { dataForm, errorForm, setForcedError }] = useFormTools()
+  const [handleChange, handleSubmit, setDataValue, {
+    dataForm,
+    errorForm,
+    setForcedError
+  }] = useFormTools()
+
   const [otp, setOTP] = useState(0)
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
   const [step, setStep] = useState(0)
   const router = useRouter()
   const [registerEmailLogin] = useMutation(EMAIL_SESSION)
-  const body = {
-    email: dataForm.email,
-    otp
+  const { handleQuery } = useManageQueryParams()
+
+  const handleForm = async (e, show) => {
+    e.preventDefault()
+    setLoading(true)
+    const device = await getDeviceId()
+    const body = {
+      email: dataForm?.email || '',
+      otp,
+      deviceid: device
+    }
+
+    try {
+      if (show === 0 && isEmailValid(dataForm?.email)) {
+        await handleEmailLogin(body)
+        handleQuery('otp', true)
+        setStep((prev) => { return prev + 1 })
+      } else if (step === 1 && otp?.length > 0) {
+        await handleOTPLogin(body)
+      }
+    } catch (e) {
+      setMessage('Ocurrió un error interno. Inténtalo nuevamente.')
+    } finally {
+      setLoading(false)
+    }
   }
-  const handleForm = (e, show) => {
-    return handleSubmit({
-      event: e,
-      action: () => {
-        if (show === 1) {
-          return registerEmailLogin({
-            variables: {
-              input: {
-                uEmail: dataForm.email
-              }
-            }
-          })
-        } else if (show === 2) {
-          return fetchJson(`${URL_BASE}auth/loginConfirm`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-          }).then(res => {
-            if (res.success === true) {
-              window.localStorage.setItem('restaurant', res?.idStore)
-              router.push('/dashboard')
-            }
-          }).catch(e => {
-          })
+
+  const handleEmailLogin = async (body) => {
+    const result = await registerEmailLoginMutation(body)
+    if (!result?.success) {
+      setMessage('Ocurrió un error interno. Inténtalo nuevamente.')
+    }
+  }
+
+  const handleOTPLogin = async (body) => {
+    const response = await fetchJson(`${URL_BASE}auth/loginConfirm`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+
+    setMessage(response?.message)
+
+    if (response?.success) {
+      window.localStorage.setItem('deviceid', body.deviceid)
+      if (response?.idStore) {
+        window.localStorage.setItem('restaurant', response?.idStore)
+      }
+      router.push('/restaurante/getDataVerify')
+    }
+  }
+
+  const isEmailValid = (email) => {
+    return email?.length > 0 && validateEmail(email)
+  }
+
+  // Assuming these are existing functions or mutations
+  const registerEmailLoginMutation = async (body) => {
+    const device = await getDeviceId()
+    const response = await registerEmailLogin({
+      variables: {
+        input: {
+          uEmail: body.email,
+          deviceid: device
         }
-      },
-      actionAfterSuccess: () => {
-      // setDataValue({})
       }
     })
+    return response?.data?.registerEmailLogin
   }
+
+
+  const firtsStep = step === 1
+  useEffect(() => {
+    if (step === 0) {
+      handleQuery('otp', '')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Content>
+      {loading && <Loading />}
       <Card>
       </Card>
-      <Form onSubmit={(e) => { handleForm(e, step !== 1 ? 1 : 2) }}>
-        <GoBack onClick={() => { return router.back() }}>
+      <Form
+        onSubmit={(e) => {
+          return handleForm(e, step)
+        }
+        }
+      >
+        <GoBack
+          onClick={() => {
+            if (firtsStep) {
+              handleQuery('otp', '')
+              return setStep(0)
+            }
+            if (step === 0) {
+              return router.push('/entrar')
+            }
+            return router.back()
+          }}
+        >
           <IconArrowLeft color={`${PLColor}`} size='25px' />
         </GoBack>
-        <Text size='20px'>{step === 1 ? 'Ingrese el código de 6 dígitos que enviamos' : 'Infoma tu correo para continuar'}</Text>
-        {step === 1
+        <Text size='20px'>
+          {firtsStep
+            ? 'Ingrese el código de 6 dígitos que enviamos'
+            : 'Infoma tu correo para continuar'
+          }
+        </Text>
+        <Text color='red' size='12px'>
+          {message !== 'Session created.' && message}
+        </Text>
+        {firtsStep
           ? <>
             <Text color={BColor} size='19px'>{dataForm?.email}</Text>
-            <OTPInput
+            <InputOTPHook
               autoFocus
               className='otpContainer'
               inputClassName='otpInput'
               isNumberInput
               length={6}
-              onChangeOTP={(otp) => { return setOTP(otp) }}
+              onChangeOTP={(otp) => {
+                setMessage('')
+                setOTP(otp)
+              }}
             />
+
           </>
           : <InputHooks
+            dataForm={dataForm}
             email
             error={errorForm?.email}
+            errorForm={errorForm}
             name='email'
-            onChange={handleChange}
+            onChange={(event) => {
+              setMessage('')
+              handleChange(event)
+            }}
             required
+            setDataValue={setDataValue}
             title='Informa tu correo.'
             value={dataForm?.email}
             width='100%'
+            withShowSuggestions
           />
         }
         <RippleButton
           bgColor={EColor}
+          disabled={step === 1 && (!otp?.length > 0)}
           margin='20px auto'
-          onClick={() => { !!dataForm?.email?.length && setStep(1) }}
-          type={dataForm?.email?.length ? 'submit' : 'button'}
+          onClick={() => {
+            if (!dataForm?.email?.length) {
+              return setForcedError({ ...errorForm, email: true })
+            }
+            return null
+          }}
+          type='submit'
           widthButton='100%'
-        >{step === 1 ? 'Correo' : 'Enviar'}</RippleButton>
+        >
+          {firtsStep ? 'Ingresar' : 'Enviar'}
+        </RippleButton>
       </Form>
-      {/* <RippleButton widthButton='100%' margin='20px auto' type='button' onClick={() => handleLogin()} bgColor={EColor}>heer Enviar</RippleButton> */}
     </Content>
   )
 }

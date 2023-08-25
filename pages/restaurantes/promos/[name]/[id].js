@@ -1,5 +1,6 @@
-import { Promos } from '@/container/Promos'
 import Head from 'next/head'
+
+import { Promos } from '@/container/Promos'
 
 export default function PromoView () {
   return (

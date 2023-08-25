@@ -1,12 +1,11 @@
-import Estilo from './estilosodalis.module.css'
-import { Botoncito } from '../../../components/UNBOTON'
+import style from './estilosodalis.module.css'
+
 export const HistoryBuys = (props) => {
   return (
-    <div className={Estilo.container}>
+    <div className={style.container}>
       <div>
 
       </div>
-      <Botoncito />
     </div>
   )
 }

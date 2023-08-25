@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { useQuery } from '@apollo/client'
@@ -8,7 +7,6 @@ import Image from 'next/image'
 
 export const Categories = props => {
   const { data: getCatStore } = useQuery(GET_ALL_CAT_STORE)
-  console.log(getCatStore?.getAllCatStore)
   return (
     <ContainerCategory>
       {getCatStore?.getAllCatStore?.map(cat => {

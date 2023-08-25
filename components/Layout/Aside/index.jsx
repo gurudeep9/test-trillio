@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import ActiveLink from '../../common/Link'
+import { ActiveLink } from 'pkg-components'
 import { Anchor, ButtonGlobalCreate, Card, ContainerAside, Info, LeftNav } from './styled'
 
 const Aside = () => {

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+
 import { Text } from '../styled'
 import { ProductsStores } from './ProductsStores'
 

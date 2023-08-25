@@ -12,7 +12,7 @@ import {
   TextMessage,
   WrapperChat
 } from './styled'
-import { RippleButton } from 'components/Ripple'
+import { RippleButton } from 'pkg-components'
 import { IconCancel, IconSendMessageTwo } from 'public/icons'
 import { Context } from '../../context/index'
 
@@ -47,7 +47,7 @@ export const MessageComp = ({
               height={20}
               layout='responsive'
               objectFit='contain'
-              src={x.getOneStore.Image || '/images/b70f2f6c-8afc-4d75-bdeb-c515ab4b7bdd_BRITS_GER85.jpg'}
+              src={'/images/b70f2f6c-8afc-4d75-bdeb-c515ab4b7bdd_BRITS_GER85.jpg'}
               width={20}
             />
           </CircleStore>

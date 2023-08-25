@@ -15,8 +15,7 @@ import { Context } from '../../context/index'
 import { APColor, PColor } from '../../public/colors'
 import { IconCancel } from '../../public/icons'
 import { numberFormat, updateCache } from '../../utils'
-import { Overline } from '../common/Reusable'
-import { RippleButton } from '../Ripple'
+import { Overline, RippleButton } from 'pkg-components'
 import {
   CardProduct,
   Content,
@@ -129,7 +128,7 @@ export const AsideCheckout = ({ menu }) => {
                               height={100}
                               objectFit='cover'
                               placeholder='blur'
-                              src={product.productFood.ProImage || '/images/DEFAULTBANNER.png'}
+                              src={'/images/DEFAULTBANNER.png'}
                               width={100}
                             />
                           </Flex>

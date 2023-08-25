@@ -1,17 +1,21 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
-import Link from '../common/Link'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
+import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { BGColor, PColor } from '../../public/colors'
 import { useApolloClient } from '@apollo/client'
-import { ButtonOption, FloatingBoxTwo, Button, ButtonOptionFav, Count } from './styled'
 import { IconArrowBottom, IconLogout, IconShopping, IconUser } from '../../public/icons'
 import { useRouter } from 'next/router'
 import { Context } from '../../context'
 import { OUR_URL_BASE } from '../../apollo/urls'
-import { useUser } from 'components/hooks/useUser'
-import { Overline } from 'components/common/Reusable'
-import { ContainerActions, ContainerBurger, OnlyMovil } from 'components/Update/Products/styled'
+import { useUser } from 'npm-pkg-hook'
+import { Overline } from 'pkg-components'
+import { ButtonOption, FloatingBoxTwo, Button, ButtonOptionFav, Count } from './styled'
 
 export const Options = ({ handleMenu }) => {
   const { client } = useApolloClient()
@@ -200,3 +204,51 @@ const Enlace = styled(Link)`
         background-color: #1b18181a;
     }
     `
+
+export const ContainerActions = styled.div`
+    display: flex;
+    align-items: center;
+    width: 30%;
+    
+`
+export const OnlyMovil = styled.div`
+    display: flex;
+    margin: auto;
+    width: min-content;
+    @media only screen and (min-width: 768px){
+        display: none;
+    }
+`
+
+export const ContainerBurger = styled.div`
+   margin: 0 10px 0 auto;
+    width: min-content;
+    .BurgerMenu__container {
+    display: flex;
+    margin: 0 10px 0 auto;
+    width: min-content;
+    align-items: center;
+ 
+    flex-direction: column;    
+    span {
+      background-color: ${PColor};
+      width: 30px;
+      height: 1px;
+      min-height: 1px;
+      max-height: 1px;
+      margin: 4px;
+      border-radius: 1px;
+      transition: all .3s ease-out;
+    }
+    .open:nth-child(1) {
+      transform: rotate(45deg) translateY(4px) translateX(6px);
+
+    }
+    .open:nth-child(2) {
+      opacity: 0;
+    }
+    .open:nth-child(3) {
+      transform: rotate(-45deg) translateY(-7px) translateX(9px);
+    }
+}
+`

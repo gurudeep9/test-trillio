@@ -3,7 +3,7 @@ import {
   useMutation,
   useSubscription
 } from '@apollo/client'
-import { RippleButton } from 'components/Ripple'
+import { RippleButton } from 'pkg-components'
 import { FavoriteStore } from 'container/favoriteStore'
 import { ItMayInterestYou, LastRecommended } from 'container/LastRecomendation'
 import { withIronSessionSsr } from 'iron-session/next'
@@ -11,7 +11,9 @@ import Head from 'next/head'
 import { useRestaurant } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import {
-  BGColor, PColor, PVColor,
+  BGColor,
+  PColor,
+  PVColor,
   SECBGColor
 } from 'public/colors'
 import {
@@ -21,6 +23,7 @@ import {
 } from 'react'
 import styled from 'styled-components'
 import { cookie } from 'utils'
+
 import { Restaurant } from '../../container/restaurantes'
 import { PromosBanner } from '../../container/restaurantes/PromosBanner'
 import { ListRestaurant } from '../../container/restaurantes/restaurant'

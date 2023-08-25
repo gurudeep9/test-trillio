@@ -6,7 +6,7 @@ import { useContext, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { ModalProduct } from '../../components/ModalProducts'
 import { Context } from '../../context'
-import { AlertBox } from '../AlertBox'
+import { AlertBox } from 'pkg-components'
 import { AsideCheckout } from '../AsideCheckout'
 import { Footer } from './footer'
 import { FooterDesktop } from './FooterDesktop'
@@ -35,20 +35,20 @@ export const Layout = ({ children, watch, settings }) => {
     speed,
     error: _err
   } = usePosition(watch, settings)
-  // useEffect(() => {
-  //   setAlertBox({ message: '', color: 'success' })
-  //   if (latitude) {
-  //     window.localStorage.setItem('latitude', latitude)
-  //     window.localStorage.setItem('longitude', longitude)
-  //     window.localStorage.setItem('location', JSON.stringify(dataLocation))
-  //     if (_err) setAlertBox({ message: `Lo sentimo ocurrió un error en tu ubicación${_err}`, color: '' })
-  //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [latitude, longitude, timestamp, accuracy, speed])
+  useEffect(() => {
+    setAlertBox({ message: '', color: 'success' })
+    if (latitude) {
+      window.localStorage.setItem('latitude', latitude)
+      window.localStorage.setItem('longitude', longitude)
+      window.localStorage.setItem('location', JSON.stringify({}))
+      if (_err) setAlertBox({ message: `Lo sentimo ocurrió un error en tu ubicación${_err}`, color: '' })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latitude, longitude, timestamp, accuracy, speed])
   const val = !['/delivery/[location]/[name]/[id]'].find(x => { return x === location.pathname })
   return (
     <div>
-      <AlertBox err={error} />
+      {/* <AlertBox err={error} /> */}
       <Main aside={!['/', '/login', '/entrar', '/restaurante', '/entrar/email', '/contact', '/varify-email', '/checkout/[id]', '/add-payment-method', '/register', '/terms_and_conditions', '/email/confirm/[code]', '/forgotpassword', '/teams/invite/[id]', '/autho', '/contact-us', '/switch-options'].find(x => { return x === location.pathname })} >
         <AsideCheckout handleMenu={handleMenu} menu={menu} />
         {<HeaderMain handleMenu={handleMenu} menu={menu} />}

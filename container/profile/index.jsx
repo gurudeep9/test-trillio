@@ -6,12 +6,14 @@ import React, {
 } from 'react'
 import { GET_USER, GET_USER_PROFILE } from './queries'
 import { useQuery } from '@apollo/client'
-import InputHooks from '../../components/InputHooks/InputHooks'
+import {
+  Loading,
+  InputHooks,
+  RippleButton,
+  LoadingButton
+} from 'pkg-components'
 import { validationSubmitHooks } from '../../utils'
 import { Context } from '../../context'
-import { RippleButton } from '../../components/Ripple'
-import { LoadEllipsis } from '../../components/LoadingButton'
-import { Loading } from '../../components/Loading'
 import {
   Section,
   Container,
@@ -131,7 +133,7 @@ export const Profile = () => {
                 </ContainerAnimationTow>
                 : null}</React.Fragment>
             <RippleButton widthButton='100%'>
-              {loading ? <LoadEllipsis color='#fff' /> : 'Confirmar'}
+              {loading ? <LoadingButton color='#fff' /> : 'Confirmar'}
             </RippleButton>
           </form>
         </Content>

@@ -1,32 +1,42 @@
-import React, { useContext, useEffect, useState } from 'react'
-// import { GoogleLogin } from 'react-google-login'
-// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-import { ButtonSubmit, Content, Form, Enlace, Card, Text } from './styled'
-import { RippleButton } from '../../components/Ripple'
-import { APColor, BGColor, EColor } from '../../public/colors'
-import { useMutation } from '@apollo/client'
-import ActiveLink from '../../components/common/Link'
-import { OUR_URL_BASE, URL_BASE } from '../../apollo/urls'
-import { CREATE_CURRENT_SESSION } from './queries'
-import fetchJson from '../../components/hooks/fetchJson'
+import PropTypes from 'prop-types'
+import React, {
+  useContext,
+  useEffect,
+  useState
+} from 'react'
+import {
+  ButtonSubmit,
+  Content,
+  Form,
+  Card,
+  Text
+} from './styled'
+import { EColor, DarkSilver } from '../../public/colors'
+import { fetchJson } from 'npm-pkg-hook'
 import { useRouter } from 'next/router'
-import { Facebook, IconGoogleFullColor } from '../../public/icons'
+import { IconGoogleFullColor } from '../../public/icons'
 import { Context } from '../../context'
 import { getDeviceId } from '../../apollo/apolloClient'
+import {
+  ActiveLink,
+  RippleButton,
+  LoadingButton,
+  GoogleLogin
+} from 'pkg-components'
+import { OUR_URL_BASE } from '@/apollo/urls'
 
 const Login = ({ watch, settings }) => {
   const router = useRouter()
   const { setAlertBox } = useContext(Context)
-  const responseFacebook = response => {
-  }
   const [location, setLocation] = useState({})
   const [locationFormat, setLocationFormat] = useState('')
-  const [newRegisterUser, { loading }] = useMutation(CREATE_CURRENT_SESSION)
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const data = window.localStorage.getItem('location')
     setLocation(JSON.parse(data))
   }, [])
   const { latitude, longitude } = location || {}
+
   const fetchData = async () => {
     const API = `https://maps.googleapis.com/maps/api/geocode/json?address=${latitude} ${longitude}&key=AIzaSyDSp8cfGhQ1oykqVyVbIc1vWkURQTf4fzA`
     fetch(API)
@@ -38,44 +48,75 @@ const Login = ({ watch, settings }) => {
       })
     return locationFormat ?? locationFormat[0].formatted_address
   }
+  const [dev] = useState(process.env.NODE_ENV === 'development')
   const responseGoogle = async (response) => {
-    response.preventDefault()
-    // const dataLocation = await fetchData()
-    // window.localStorage.setItem('sessionGoogle', JSON.stringify(response.profileObj))
-    // const { name, googleId, email, imageUrl } = response?.profileObj
-    // const body = {
-    //     name: name,
-    //     username: name,
-    //     lastName: name,
-    //     email: email,
-    //     password: googleId,
-    //     locationFormat: locationFormat[0]?.formatted_address,
-    //     useragent: window.navigator.userAgent,
-    //     deviceid: await getDeviceId() || '',
-    // }
-    const bodyfalse = {
-      name: 'juvinaojesusd@gmail.com',
-      username: 'juvinaojesusd@gmail.com',
-      lastName: 'juvinaojesusd@gmail.com',
-      email: 'juvinaojesusd@gmail.com',
-      password: '113561675852804771364',
-      locationFormat: locationFormat[0]?.formatted_address,
-      useragent: window.navigator.userAgent,
-      deviceid: '23423423432'
+    if (response && typeof response?.preventDefault === 'function') {
+      response?.preventDefault()
     }
-    await fetchJson(`${OUR_URL_BASE}auth`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bodyfalse)
-    }).then(res => {
-      const { userId, token } = res || {}
-      window.localStorage.setItem('session', token)
-      window.localStorage.setItem('usuario', userId)
-      setAlertBox({ message: `${res.message}`, color: 'success' })
-      router.push('/restaurantes')
-    }).catch(e => {
-      console.log('🚀 ~ file: index.jsx ~ line 77 ~ responseGoogle ~ e', e)
-    })
+    setLoading(true)
+    try {
+      const { profileObj } = response || {}
+      const {
+        name,
+        googleId,
+        email,
+        imageUrl
+      } = profileObj || {}
+
+      const locationResults = await fetchData(location?.latitude, location?.longitude)
+      const locationFormat = locationResults?.[0]?.formatted_address
+
+      const device = await getDeviceId()
+      const body = {
+        name,
+        username: name,
+        lastName: name,
+        email,
+        password: googleId,
+        locationFormat,
+        useragent: window.navigator.userAgent,
+        deviceid: device,
+        imageUrl
+      }
+      const bodyDev = {
+        name: 'Jesus Juvinao',
+        username: 'Jesus Juvinao',
+        lastName: 'Jesus Juvinao',
+        email: 'juvinaojesusd@gmail.com',
+        password: '103406429809408531217',
+        useragent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        deviceid: 'd30f7b61e48e517efc6932be15b5667f',
+        imageUrl: 'https://lh3.googleusercontent.com/a/AAcHTtc4b3_VC6v5u6-dqiiMsdra6dELCKa8GAurST5F3SxeVBo=s96-c'
+      }
+
+      try {
+        const res = await fetchJson(`${OUR_URL_BASE}auth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dev ? bodyDev : body)
+        })
+
+        setAlertBox({ message: res.message, color: 'success' })
+
+        const { storeUserId } = res
+
+        if (storeUserId) {
+          const { userId, token } = res || {}
+          window.localStorage.setItem('session', token)
+          window.localStorage.setItem('usuario', userId)
+          setAlertBox({ message: `${res.message}`, color: 'success' })
+          router.push('/restaurantes')
+        } else {
+          router.push('/restaurantes')
+        }
+      } catch (error) {
+        setAlertBox({ message: 'Lo sentimos ha ocurrido un error', color: 'error' })
+      } finally {
+        setLoading(false)
+      }
+    } catch (error) {
+      // Handle error
+    }
   }
   return (
     <Content>
@@ -85,28 +126,28 @@ const Login = ({ watch, settings }) => {
         <Text size='30px'>¡Falta poco para saciar tu hambre!</Text>
         <Text size='15px'>¿Cómo deseas continuar?</Text>
         <button onClick={(e) => { return responseGoogle(e) }}>Login falso</button>
-        {/* <GoogleLogin
-                    autoLoad={false}
-                    clientId='58758655786-u323tp1dpi6broro865rrm488gh4mnpu.apps.googleusercontent.com'
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                    render={renderProps => (
-                        <div>
-
-                            <ButtonSubmit size='14px' colorFont={DarkSilver} height='40px' color='2' onClick={renderProps.onClick} disabled={renderProps.disabled}><IconGoogleFullColor size='30px' /> Continue with Google<div style={{ width: 'min-content' }} /> </ButtonSubmit>
-                        </div>
-                    )}
-                />
-                <FacebookLogin
-                    appId="467885964900974"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    callback={responseFacebook}
-                    render={renderProps => (
-                        <ButtonSubmit type="button" size='14px' height='40px' color='1' onClick={renderProps.onClick} disabled={renderProps.disabled}><Facebook color={BGColor} size='30px' /> Login <div style={{ width: 'min-content' }} />    </ButtonSubmit>
-                    )}
-                /> */}
+        <GoogleLogin
+          autoLoad={false}
+          clientId='58758655786-u323tp1dpi6broro865rrm488gh4mnpu.apps.googleusercontent.com'
+          cookiePolicy={'single_host_origin'}
+          onFailure={responseGoogle}
+          onSuccess={responseGoogle}
+          render={renderProps => {
+            return (
+              <ButtonSubmit
+                color='2'
+                colorFont={DarkSilver}
+                disabled={renderProps.disabled}
+                height='40px'
+                onClick={renderProps.onClick}
+                size='14px'
+              >
+                <IconGoogleFullColor size='30px' />  {loading ? <LoadingButton /> : 'Continuar con Google'}
+                <div style={{ width: 'min-content' }} />
+              </ButtonSubmit>
+            )
+          }}
+        />
         <ActiveLink activeClassName='active' href='/entrar/email'>
           <a>
             <RippleButton
@@ -130,6 +171,11 @@ const Login = ({ watch, settings }) => {
       </Form>
     </Content>
   )
+}
+
+Login.propTypes = {
+  settings: PropTypes.any,
+  watch: PropTypes.any
 }
 
 export default Login

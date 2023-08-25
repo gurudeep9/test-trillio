@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+
 const connect = require('../../db')
 const sequelize = connect()
 const { enCode } = require('../../utils/util')

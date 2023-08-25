@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useQuery } from '@apollo/client'
+
 import { Historial } from '../../container/history'
 import { GET_ALL_FAV_STORE } from '../../container/profile/queries'
 export default function HomeView () {

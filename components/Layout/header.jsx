@@ -1,10 +1,15 @@
 import React from 'react'
+import styled from 'styled-components'
+import {
+  useScrollHook,
+  useScrollColor,
+  useScrollY
+} from 'npm-pkg-hook'
+
 import { AdicionalComponent } from './styled'
-import ActiveLink from '../common/Link'
+import { ActiveLink } from 'pkg-components'
 import { IconLogo } from '../../public/icons'
 import { PColor } from '../../public/colors'
-import styled from 'styled-components'
-import useScrollHook, { useScrollColor, useScrollY } from '../hooks/useScroll'
 
 export const Header = () => {
   const style = useScrollHook()

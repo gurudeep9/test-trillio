@@ -9,6 +9,7 @@ const logTimeLink = new ApolloLink((operation, forward) => {
   return forward(operation).map((data) => {
     // data from a previous link
     const time = new Date() - operation.getContext().start
+    // eslint-disable-next-line no-console
     console.log(`operation ${operation.operationName} took ${time} to complete`)
     return data
   })

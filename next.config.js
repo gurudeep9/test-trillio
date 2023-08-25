@@ -1,84 +1,54 @@
-/* eslint-disable consistent-return */
+/* eslint-disable */
+const withPlugins = require('./scripts/next-compose-plugins/lib')
+const withTM = require('next-transpile-modules')([
+  'pkg-components',
+  'npm-pkg-hook'
+]) // pass the modules you would like to see transpiled
+
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  disable: process.env.NODE_ENV === 'development'
+})
+
 /** @type {import('next').NextConfig} */
-const {
-  PHASE_DEVELOPMENT_SERVER,
-  PHASE_PRODUCTION_BUILD
-} = require('next/constants')
-const nextConfig = {
-  reactStrictMode: true
-}
-module.exports = (phase) => {
-  // npm run dev or next dev
-  const isDev = phase === PHASE_DEVELOPMENT_SERVER
-  // npm run build or next build
-  const isProd = phase === PHASE_PRODUCTION_BUILD && process.env.STAGING !== '1'
-  // npm run build or next build
-  const isStaging = phase === PHASE_PRODUCTION_BUILD && process.env.STAGING === '1'
+module.exports = async (phase) => {
   const env = {
-    NAMEDB: (() => {
-      if (isDev) return 'app'
-      if (isProd) return 'app'
-    })(),
-    USERDB: (() => {
-      if (isDev) return 'root'
-      if (isProd) return 'root'
-    })(),
-    PASSDB: (() => {
-      if (isDev) return ''
-      if (isProd) return ''
-    })(),
-    HOSTDB: (() => {
-      if (isDev) return 'localhost'
-      if (isProd) return 'localhost'
-    })(),
-    DIALECTDB: 'mysql',
-    SESSION_NAME: 'vp.client',
-    SESSION_KEY: '12ba105efUaGjihGrh0LfJHTGIBGu6jXa',
-    URL_BASE: (() => {
-      if (isDev) return 'http://localhost:3001/'
-      if (isProd) return 'http://localhost:3001/'
-      // if (isStaging) return 'Title Stg'
-    })(),
-    MAIN_URL_BASE: (() => {
-      if (isDev) return 'http://localhost:3000/'
-      if (isProd) return 'http://localhost:3000/'
-      if (isStaging) return 'Title Stg'
-    })(),
-    // URL_BASE_WS
-    URL_ADMIN_SERVER: (() => {
-      if (isDev) return 'http://localhost:4000/'
-      // if (isDev) return 'https://server-image-food.herokuapp.com/'
-      if (isProd) return 'http://localhost:4000/'
-    })(),
-    // BANCOLOMBIA
-    BANCOLOMBIA_CLIENT_KEY: '55929729-85fe-4ffe-928d-0bd317817be4',
-    BANCOLOMBIA_SECRET_KEY: 'E1aM2bV2lD7vS8cH1qJ8oN0nD7eN0eP0rM8gU0cG2lL6uY5sO7',
-    JWT_EXPIRY: 333300,
-    REFRESH_TOKEN_EXPIRY: '604800',
-    AUTHO_USER_KEY: '12ba105efUaGjihGrh0LfJHTGIBGu6jXV',
-    ACCESS_SID_TWILIO: 'AC7c9ccbdb50400c504faf629e35aea8e4',
-    // REACT_APP_API_KEY_GOOGLE_MAPS: 'AIzaSyAy0SY1G3OFqesWSTQRHJvzyJzNgURPoN8', mio
-    REACT_APP_API_KEY_GOOGLE_MAPS: 'AIzaSyDE9qovkvsvIAg-IOJY7_YPo4guCvSzjnE',
-    ACCESS_TOKEN_AUTH_TWILIO: '22e090d4d776ace7bb596ca77cba6b18'
+    NAMEDB: process.env.NAMEDB,
+    USERDB: process.env.USERDB,
+    PASSDB: process.env.PASSDB,
+    HOST_DB: process.env.HOST_DB,
+    BUSSINESS_TITLE: process.env.BUSSINESS_TITLE,
+    MYSQL_PORT: process.env.MYSQL_PORT,
+    DIALECTDB: process.env.DIALECTDB,
+    LOCAL_SALES_STORE: process.env.LOCAL_SALES_STORE,
+    SESSION_NAME: process.env.SESSION_NAME,
+    SESSION_KEY: process.env.SESSION_KEY,
+    URL_BASE:process.env.URL_BASE,
+    MAIN_URL_BASE: process.env.MAIN_URL_BASE,
+    URL_ADMIN_SERVER: process.env.URL_ADMIN_SERVER,
+    JWT_EXPIRY: process.env.JWT_EXPIRY,
+    REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY,
+    AUTHO_USER_KEY: process.env.AUTHO_USER_KEY,
+    REACT_APP_API_KEY_GOOGLE_MAPS: process.env.REACT_APP_API_KEY_GOOGLE_MAPS,
+    ACCESS_SID_TWILIO: process.env.ACCESS_SID_TWILIO,
+    ACCESS_TOKEN_AUTH_TWILIO: process.env.ACCESS_TOKEN_AUTH_TWILIO,
+    SECRET_KEY: process.env.SECRET_KEY
   }
 
-  const resolveUniqueReactForHooks = {
-    webpack: (config, options) => {
-      if (options.isServer) {
-        config.externals = ['react', ...config.externals]
-      }
-      // eslint-disable-next-line no-undef
-      config.resolve.alias.react = reactPath
-      return config
-    },
-    images: {
-      domains: ['http2.mlstatic.com', 'localhost', 'server-image-food.herokuapp.com']
-    }
+  const images = {
+    domains: [
+      'http2.mlstatic.com',
+      'localhost',
+      'server-image-food.herokuapp.com',
+      '*'
+    ]
   }
-  const headers = () => {
+
+  const headers = async () => {
     return [
       {
-        source: '/app',
+        source: '/',
         headers: [
           {
             key: 'x-custom-header-1',
@@ -88,41 +58,25 @@ module.exports = (phase) => {
       }
     ]
   }
-  const redirects = () => {
-    return [
-      {
-        source: '/home',
-        destination: '/',
-        permanent: true
-      }
-    ]
-  }
-  const basePath = '/app'
-  // puedes sobre escribir la ruta
-  const rewrites = () => {
-    return [
-      {
-        source: '/ab',
-        destination: '/about'
-      }
-    ]
-  }
-  const assetPrefix = isProd ? 'https://cdn.mydomain.com' : ''
-  const images = {
-    domains: ['http2.mlstatic.com', 'localhost', 'server-image-food.herokuapp.com', '*']
-  }
-  return {
+
+  const nextConfig = {
     env,
-    swcMinify: false,
     images,
+    reactStrictMode: true,
     headers,
-    optimizeFonts: false,
-    nextConfig,
-    // basePath,
-    rewrites,
-    redirects,
-    assetPrefix,
-    resolveUniqueReactForHooks
+    optimizeFonts: true,
+    swcMinify: false,
+    webpack: (config, { isServer }) => {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        // Will make webpack look for these modules in parent directories
+        'pkg-components': require.resolve('pkg-components')
+      }
+      return config
+    }
   }
+
+  const defaultConfig = nextConfig
+
+  return withPlugins( [withTM], [withPWA], nextConfig)(phase, { defaultConfig })
 }
-// module.exports = nextConfig

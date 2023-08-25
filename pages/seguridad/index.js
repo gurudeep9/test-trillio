@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+
 import { GET_ALL_DEVICES } from '../../container/profile/queries'
 import { Security } from '../../container/profile/Security'
 

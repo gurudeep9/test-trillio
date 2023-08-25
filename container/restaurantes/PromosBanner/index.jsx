@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Context } from '../../../context';
-import { BannerPromo, ContainerCardProduct, Content, Img, ContainerSliderPromo, CardPromo, ImageBannerPromo } from './styled';
+import React, { useContext, useEffect, useState } from 'react'
+import { Context } from '../../../context'
+import { BannerPromo, ContainerCardProduct, Content, Img, ContainerSliderPromo, CardPromo, ImageBannerPromo } from './styled'
 import Link from 'next/link'
-import { GET_ALL_BANNERS, GET_ALL_BANNERS_PROMO } from 'gql/getBanners';
-import { useQuery } from '@apollo/client';
+import { GET_ALL_BANNERS, GET_ALL_BANNERS_PROMO } from 'gql/getBanners'
+import { useQuery } from '@apollo/client'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Virtual, Navigation, Pagination, A11y, Parallax } from 'swiper'
 
@@ -13,13 +13,13 @@ export const PromosBanner = () => {
   const [color, setActiveColor] = useState(null)
   // HANDLES
   const { data } = useQuery(GET_ALL_BANNERS, {
-    context: { clientName: "admin-server" }
+    context: { clientName: 'admin-server' }
   })
 
   // console.log(datapro.getAllPromoBanners)
   const handleAddProduct = elem => {
     handleMenu(1)
-    let includes = state_product_card?.PRODUCT.includes(elem);
+    const includes = state_product_card?.PRODUCT.includes(elem)
     console.log(includes)
     if (includes) {
       setAlertBox({ message: 'El producto ya esta en la lista' })
@@ -46,11 +46,17 @@ export const PromosBanner = () => {
               >
                 <Link
                   // key={banner.BannerId}
+                  href={`/restaurantes/promos/${banner.name.replace(/\s/g, '-')}/${banner.BannerId}`}
                   prefetch={true}
-                  href={`/restaurantes/promos/${banner.name.replace(/\s/g, '-')}/${banner.BannerId}`}>
+                >
                   <a>
-                    <BannerPromo color={color} onMouseOut={() => setActiveColor('red')} onMouseOver={() => setActiveColor('blue')} key={banner.pId}>
-                      <Img src={banner.path} alt={banner.description} />
+                    <BannerPromo
+                      color={color}
+                      key={banner.pId}
+                      onMouseOut={() => { return setActiveColor('red') }}
+                      onMouseOver={() => { return setActiveColor('blue') }}
+                    >
+                      <Img alt={banner.description} src={banner.path} />
                     </BannerPromo>
                   </a>
                 </Link>
@@ -61,12 +67,12 @@ export const PromosBanner = () => {
         </Swiper>
       </ContainerCardProduct>
     </Content >
-  );
-};
+  )
+}
 
 export const PromoBannerStores = () => {
   const { data: datapro } = useQuery(GET_ALL_BANNERS_PROMO, {
-    context: { clientName: "admin-server" }
+    context: { clientName: 'admin-server' }
   })
   const chartColor = ['rgba(1,25,71, 0.0001)', '#01194750', 'rgb(255 0 0 / 0%)']
   // const final =
@@ -79,14 +85,16 @@ export const PromoBannerStores = () => {
 
   return (
     <ContainerSliderPromo>
-      {datapro && dataFinal?.map(pb => (
-        <CardPromo final={colorGradient} key={pb.bpId}>
-          <ImageBannerPromo src={pb.path} alt={pb.description} />
-          <div className="goto-action">
-            <span className="text">{pb.name}</span>
-          </div>
-        </CardPromo>
-      ))}
+      {datapro && dataFinal?.map(pb => {
+        return (
+          <CardPromo final={colorGradient} key={pb.bpId}>
+            <ImageBannerPromo alt={pb.description} src={pb.path} />
+            <div className='goto-action'>
+              <span className='text'>{pb.name}</span>
+            </div>
+          </CardPromo>
+        )
+      })}
     </ContainerSliderPromo>
   )
 }

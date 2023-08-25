@@ -1,24 +1,39 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-console */
 import { useMemo } from 'react'
-import { ApolloClient, from, HttpLink, InMemoryCache, ApolloLink, split, createHttpLink } from '@apollo/client'
-import { concatPagination, getMainDefinition } from '@apollo/client/utilities'
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  ApolloLink,
+  split
+} from '@apollo/client'
+import {
+  concatPagination,
+  getMainDefinition
+} from '@apollo/client/utilities'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
-import { URL_ADMIN, URL_ADMIN_SERVER, URL_BASE } from './urls'
-// import FingerprintJS from "@fingerprintjs/fingerprintjs"
-import { onError } from '@apollo/client/link/error'
+import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { WebSocketLink } from '@apollo/client/link/ws'
-import { createUploadLink } from 'apollo-upload-client'
+import { onError } from '@apollo/client/link/error'
+
+import {
+  URL_ADMIN,
+  URL_ADMIN_SERVER,
+  URL_BASE
+} from './urls'
 
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient
-let userAgent
 export const getDeviceId = async () => {
-  // const fp = await FingerprintJS.load()
-  // const result = await fp.get()
-  // userAgent = window.navigator.userAgent
-  return 32432
+  const fp = await FingerprintJS.load()
+  const result = await fp.get()
+  const { visitorId } = result || {}
+  return visitorId
 }
 const authLink = async (_) => {
   if (typeof window !== 'undefined') {
@@ -38,27 +53,8 @@ const authLink = async (_) => {
         }
       }
   }
+  return ''
 }
-
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) => {
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    })
-  }
-  //
-  graphQLErrors?.length && graphQLErrors.forEach(err => {
-    const { code } = err.extensions
-    // if (code === 'UNAUTHENTICATED' || code === 'FORBIDDEN') console.log('Papuuuuuuuu')
-    // else if (code === 403) {
-    //   console.log('Papuuuuuuuu')
-    // }
-  })
-  if (networkError) console.log(`[Network error]: ${networkError}`)
-})
 
 // Create Second Link
 const wsLink = process.browser
@@ -78,7 +74,6 @@ const wsLink = process.browser
 const getLink = async (operation) => {
   // await splitLink({ query: operation.query })
   const headers = await authLink()
-  const definition = getMainDefinition(operation.query)
   const service = operation.getContext().clientName
   let uri = `${URL_BASE}graphql`
   if (service === 'subscriptions') uri = 'http://localhost:4000/graphql'
@@ -93,93 +88,69 @@ const getLink = async (operation) => {
   })
   return link.request(operation)
 }
-const httpLink = createUploadLink({
-  uri: `${URL_BASE}graphql`,
-  authorization: 'pija',
-  credentials: 'same-origin'
-})
-
-// split based on operation type
-const Link = typeof window !== 'undefined'
-  ? split(
-    (operation) => {
-      const url = `${URL_BASE}graphql`
-      const service = operation.getContext().clientName
-      console.log(service)
-      const definition = getMainDefinition(operation.query)
-      return (definition.kind === 'OperationDefinition' && definition.operation === 'subscription')
-    },
-    wsLink,
-    httpLink
-  )
-  : httpLink
 
 
-// const [ createPerson ] = useMutation(CREATE PERSON, (
-//     onError: (error) » {
-//       notifyError(error.graphQLErrors[0].message)
-//     },
-//     update: (store, response) {
-//       const dataInStore = store.readQuery({ query: ALL_PERSONS })
-//       store.writeQuery({
-//         query: ALL PERSONS,
-//         data: {
-
-//            ... dataInStore,
-//           allPersons:[
-//                dataInStore.allPersons, ...
-//             response.data.addPerson
-//       })
-//   })
-
-const defaultOptions = {
-  watchQuery: {
-    fetchPolicy: 'cache-first',
-    returnPartialData: true,
-    notifyOnNetworkStatusChange: true,
-    errorPolicy: 'all'
-  },
-  mutate: {
-    errorPolicy: 'all'
-  }
-}
+/**
+ * Creates an Apollo Client instance based on the current environment and operation type.
+ *
+ * @returns {ApolloClient} The configured Apollo Client instance.
+ */
 function createApolloClient () {
   const ssrMode = typeof window === 'undefined'
-  const link = ssrMode ? ApolloLink.split(() => { return true }, operation => { return getLink(operation) }) : typeof window !== 'undefined'
-    ? split((operation) => {
-      const definition = getMainDefinition(operation.query)
-      return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
-    },
-    wsLink,
-    ApolloLink.split(() => { return true }, operation => { return getLink(operation) })
-      // errorLink,
 
+  /**
+   * Returns the appropriate link based on the current environment and operation type.
+   *
+   * @param {Operation} operation - The operation being performed.
+   * @returns {ApolloLink} The appropriate ApolloLink for the operation.
+   */
+  function getDynamicLink (operation) {
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors) {
+        graphQLErrors.map(({ message, location, path }) => {
+          console.log(`[GraphQL error]: Message: ${message}, Location: ${location}, Path: ${path}`)
+        })
+      }
+
+      if (networkError) {
+        console.log(`[Network error]: ${networkError}`)
+      }
+    })
+
+    if (ssrMode) {
+      return ApolloLink.split(
+        () => { return true },
+        operation => { return getLink(operation) }
+      )
+    } else if (typeof window !== 'undefined') {
+      return split(
+        operation => {
+          const definition = getMainDefinition(operation.query)
+          return (
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'subscription'
+          )
+        },
+        wsLink,
+        ApolloLink.split(
+          () => { return true },
+          operation => { return getLink(operation) }
+        ),
+        errorLink
+      )
+    }
+    return ApolloLink.split(
+      () => { return true },
+      operation => { return getLink(operation) }
     )
-    : ApolloLink.split(() => { return true }, operation => { return getLink(operation) })
+  }
+
+  const link = getDynamicLink()
+
   return new ApolloClient({
-    // defaultOptions,
     connectToDevTools: true,
-    ssrMode: typeof window === 'undefined',
+    ssrMode,
     link,
-    // link: ApolloLink.from([
-    //     onError(({
-    //         graphQLErrors,
-    //         networkError
-    //     }) => {
-    //         if (graphQLErrors) {
-    //             graphQLErrors.map(({ message, locations, path
-    //             }) =>
-    //                 console.log(
-    //                     `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-    //                 )
-    //             );
-    //         }
-    //         if (networkError) {
-    //             console.log(`[Network error]: ${networkError}`);
-    //         }
-    //     }),
-    //     link
-    // ]),
     cache: new InMemoryCache({
       typePolicies: {
         Query: {
@@ -192,7 +163,7 @@ function createApolloClient () {
   })
 }
 
-export function initializeApollo (initialState = null, ctx) {
+export function initializeApollo (ctx, initialState = null) {
   const _apolloClient = apolloClient ?? createApolloClient()
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here

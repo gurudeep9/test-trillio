@@ -1,15 +1,21 @@
 import { useQuery, useSubscription } from '@apollo/client'
-import { Skeleton } from 'components/Skeleton'
 import { GET_STATE_ORDER } from 'container/checkout/queries'
 import moment from 'moment'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
-import { useEffect, useRef, useState } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { copyToClipboard, numberFormat } from 'utils'
-import { AwesomeModal } from '../../components/AwesomeModal'
-import InputHooks from '../../components/InputHooks/InputHooks'
-import { Rate } from '../../components/Rate'
-import { RippleButton } from '../../components/Ripple'
+import {
+  InputHooks,
+  RippleButton,
+  Skeleton,
+  AwesomeModal,
+  Rate
+} from 'pkg-components'
 import {
   APColor,
   BGColor,
@@ -17,8 +23,16 @@ import {
   WColor
 } from '../../public/colors'
 import {
-  IconDisLike, IconEnlace, IconFacebook, IconLike, IconMiniCheck,
-  IconPlus, IconRate, IconTicker, IconTwitter, IconWhatsApp
+  IconDisLike,
+  IconEnlace,
+  IconFacebook,
+  IconLike,
+  IconMiniCheck,
+  IconPlus,
+  IconRate,
+  IconTicker,
+  IconTwitter,
+  IconWhatsApp
 } from '../../public/icons'
 import { GET_ONE_SCHEDULE_STORE } from '../queries'
 import { Story } from '../story'
@@ -29,9 +43,26 @@ import {
   StickyViewport
 } from './stickyheader'
 import {
-  ActionButton, ButtonLike,
-  CardItemRating, CardProductsModal, CardsComponent, Container,
-  ContainerCarrusel, ContainerShare, ContentCategoryProducts, ContentInfo, ContentSearch, ContentShare, CtnItemFilter, DisRestaurant, Flex, GarnishChoicesHeader, HeadSticky, MerchantBannerWrapperInfo, Text, Title
+  ActionButton,
+  ButtonLike,
+  CardItemRating,
+  CardProductsModal,
+  CardsComponent,
+  Container,
+  ContainerCarrusel,
+  ContainerShare,
+  ContentCategoryProducts,
+  ContentInfo,
+  ContentSearch,
+  ContentShare,
+  CtnItemFilter,
+  DisRestaurant,
+  Flex,
+  GarnishChoicesHeader,
+  HeadSticky,
+  MerchantBannerWrapperInfo,
+  Text,
+  Title
 } from './styled'
 import SvgComponent from './svg'
 export const RestaurantProfile = ({
@@ -85,7 +116,14 @@ export const RestaurantProfile = ({
   decrease,
   handleChangeClickOnTable
 }) => {
-  const { pName, getStore, ProImage, ProPrice, ProDescription, ProDescuento, ExtProductFoodsAll } = dataOneProduct || {}
+  const {
+    pName,
+    getStore,
+    ProPrice,
+    ProDescription,
+    ProDescuento,
+    ExtProductFoodsAll
+  } = dataOneProduct || {}
   const { fState } = dataOneFav
   const containerStyle = {
     height: '100vh'
@@ -182,7 +220,7 @@ export const RestaurantProfile = ({
             <button onClick={() => au.current.pause()}>Pause</button> */}
       <audio id='a1' ref={au}>
         <source src='https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' type='audio/mpeg' />
-                Your browser does not support the audio element.
+        Your browser does not support the audio element.
       </audio>
       <StickyViewport as='main' style={containerStyle}>
         <MerchantBannerWrapperInfo bannerImage={(path || src) ? `url(${path || src})` : `url("/images/DEFAULTBANNER.png")`}>
@@ -312,7 +350,9 @@ export const RestaurantProfile = ({
               onClick={() => { return handleRating(id) }}
               padding='0px'
               widthButton='100%'
-            >Subir</RippleButton>
+            >
+              Subir
+            </RippleButton>
           </AwesomeModal>
           <InputHooks
             errors={errorForm?.search}
@@ -351,7 +391,7 @@ export const RestaurantProfile = ({
               height={450}
               objectFit='contain'
               placeholder='blur'
-              src={ProImage || '/images/hamb.jpg'}
+              src='/images/b70f2f6c-8afc-4d75-bdeb-c515ab4b7bdd_BRITS_GER85.jpg'
               width={450}
             />
           </div>
@@ -465,7 +505,7 @@ export const RestaurantProfile = ({
           <div>
             {/* <QRCode value={share || ''} /> */}
             <ContentShare>
-                            compartir
+              compartir
               <ContainerShare>
                 <div>
                   <button onClick={() => { return handlerShare(1) }}>Generar Código QR</button>
