@@ -1240,27 +1240,3 @@ export const getUserFromToken = token => {
     throw new Error('La session ha expirado')
   }
 }
-// useEffect(() => {
-//   // let audio = new Audio('public/y2mate.mp3')
-//   // audio.play()
-//   // dataProductAndCategory?.getCatProductsWithProductClient && setData([...dataProductAndCategory?.getCatProductsWithProductClient])
-//   let lengths = ['Bilbo', 'Gandalf', 'Nazgul'].map(item => { return item.length })
-//   // console.log(lengths); //
-//   const lol = [1, -2, 15, 2, 0, 8].sort(function (a, b) {
-//     // console.log(a + " <> " + b);
-//     return a - b
-//   })
-//   let nombres = 'Bilbo, Gandalf, Nazgul'
-
-//   let arr = nombres.split(', ')
-
-//   for (let name of arr) {
-//     // console.log(`Un mensaje para ${name}.`); // Un mensaje para Bilbo  (y los otros nombres)
-//   }
-//   // console.log(lol)
-//   let value = arr.reduce(function (accumulator, item, index, array) {
-//     // ...
-//     // console.log(accumulator, item, index, array)
-//     // console.log(audio)
-//   }, [])
-// }, [dataProductAndCategory, searchFilter])

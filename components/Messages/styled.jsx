@@ -3,21 +3,14 @@ import styled, { css } from 'styled-components'
 
 export const ContainerContextMessage = styled.div`
     position: fixed;
-    /* background-color: red; */
     right: 0;
     bottom: 0;
     z-index: 999;
-    width: 380px;
-    /* height: calc(100vh - 80px); */
+    width: 472px;
 `
 export const BoxChat = styled.div`
-        display: block;
-        /* position: absolute; */
-    /* background-color: red; */
-    /* right: 0; */
-    /* bottom: 0; */
-    /* transform: translateY(-63px); */
     bottom: 20px;
+    display: block;
     position: fixed;
     right: 40px;
     width: min-content;

@@ -31,27 +31,28 @@ function Sticky ({
     dispatch.addStickyRef(topSentinelRef, bottomSentinelRef, stickyRef)
   }
   const Component = as
-  const VIEW_VISITOR = gql`
-        mutation setVisitorStore($input: InputVisitorStoreType) {
-        setVisitorStore(input: $input) {
-            success
-            message
-        }
-        }
-    `
-  const [setVisitorStore] = useMutation(VIEW_VISITOR)
-  const location = useRouter()
-  useEffect(() => {
-    const UserId = window.localStorage.getItem('usuario')
-    setVisitorStore({
-      variables: {
-        input: {
-          id: !!UserId && UserId,
-          idStore: location.query.id
-        }
-      }
-    }).catch(err => { return console.log({ message: `${err}` }) })
-  }, [location.query])
+  // const VIEW_VISITOR = gql`
+  //       mutation setVisitorStore($input: InputVisitorStoreType) {
+  //       setVisitorStore(input: $input) {
+  //           success
+  //           message
+  //       }
+  //       }
+  //   `
+  // const [setVisitorStore] = useMutation(VIEW_VISITOR)
+  // const location = useRouter()
+  // useEffect(() => {
+  //   const UserId = window.localStorage.getItem('usuario')
+  //   setVisitorStore({
+  //     variables: {
+  //       input: {
+  //         id: !!UserId && UserId,
+  //         idStore: location.query.id
+  //       }
+  //     }
+  //   // eslint-disable-next-line n/handle-callback-err
+  //   }).catch(err => { return {} })
+  // }, [location.query])
   return (
     <Component
       className={styles.sticky + className || ` ${className}`}

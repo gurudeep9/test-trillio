@@ -24,7 +24,7 @@ export const ContentTotal = styled.div`
 
 `
 export const LateralModal = styled.div`
-    width: 380px;
+    width: 472px;
     height: calc(100vh - 80px);
     position: fixed;
     bottom: 0;

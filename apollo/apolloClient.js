@@ -49,10 +49,7 @@ const authLink = async (_) => {
 }
 
 // Define la URL del servidor GraphQL
-const graphqlUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'ws://localhost:4000/graphql' // Si estás en desarrollo
-    : 'wss://front-back-server.fly.dev/graphql' // Si estás en producción y usando WSS
+const graphqlUrl = process.env.URL_ADMIN_SERVER_SOCKET // Si estás en producción y usando WSS
 
 // Comprueba si el código se está ejecutando en un navegador
 const isBrowser = typeof window !== 'undefined'
@@ -78,7 +75,7 @@ const getLink = async (operation) => {
   const headers = await authLink()
   const service = operation.getContext().clientName
   let uri = `${URL_BASE}graphql`
-  if (service === 'subscriptions') uri = 'http://localhost:4000/graphql'
+  if (service === 'subscriptions') uri = `${URL_ADMIN_SERVER}graphql`
   if (service === 'main') uri = 'http://localhost:3000/api/graphql'
   if (service === 'admin') uri = `${URL_ADMIN}graphql`
   if (service === 'admin-server') uri = `${URL_ADMIN_SERVER}graphql`

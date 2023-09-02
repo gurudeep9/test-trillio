@@ -30,6 +30,7 @@ query getAllMatchesStoreRecommended($catStore: ID, $min: Int, $max: Int){
       cName
       }
       storeName
+      open
       Image
       city{
         ctId

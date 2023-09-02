@@ -1,18 +1,74 @@
 import styled, { css, keyframes } from 'styled-components'
-import { BColor, BGColor, BGVColor, DarkSilver, EColor, PColor, SECBGColor } from '../../public/colors'
-import Link from 'next/link'
+import {
+  BColor,
+  BGColor,
+  BGVColor,
+  DarkSilver,
+  PColor,
+  SECBGColor
+} from '../../public/colors'
+
 export const Container = styled.div`
-  /* max-width: 1366px; */
-  /* margin: 30px auto 20px; */
-  /* overflow: hidden; */
+.container-rating {
+    justify-content: start;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+  .text-favorite {
+    color: #393a3d;
+    font-weight: 400;
+    word-break: break-word;
+    line-height: 44px;
+  }
+  .button-rating {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+  }
+
+  .rating-container {
+    line-height: 1.15;
+    place-items: center;
+    display: grid;
+    font-size: 16px;
+    height: 85%;
+    overflow-y: auto;
+    padding: 16px 0px;
+    gap: 0px; 
+    grid-template-columns: repeat(auto-fit,minmax(50%,1fr)); /* Columnas autoajustables */
+  }
+  .rating-store {
+    background-color: transparent;
+    border: 1px solid #f2f2f2;
+    border-radius: 30px;
+    width: 250px;
+    cursor: pointer;
+    padding: auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    span {
+      font-weight: 400;
+    word-break: break-word;
+    line-height: 44px;
+}
+    }
 `
 export const ContentSearch = styled.div`
   max-width: 1366px;
+  justify-content: space-between;
+    align-items: flex-end;
   margin: 5px auto;
-  font-size: 1.5rem;
   line-height: 1em;
   flex-grow: 1;
+  gap: 10px;
   font-family: PFont-Light;
+  display: flex;
   `
 export const ContainerCarrusel = styled.div`
   display: grid;
@@ -75,7 +131,7 @@ export const ButtonLike = styled.button`
 
   ${(props) => {
     return props.isLiked &&
-    css`
+      css`
     ::after {
       content: "";
       position: absolute;
@@ -137,7 +193,7 @@ export const MerchantBannerWrapperInfo = styled.div`
     background-blend-mode: overlay;
     max-width: 1366px;
     margin: 50px auto 20px;
-    background-image: ${({ bannerImage }) => { return bannerImage && (bannerImage) }};
+    background-image: ${({ bannerImage }) => { return bannerImage }};
     .merchant-banner__status-description {
       line-height: 1.15;
       font-size: 16px;
@@ -177,13 +233,15 @@ export const CardItemRating = styled.div`
   place-content: center;
   flex-direction: column;
   align-items: center; 
-  width: 30%;
+  width: 50%;
   .option {
-    background-color: #cccccc67;
     border-radius: 5px; 
     display: flex;
     place-content: space-around;
     align-items: center; 
+  }
+  .button-rating_action {
+    background-color: transparent;
   }
 `
 export const CtnItemFilter = styled.div`

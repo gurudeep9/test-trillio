@@ -132,6 +132,7 @@ query getFavorite{
       cId
       id
       Image
+      open
       cateStore{
       catStore
       cName

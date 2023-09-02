@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 const { Base64 } = require('js-base64')
+const crypto = require('crypto')
 
 const codeRed = async model => {
   /** variables necesarias */
@@ -17,15 +18,49 @@ const codeRed = async model => {
   if (dataUP) { await codeRed() } else { return result }
 }
 
+const SECRET_KEY = process.env.ID_DECODE_KEY
+
 const enCode = value => {
-  const v = ((((value * 998161) * 793927) * 562841) * 288413) / 472793
-  return Base64.encode(`${v}`)
+  try {
+    if (value) {
+      const cipher = crypto.createCipher('aes-256-cbc', Buffer.from(SECRET_KEY, 'hex'))
+      let encrypted = cipher.update(value.toString(), 'utf-8', 'hex')
+      encrypted += cipher.final('hex')
+
+      const uuid = [
+        encrypted.substr(0, 8),
+        encrypted.substr(8, 4),
+        encrypted.substr(12, 4),
+        encrypted.substr(16, 4),
+        encrypted.substr(20)
+      ].join('-')
+
+      return uuid
+    }
+  } catch (error) {
+    return ''
+  }
 }
 
-const deCode = value => {
-  const v = Base64.decode(value)
-  return Math.round(((((v * 472793) / 288413) / 562841) / 793927) / 998161)
+const deCode = uuidValue => {
+  try {
+    if (!uuidValue) return ''
+
+    if (typeof uuidValue !== 'string') {
+      uuidValue = uuidValue.toString()
+    }
+
+    const encryptedHex = uuidValue.replace(/-/g, '')
+    const decipher = crypto.createDecipher('aes-256-cbc', Buffer.from(SECRET_KEY, 'hex'))
+    let decrypted = decipher.update(encryptedHex, 'hex', 'utf-8') // Cambia 'hex' a 'utf-8'
+    decrypted += decipher.final('utf-8') // Cambia 'hex' a 'utf-8'
+
+    return parseInt(decrypted, 10)
+  } catch (error) {
+    return ''
+  }
 }
+
 
 const linkBelongsTo = (modelOne, modelTwo, target, foreign) => {
   return modelOne.belongsTo(modelTwo, {

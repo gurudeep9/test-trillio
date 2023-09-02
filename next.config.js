@@ -27,13 +27,16 @@ module.exports = async (phase) => {
     URL_BASE:process.env.URL_BASE,
     MAIN_URL_BASE: process.env.MAIN_URL_BASE,
     URL_ADMIN_SERVER: process.env.URL_ADMIN_SERVER,
+    URL_ADMIN_SERVER_SOCKET: process.env.URL_ADMIN_SERVER_SOCKET,
     JWT_EXPIRY: process.env.JWT_EXPIRY,
     REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY,
     AUTHO_USER_KEY: process.env.AUTHO_USER_KEY,
     REACT_APP_API_KEY_GOOGLE_MAPS: process.env.REACT_APP_API_KEY_GOOGLE_MAPS,
     ACCESS_SID_TWILIO: process.env.ACCESS_SID_TWILIO,
     ACCESS_TOKEN_AUTH_TWILIO: process.env.ACCESS_TOKEN_AUTH_TWILIO,
-    SECRET_KEY: process.env.SECRET_KEY
+    SECRET_KEY: process.env.SECRET_KEY,
+    ID_DECODE_KEY: process.env.ID_DECODE_KEY,
+
   }
 
   const images = {

@@ -1,20 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types'
-import { useMutation, useQuery } from '@apollo/client'
 import Link from 'next/link'
 import Image from 'next/image'
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
-import { DELETE_ONE_ITEM_SHOPPING_PRODUCT } from '../../container/checkout/queries'
-import { GET_ALL_SHOPPING_CARD } from '../../container/restaurantes/queries'
+import React, { useContext } from 'react'
 import { Context } from '../../context/index'
-import { APColor, PColor } from '../../public/colors'
-import { IconCancel } from '../../public/icons'
-import { numberFormat, updateCache } from '../../utils'
+import { APColor, PColor } from 'public/colors'
+import { IconCancel } from 'public/icons'
+import { numberFormat, useAsideCart } from 'npm-pkg-hook'
 import { Overline, RippleButton } from 'pkg-components'
 import {
   CardProduct,
@@ -26,82 +17,39 @@ import {
 } from './styled'
 
 export const AsideCheckout = ({ menu }) => {
-  const { setAlertBox, setCountItemProduct, handleMenu } = useContext(Context)
-  const { data: dataShoppingCard, loading } = useQuery(GET_ALL_SHOPPING_CARD)
-  useEffect(() => {
-    setAlertBox({ message: '', color: 'success' })
-  }, [])
-  const result2 = dataShoppingCard?.getAllShoppingCard.length > 0 && dataShoppingCard?.getAllShoppingCard?.reduce(function (r, a) {
-    r[a.getStore?.storeName] = r[a.getStore?.storeName] || []
-    r[a.getStore?.storeName].push(a)
-    return r
-  }, Object.create(null))
-  const [key, setSetKey] = useState([])
-  useEffect(() => {
-    if (!loading &&
-      dataShoppingCard !== null &&
-      dataShoppingCard?.getAllShoppingCard?.length > 0
-    ) {
-      const dataProduct2 = Object.keys(result2)
-      setSetKey(dataProduct2)
-      setCountItemProduct(dataShoppingCard?.getAllShoppingCard.length || 0)
-    }
-  }, [dataShoppingCard, loading, setCountItemProduct])
+  const {
+    setAlertBox,
+    setCountItemProduct,
+    handleMenu
+  } = useContext(Context)
 
-  const sumProduct = (ProPrice, ProDelivery, cant) => {
-    const price = parseInt(ProPrice)
-    const priceFinal = cant * price
-    const delivery = parseInt(ProDelivery || 0)
-    return delivery ? priceFinal + delivery : priceFinal
-  }
-  const refs = useRef([React.createRef(), React.createRef()])
-  const [totalProductPrice, setTotalProductPrice] = useState(0)
-  const total = 0
-  let suma = 0
-  useEffect(() => {
-    dataShoppingCard?.getAllShoppingCard.forEach((a) => {
-      const { productFood, cantProducts } = a || {}
-      const { ProPrice, ValueDelivery } = productFood || {}
-      const PriceFinal = (ProPrice * cantProducts) + ValueDelivery
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      suma += PriceFinal
-      setTotalProductPrice(Math.abs(suma))
-    })
-  }, [totalProductPrice, suma, total, dataShoppingCard])
-  const [deleteOneItem] = useMutation(DELETE_ONE_ITEM_SHOPPING_PRODUCT, {
-    onCompleted: data => {
-      setAlertBox({ message: data?.deleteOneItem?.message })
-      if (dataShoppingCard?.getAllShoppingCard.length === 1) {
-        setAlertBox({ message: 'Tu carrito esta vació' })
-        handleMenu(false)
-      }
-    }
+  const {
+    key,
+    totalProductPrice,
+    result2,
+    dataShoppingCard,
+    handleDeleteItemShopping,
+    handleEditProduct,
+    sumProduct
+  } = useAsideCart({
+    setCountItemProduct,
+    setAlertBox,
+    handleMenu
   })
-  const handleDeleteItemShopping = item => {
-    deleteOneItem({
-      variables: {
-        cState: item.cState,
-        ShoppingCard: item.ShoppingCard
-      },
-      update: (cache, { data: { getAllShoppingCard } }) => {
-        return updateCache({
-          cache,
-          query: GET_ALL_SHOPPING_CARD,
-          nameFun: 'getAllShoppingCard',
-          dataNew: getAllShoppingCard
-        })
-      }
-    })
-  }
+
   return (
     <div>
-      <Overline onClick={() => { return handleMenu(1) }} show={menu === 1} />
+      <Overline
+        onClick={() => { return handleMenu(1) }}
+        show={menu === 1}
+        zIndez='999'
+      />
       <LateralModal show={menu === 1}>
         <RippleButton bgColor='transparent' onClick={() => { return handleMenu(1) }}>
           <IconCancel color={PColor} size='15px' />
         </RippleButton>
         <Content>
-          {dataShoppingCard?.getAllShoppingCard?.length > 0 && <div className='restaurant-cart-header'>Tu pedido en</div>}
+          {<div className='restaurant-cart-header'>Tu pedido en</div>}
           <div>
             {key?.map((store, i) => {
               return (
@@ -122,33 +70,47 @@ export const AsideCheckout = ({ menu }) => {
                           <div>
                             <Image
                               alt={'Picture of the author'}
-                              blurDataURL='/images/DEFAULTBANNER.png'
+                              blurDataURL='/images/cat1.png'
                               className='store_image'
                               height={100}
                               objectFit='cover'
                               placeholder='blur'
-                              src={'/images/DEFAULTBANNER.png'}
+                              src={'/images/cat1.png'}
                               width={100}
                             />
                           </div>
                           <div className='item-line'>
                             <Text margin={'40px 0'} size='20px'>{product.productFood?.pName}</Text>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>
-                              <Text color={APColor}> $ {numberFormat(product.productFood?.ProPrice)}</Text>
-                              <Text color={APColor}> Cantidad {numberFormat(product.cantProducts)}</Text>
+                              <Text color={APColor}>
+                                $ {numberFormat(product.productFood?.ProPrice)}
+                              </Text>
+                              <Text color={APColor}>
+                                Cantidad {numberFormat(product.cantProducts)}
+                              </Text>
                               <Text
                                 line
                                 margin='0 0 0 10px'
                                 size='25px'
-                              >$ {numberFormat(product.productFood?.ProDescuento)}</Text>
+                              >
+                                $ {numberFormat(product.productFood?.ProDescuento || 0)}</Text>
                             </div>
                             <div className='footer' style={{ display: 'flex' }}>
-                              <Text color={PColor} >Editar</Text>
-                              <Text
-                                color='#ccc'
-                                margin='0 0 0 10px'
-                                onClick={() => { return handleDeleteItemShopping(product) }}
-                              >Eliminar</Text>
+                              <button onClick={() => { return handleEditProduct(product) }}>
+                                <Text color={PColor}>
+                                  Editar
+                                </Text>
+                              </button>
+                              &nbsp;
+                              &nbsp;
+                              <button onClick={() => { return handleDeleteItemShopping(product) }}>
+                                <Text
+                                  color='#ccc'
+                                  margin='0 0 0 10px'
+                                >
+                                  Eliminar
+                                </Text>
+                              </button>
                             </div>
                           </div>
                           <ContentTotal>
@@ -161,7 +123,7 @@ export const AsideCheckout = ({ menu }) => {
                           </ContentTotal>
                           <ContentTotal>
                             <Text margin='0 0 0 10px' >Costo Final</Text>
-                            <Text margin='0 0 0 10px' ref={refs.current[idx]}>$ {numberFormat(sumProduct(product.productFood?.ProPrice, product.productFood?.ValueDelivery, product.cantProducts))}</Text>
+                            <Text margin='0 0 0 10px'>$ {numberFormat(sumProduct(product.productFood?.ProPrice, product.productFood?.ValueDelivery, product.cantProducts))}</Text>
                           </ContentTotal>
                         </CardProduct>
                       )
@@ -172,10 +134,10 @@ export const AsideCheckout = ({ menu }) => {
             })}
           </div>
         </Content>
-        {dataShoppingCard?.getAllShoppingCard?.length > 0 && <ActionPay>
+        {dataShoppingCard?.length && <ActionPay>
           <ContentTotal>
             <Text bold='900'>Total</Text>
-            <Text bold='900'>$ {numberFormat(dataShoppingCard?.getAllShoppingCard.length > 0 && totalProductPrice)}</Text>
+            <Text bold='900'>$ {numberFormat(dataShoppingCard.length > 0 && totalProductPrice)}</Text>
           </ContentTotal>
           <Link href='/proceso-de-compra' >
             <a>
@@ -183,7 +145,9 @@ export const AsideCheckout = ({ menu }) => {
                 margin={'auto'}
                 onClick={() => { return handleMenu(false) }}
                 widthButton='100%'
-              >Eligir método de pago</RippleButton>
+              >
+                Eligir método de pago
+              </RippleButton>
             </a>
           </Link>
         </ActionPay>}

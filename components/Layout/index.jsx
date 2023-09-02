@@ -4,9 +4,8 @@ import { usePosition } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import { useContext, useEffect } from 'react'
 import styled, { css } from 'styled-components'
-import { ModalProduct } from '../../components/ModalProducts'
 import { Context } from '../../context'
-import { AlertBox } from 'pkg-components'
+import { AlertBox, ModalProduct } from 'pkg-components'
 import { AsideCheckout } from '../AsideCheckout'
 import { Footer } from './footer'
 import { FooterDesktop } from './FooterDesktop'
@@ -36,7 +35,6 @@ export const Layout = ({ children, watch, settings }) => {
     error: _err
   } = usePosition(watch, settings)
   useEffect(() => {
-    setAlertBox({ message: '', color: 'success' })
     if (latitude) {
       window.localStorage.setItem('latitude', latitude)
       window.localStorage.setItem('longitude', longitude)
@@ -48,7 +46,7 @@ export const Layout = ({ children, watch, settings }) => {
   const val = !['/delivery/[location]/[name]/[id]'].find(x => { return x === location.pathname })
   return (
     <div>
-      {/* <AlertBox err={error} /> */}
+      <AlertBox err={error} />
       <Main aside={!['/', '/login', '/entrar', '/restaurante', '/entrar/email', '/contact', '/varify-email', '/checkout/[id]', '/add-payment-method', '/register', '/terms_and_conditions', '/email/confirm/[code]', '/forgotpassword', '/teams/invite/[id]', '/autho', '/contact-us', '/switch-options'].find(x => { return x === location.pathname })} >
         <AsideCheckout handleMenu={handleMenu} menu={menu} />
         {<HeaderMain handleMenu={handleMenu} menu={menu} />}
@@ -56,7 +54,6 @@ export const Layout = ({ children, watch, settings }) => {
           {<NavHeaderMobile menuMobile={menuMobile} setOpenMenuMobile={setOpenMenuMobile} />}
           {children}
           {val && <FooterDesktop />}
-          <ModalProduct />
         </div>
         {!['/login', '/register', '/varify-email', '/restaurante', '/checkout/[id]', '/forgotpassword', '/terms_and_conditions', '/email/confirm/[code]', '/switch-options', '/teams/invite/[id]', '/contact'].find(x => { return x === location.pathname }) && <Footer />}
         <div style={{ gridArea: 'right' }}>

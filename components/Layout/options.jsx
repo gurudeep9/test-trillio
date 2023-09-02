@@ -53,8 +53,12 @@ export const Options = ({ handleMenu }) => {
     setShow(index === show ? false : index)
   }
   const [dataUser] = useUser()
+
   useEffect(() => {
-    setShow(false)
+    if (show) {
+      setShow(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
   // activa el menu de configuraciones del perfil
 
@@ -62,6 +66,8 @@ export const Options = ({ handleMenu }) => {
     setOpenMenuMobile(!menuMobile)
     setStatus(status === 'open' ? 'close' : 'open')
   }
+  const email = dataUser?.email ? dataUser?.email.split('@')[0] : ''
+
   return (
     <ContainerActions>
       <Overline onClick={() => { return setShow(!show) }} show={show} />
@@ -87,7 +93,7 @@ export const Options = ({ handleMenu }) => {
       <ButtonOption onClick={() => { return handleClick(1) }}>
         <IconUser color={PColor} size='25px' />
         <LeftNav show={show === 1}>
-          <Name>Hola, {dataUser?.username}</Name>
+          <Name>Hola {dataUser?.username ?? email}</Name>
           <Enlace href='/profile'>
             <a>
               <Button type='button'>

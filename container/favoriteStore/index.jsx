@@ -1,19 +1,19 @@
 import React from 'react'
-import { Container, Title } from './styled';
-import { useQuery } from '@apollo/client';
-import { GET_ALL_FAV_STORE } from 'container/profile/queries';
-import { ListRestaurant } from 'container/restaurantes/restaurant';
-// catStore
+import { Container, Title } from './styled'
+import { useFavoriteStores } from 'npm-pkg-hook'
+import { ListRestaurant } from 'container/restaurantes/restaurant'
 
 export const FavoriteStore = () => {
-    const { data: dataFav } = useQuery(GET_ALL_FAV_STORE)
-    return (
-        <Container>
-           {dataFav?.getFavorite?.length > 0  &&  <Title>Tus restaurantes Favoritos</Title>}
-            <ListRestaurant
-                like={true}
-                data={dataFav?.getFavorite || []}
-            />
-        </Container>
-    )
+  const [data, { loading, error }] = useFavoriteStores()
+  if (loading || error) return <></>
+
+  return (
+    <Container>
+      <Title>Tus restaurantes Favoritos</Title>
+      <ListRestaurant
+        data={data}
+        like={true}
+      />
+    </Container>
+  )
 }

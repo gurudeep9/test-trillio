@@ -1,6 +1,7 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
-
 import { newRegisterUser } from '../lib/resolvers/users/user'
+
+export const MAX_AGE = 60 * 60 * 8
 
 export default withIronSessionApiRoute(
   async function loginRoute (req, res) {
@@ -28,7 +29,9 @@ export default withIronSessionApiRoute(
     password: process.env.SESSION_KEY,
     cookieName: process.env.SESSION_NAME,
     cookieOptions: {
-      secure: process.env.NODE_ENV === 'production'
+      expires: new Date(Date.now() + MAX_AGE * 1000),
+      maxAge: MAX_AGE, // 8 hours,
+      secure: false
     }
   }
 )

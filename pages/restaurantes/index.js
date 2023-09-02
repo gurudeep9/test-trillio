@@ -33,8 +33,8 @@ import styles from '../../styles/Home.module.css'
 
 export default function RestaurantHome ({
   ACEPTE_COOKIE = true,
-  ID_CATEGORIE,
-  PRODUCT_NAME_COOKIE
+  ID_CATEGORIE = '',
+  PRODUCT_NAME_COOKIE = ''
 }) {
   const [data, { fetchMore }] = useRestaurant()
   const { setAlertBox } = useContext(Context)
@@ -57,7 +57,9 @@ mutation setCookie($name: String, $value: String) {
     newNotification
   }
   `
-  const { data: dataWS } = useSubscription(NEW_NOTIFICATION)
+  const { data: dataWS } = useSubscription(NEW_NOTIFICATION, {
+    context: { clientName: 'admin-server' }
+  })
   useEffect(() => {
     if (dataWS) {
       setAlertBox({ message: dataWS?.newNotification, duration: 30000 })
@@ -78,7 +80,7 @@ mutation setCookie($name: String, $value: String) {
         <Restaurant />
       </Section>
       <Section>
-        <ListRestaurant data={data?.getAllStoreInStore || []} />
+        <ListRestaurant data={data} />
       </Section>
       <RippleButton
         bgColor={BGColor}

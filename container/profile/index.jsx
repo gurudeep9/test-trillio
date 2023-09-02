@@ -69,7 +69,6 @@ export const Profile = () => {
     const obj = { ...getOneUserProfile, ...data?.getUser }
     setValues({ ...obj })
   }, [data, getOneUserProfile, dataUp])
-  // console.log(email)
   const [emailFormat, setEmailFormat] = useState('')
   // eslint-disable-next-line no-unused-vars
   const [_, setlastEmailFormat] = useState('')

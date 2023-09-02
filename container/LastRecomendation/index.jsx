@@ -7,15 +7,17 @@ import {
   useEffect,
   useState
 } from 'react'
-import { GET_ALL_PRODUCT_STORE, GET_ALL_STORE_RECOMMENDED } from 'gql/Recommendation'
+import { GET_ALL_STORE_RECOMMENDED } from 'gql/Recommendation'
 import { ListRestaurant } from 'container/restaurantes/restaurant'
-import CardProduct from 'container/RestaurantProfile/CardProducts'
 import { Context } from 'context'
 import Link from 'next/link'
-import { Row, Column } from 'pkg-components'
+import { useGetFoodRecomended } from 'npm-pkg-hook'
+import {
+  Row,
+  Column,
+  CardProducts
+} from 'pkg-components'
 
-// It may interest you
-// eslint-disable-next-line react/prop-types
 export const LastRecommended = ({ ID_CATEGORIE }) => {
   const [getOneCatStore, { data: dataCatSto }] = useLazyQuery(GET_ONE_STORE_IN_CATEGORY)
   const { data: dataStoreRecommended } = useQuery(GET_ALL_STORE_RECOMMENDED, {
@@ -31,50 +33,45 @@ export const LastRecommended = ({ ID_CATEGORIE }) => {
       }
     }).catch(() => { })
     setDataCatStore(dataCatSto?.getOneCatStore)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ID_CATEGORIE, dataStoreRecommended, dataCatSto])
   const { cName } = categoryStores || {}
   return (
     <Container>
       {dataStoreRecommended?.getAllMatchesStoreRecommended.length > 0 &&
-                <>
-                  <Title>Basado en tu última visita en {cName}  te recomendamos</Title>
-                  <ListRestaurant
-                    data={dataStoreRecommended?.getAllMatchesStoreRecommended || []}
-                  />
-                </>}
+        <>
+          <Title>Basado en tu última visita {cName && `en ${cName}`}  te recomendamos</Title>
+          <ListRestaurant
+            data={dataStoreRecommended?.getAllMatchesStoreRecommended || []}
+          />
+        </>}
     </Container>
   )
+}
+
+LastRecommended.propTypes = {
+  ID_CATEGORIE: PropTypes.string
 }
 
 export const ItMayInterestYou = ({ PRODUCT_NAME_COOKIE }) => {
   const { openProductModal, setOpenProductModal } = useContext(Context)
   let name = PRODUCT_NAME_COOKIE
   name = name?.split(' ')[0]
-  const { data: dataProduct } = useQuery(GET_ALL_PRODUCT_STORE, {
-    fetchPolicy: 'cache-and-network',
-    notifyOnNetworkStatusChange: true,
-    nextFetchPolicy: 'cache-first',
-    refetchWritePolicy: 'merge',
-    variables:
-        {
-          max: 6,
-          search: name
-        }
-  })
+  const [dataProduct] = useGetFoodRecomended({ name: 'buñuelos' })
 
   return (
     <Column margin={'50px auto'} maxWidth='1366px'>
-      {(dataProduct?.productFoodsAllRecommended?.length > 0) &&
-      <Title>Te puede interesar {name}
-      </Title>
+      {(dataProduct?.length > 0) &&
+        <Title>
+          Te puede interesar {name}
+        </Title>
       }
       <Row
-        display={'grid'}
+        display='grid'
         gridGap='10px'
-        gridTemplateColumns='repeat(auto-fill,minmax(280px,1fr))'
+        gridTemplateColumns='repeat(auto-fill,minmax(380px,1fr))'
       >
-        {dataProduct?.productFoodsAllRecommended?.length > 0 && dataProduct?.productFoodsAllRecommended?.map((food, i) => {
+        {dataProduct?.length > 0 && dataProduct?.map((food, i) => {
           return (
             <div key={i + 1}>
               <Link
@@ -87,8 +84,10 @@ export const ItMayInterestYou = ({ PRODUCT_NAME_COOKIE }) => {
                 shallow
               >
                 <a>
-                  <CardProduct
+                  <CardProducts
                     food={food}
+                    isEdit={false}
+                    isVisible={true}
                     key={food.pId}
                     onClick={() => { return setOpenProductModal(!openProductModal) }}
                   />

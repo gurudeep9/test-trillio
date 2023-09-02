@@ -64,7 +64,6 @@ import { API_GOOGLE_MAPS } from '../../apollo/urls'
 import { Form } from './Form'
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete'
 import { Input } from '@/container/InputSearch/styled'
-import { ContainerModal } from '../ModalProducts/styled'
 import {
   RippleButton,
   Row,
@@ -293,7 +292,7 @@ export const MapStore = ({ showModal, setShowModal }) => {
   }
   const showAddressLis = value.length < 4
   return (
-    <ContainerModal onClick={() => { return closeAllState() }} showModal={showModal}>
+    <div onClick={() => { return closeAllState() }} showModal={showModal}>
       <AwesomeModal onClick={e => { return e.stopPropagation() }} showModal={showModal}>
         {<Container modal={modal === 0}>
           <div className='content-location'>
@@ -458,7 +457,7 @@ export const MapStore = ({ showModal, setShowModal }) => {
           </ContentButton>}
         </ContainerMap>
       </AwesomeModal>
-    </ContainerModal>
+    </div>
   )
 }
 

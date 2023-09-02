@@ -95,18 +95,16 @@ const Login = ({ watch, settings }) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dev ? bodyDev : body)
         })
-
-        setAlertBox({ message: res.message, color: 'success' })
-
-        const { storeUserId } = res
-
-        if (storeUserId) {
-          const { userId, token } = res || {}
+        const {
+          userId,
+          token,
+          success
+        } = res || {}
+        if (success) {
+          setAlertBox({ message: res.message, color: 'success' })
           window.localStorage.setItem('session', token)
           window.localStorage.setItem('usuario', userId)
           setAlertBox({ message: `${res.message}`, color: 'success' })
-          router.push('/restaurantes')
-        } else {
           router.push('/restaurantes')
         }
       } catch (error) {

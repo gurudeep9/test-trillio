@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components'
 import { FadeDown } from '../../components/animations'
 import {
-  BColor,
-  BGColor,
-  DarkSilver,
-  EColor,
-  PColor,
-  SECBGColor
+    BColor,
+    BGColor,
+    DarkSilver,
+    EColor,
+    PColor,
+    SECBGColor
 } from '../../public/colors'
 import Link from 'next/link'
 
@@ -133,17 +133,17 @@ export const Anchor = styled.a`
    
     &&:hover{
         ${props => {
-    return props.hover
-      ? css`
+        return props.hover
+            ? css`
             color: ${PColor};
             
             `
-      : css`
+            : css`
             color: ${BGColor};
             background-color:${PColor};
             
         `
-  }}
+    }}
     }
     
 `
@@ -210,7 +210,7 @@ export const Box = styled.div`
     .landing-sign-up-voucher__texts__title {
         font-family: SulSans,Helvetica,sans-serif;
         box-sizing: border-box;
-        font-size: 1.1em;
+        font-size: 1.55rem;
         font-weight: 900;
         line-height: 1.25rem;
         color: ${BColor};
@@ -354,7 +354,7 @@ export const ContentImgs = styled.div`
 
     .contentimg {
         background-image: url("/images/company-finance.jpg");
-        /* background-image: url(${({ })}); */
+        /* background-image: url(${({})}); */
         background-size: cover;
         background-repeat: no-repeat;
         width: 33%;

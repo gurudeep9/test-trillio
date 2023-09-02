@@ -1,10 +1,9 @@
 import {
   useLazyQuery,
-  useMutation,
-  useQuery
+  useMutation
 } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { useFormTools } from 'npm-pkg-hook'
+import { useFormTools, useGetCart } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import React, {
   useEffect,
@@ -61,8 +60,8 @@ export const Checkout = ({
   const [key, setSetKey] = useState([])
   const handleClick = index => { setActive(index === active ? true : index) }
   // QUERIES
-  const { data: dataShoppingCard, loading } = useQuery(GET_ALL_SHOPPING_CARD)
-  const result = dataShoppingCard?.getAllShoppingCard?.reduce(function (r, a) {
+  const [dataShoppingCard, { loading }] = useGetCart()
+  const result = dataShoppingCard?.reduce(function (r, a) {
     r[a.getStore?.storeName] = r[a.getStore?.storeName] || []
     r[a.getStore?.storeName].push(a)
     return r
@@ -75,7 +74,7 @@ export const Checkout = ({
   const [deleteOneItem] = useMutation(DELETE_ONE_ITEM_SHOPPING_PRODUCT, {
     onCompleted: data => {
       setAlertBox({ message: data?.deleteOneItem?.message })
-      if (dataShoppingCard?.getAllShoppingCard?.length === 1) {
+      if (dataShoppingCard?.length === 1) {
         setAlertBox({ message: 'Tu carrito esta vació' })
         router.replace('/restaurantes')
       }
@@ -84,7 +83,7 @@ export const Checkout = ({
   const [createMultipleOrderStore] = useMutation(CREATE_MULTIPLE_ORDER_PRODUCTS, {
     onCompleted: data => {
       if (data.createMultipleOrderStore.success === true) {
-        router.push('/proceso-de-compra/finalizar')
+        // router.push('/proceso-de-compra/finalizar')
       }
     }
   })
@@ -98,7 +97,7 @@ export const Checkout = ({
   const [totalProductPrice, setTotalProductPrice] = useState(0)
   // eslint-disable-next-line
   const handleSubmitPedido = async () => {
-    const newArray = dataShoppingCard?.getAllShoppingCard.map(x => { return { ShoppingCard: x.ShoppingCard, idStore: x.getStore.idStore } })
+    const newArray = dataShoppingCard.map(x => { return { ShoppingCard: x.ShoppingCard, idStore: x.getStore.idStore } })
     const code = RandomCode(10)
     if (!objLocation) return setAlertBox({ message: 'Elige una ubicación' })
     await createMultipleOrderStore({
@@ -138,25 +137,26 @@ export const Checkout = ({
     if (!loading && dataShoppingCard !== null) {
       const dataProduct2 = Object.keys(result)
       setSetKey(dataProduct2)
-      setCountItemProduct(dataShoppingCard?.getAllShoppingCard.length || 0)
+      setCountItemProduct(dataShoppingCard.length || 0)
     }
   }, [dataShoppingCard])
-  const total = 0
-  let suma = 0
+
+
   useEffect(() => {
-    dataShoppingCard?.getAllShoppingCard.forEach((a) => {
-      const { productFood, cantProducts } = a || {}
-      const { ProPrice, ValueDelivery } = productFood || {}
-      const PriceFinal = (ProPrice * cantProducts) + ValueDelivery
-      suma += PriceFinal
-      setTotalProductPrice(suma)
-    })
-  }, [
-    totalProductPrice,
-    suma,
-    total,
-    dataShoppingCard
-  ])
+    const totalProductPrice = dataShoppingCard.reduce((total, item) => {
+      const { productFood, cantProducts } = item || {}
+      if (productFood) {
+        const { ProPrice, ValueDelivery } = productFood
+        const PriceFinal = (ProPrice * cantProducts) + ValueDelivery
+        return total + PriceFinal
+      }
+      return total
+    }, 0)
+
+    setTotalProductPrice(totalProductPrice)
+  }, [dataShoppingCard])
+
+
   // HANDLESS
   const handleDeleteItemShopping = item => {
     deleteOneItem({
@@ -174,14 +174,32 @@ export const Checkout = ({
       }
     })
   }
+  /**
+   * Calculate the total cost of products including delivery.
+   *
+   * @param {number} ProPrice - Price of a single product.
+   * @param {number} ProDelivery - Delivery cost (optional).
+   * @param {number} cant - Quantity of products.
+   * @returns {number} - Total cost including delivery.
+   */
   const sumProduct = (ProPrice, ProDelivery, cant) => {
-    const price = parseInt(ProPrice)
-    const priceFinal = cant * price
-    const delivery = parseInt(ProDelivery || 0)
-    return delivery ? priceFinal + delivery : priceFinal
+    // Parse input values to integers
+    const price = parseInt(ProPrice) || 0
+    const quantity = parseInt(cant) || 0
+    const delivery = parseInt(ProDelivery) || 0
+
+    // Calculate the total cost of products
+    const productCost = price * quantity
+
+    // Calculate the total cost including delivery
+    const totalCost = productCost + delivery
+
+    return totalCost
   }
+
   const checkoutCart = active === 2
-  const existData = dataShoppingCard?.getAllShoppingCard?.length
+  const existData = dataShoppingCard?.length
+  if (!existData && !loading) return <>Carrito vacio</>
   return (
     <Body>
       {existData > 0
@@ -263,7 +281,7 @@ export const Checkout = ({
               color={PColor}
               size='30px'
             >
-              $ {numberFormat(dataShoppingCard?.getAllShoppingCard.length > 0 && totalProductPrice)}
+              $ {numberFormat(dataShoppingCard.length > 0 && totalProductPrice)}
             </Text>
           </Wrapper>
         </CardPro>
