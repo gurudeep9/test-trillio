@@ -1,3 +1,4 @@
+/* eslint-disable n/no-deprecated-api */
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 const { Base64 } = require('js-base64')

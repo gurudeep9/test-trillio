@@ -74,7 +74,7 @@ const getLink = async (operation) => {
   // await splitLink({ query: operation.query })
   const headers = await authLink()
   const service = operation.getContext().clientName
-  let uri = `${URL_BASE}graphql`
+  let uri = `${process.env.URL_BACK_SERVER}graphql`
   if (service === 'subscriptions') uri = `${URL_ADMIN_SERVER}graphql`
   if (service === 'main') uri = 'http://localhost:3000/api/graphql'
   if (service === 'admin') uri = `${URL_ADMIN}graphql`

@@ -48,6 +48,7 @@ const Login = ({ watch, settings }) => {
       })
     return locationFormat ?? locationFormat[0].formatted_address
   }
+  console.log(process.env.URL_BACK_SERVER)
   const [dev] = useState(process.env.NODE_ENV === 'development')
   const responseGoogle = async (response) => {
     if (response && typeof response?.preventDefault === 'function') {
@@ -90,7 +91,7 @@ const Login = ({ watch, settings }) => {
       }
 
       try {
-        const res = await fetchJson(`${OUR_URL_BASE}auth`, {
+        const res = await fetchJson(`${process.env.URL_BACK_SERVER}api/auth`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dev ? bodyDev : body)

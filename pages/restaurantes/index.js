@@ -49,7 +49,7 @@ mutation setCookie($name: String, $value: String) {
 }
   `
   const [setCookie] = useMutation(UPDATE_COOKIES, {
-    context: { clientName: 'main' }
+    context: { clientName: '' }
 
   })
   const NEW_NOTIFICATION = gql`

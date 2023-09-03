@@ -17,6 +17,7 @@ module.exports = async (phase) => {
     NAMEDB: process.env.NAMEDB,
     USERDB: process.env.USERDB,
     PASSDB: process.env.PASSDB,
+    URL_BACK_SERVER: process.env.URL_BACK_SERVER,
     HOST_DB: process.env.HOST_DB,
     BUSSINESS_TITLE: process.env.BUSSINESS_TITLE,
     MYSQL_PORT: process.env.MYSQL_PORT,

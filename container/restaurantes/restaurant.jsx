@@ -17,7 +17,7 @@ export const ListRestaurant = ({
   like = false
 }) => {
   const [pushOneRecommendation] = useMutation(PUSH_RECOMMENDED, {
-    context: { clientName: 'main' }
+    context: { clientName: '' }
   })
 
   return (

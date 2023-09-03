@@ -9,7 +9,7 @@ const mergeArraysWithDuplicates = (existing = [], incoming = [], max = Infinity,
     for (let i = 0; i < incoming.length && merged.length < max; ++i) {
       const item = incoming[i]
       if (uniqueKey) {
-        const index = merged.findIndex((existingItem) => {return existingItem[uniqueKey] === item[uniqueKey]})
+        const index = merged.findIndex((existingItem) => { return existingItem[uniqueKey] === item[uniqueKey] })
         if (index >= 0) {
           merged[index] = item
         } else {
@@ -29,12 +29,12 @@ export const cache = new InMemoryCache({
     Query: {
       fields: {
         isLogged: {
-          read: () => {return isLoggedVar()}
+          read: () => { return isLoggedVar() }
         },
         allPosts: concatPagination(),
         getOnePedidoStore: {
           keyArgs: ['pCodeRef'],
-          merge(existing, incoming) {
+          merge (existing, incoming) {
             if (!incoming) return existing
             if (!existing) return incoming
 
@@ -53,7 +53,7 @@ export const cache = new InMemoryCache({
         },
         getAllPedidoStoreFinal: {
           keyArgs: ['idStore', 'search', 'statusOrder'],
-          merge(existing, incoming, { args: { max = Infinity } }) {
+          merge (existing, incoming, { args: { max = Infinity } }) {
             try {
               // Verificar que el objeto exista y tenga la propiedad getAllPedidoStore
               const existingResults = existing?.getAllPedidoStore ?? []
@@ -63,7 +63,7 @@ export const cache = new InMemoryCache({
               for (let i = 0; i < incomingResults.length && merged.length < max; ++i) {
                 const incomingResult = incomingResults[i]
                 // Verificar que el objeto exista y tenga la propiedad pCodeRef
-                if (incomingResult?.pCodeRef && !merged.some(existingResult => {return existingResult.pCodeRef === incomingResult.pCodeRef})) {
+                if (incomingResult?.pCodeRef && !merged.some(existingResult => { return existingResult.pCodeRef === incomingResult.pCodeRef })) {
                   merged.push(incomingResult)
                 }
               }
@@ -77,13 +77,13 @@ export const cache = new InMemoryCache({
           }
         },
         getAllSalesStoreTotal: {
-          merge(existing = {}, incoming) {
+          merge (existing = {}, incoming) {
             return { ...existing, ...incoming }
           }
         },
         getAllSalesStore: {
           keyArgs: ['idStore', 'search', 'max', 'fromDate', 'toDate'],
-          merge(existing, incoming, { args: { max = Infinity } }) {
+          merge (existing, incoming, { args: { max = Infinity } }) {
             try {
               // Verificar que el objeto exista y tenga la propiedad getAllSalesStore
               const existingResults = existing?.getAllSalesStore ?? []
@@ -93,7 +93,7 @@ export const cache = new InMemoryCache({
               for (let i = 0; i < incomingResults.length && merged.length < max; ++i) {
                 const incomingResult = incomingResults[i]
                 // Verificar que el objeto exista y tenga la propiedad pCodeRef
-                if (incomingResult?.pCodeRef && !merged.some(existingResult => {return existingResult.pCodeRef === incomingResult.pCodeRef})) {
+                if (incomingResult?.pCodeRef && !merged.some(existingResult => { return existingResult.pCodeRef === incomingResult.pCodeRef })) {
                   merged.push(incomingResult)
                 }
               }
@@ -108,11 +108,11 @@ export const cache = new InMemoryCache({
         },
         productFoodsAll: {
           keyArgs: ['categories', 'desc', 'fromDate', 'gender', 'pState', 'search', 'toDate'],
-          merge(existing, incoming, { args: { max = Infinity } }) {
+          merge (existing, incoming, { args: { max = Infinity } }) {
             const merged = Array.isArray(existing) ? existing?.slice(0) : []
             for (let i = 0; i < incoming.length && merged.length < max; ++i) {
               const item = incoming[i]
-              const index = merged.findIndex((existingItem) => {return existingItem.pId === item.pId})
+              const index = merged.findIndex((existingItem) => { return existingItem.pId === item.pId })
               if (index >= 0) {
                 merged[index] = item
               } else {
@@ -124,7 +124,7 @@ export const cache = new InMemoryCache({
         },
         getCatProductsWithProduct: {
           keyArgs: ['search', 'min', 'max', 'gender', 'desc', 'categories'],
-          merge(existing, incoming, { args: { max = Infinity } }) {
+          merge (existing, incoming, { args: { max = Infinity } }) {
             const merged = {
               ...incoming,
               catProductsWithProduct: mergeArraysWithDuplicates(
@@ -139,7 +139,7 @@ export const cache = new InMemoryCache({
         },
         getAllContacts: {
           keyArgs: ['search', 'min', 'max', 'idStore', 'pState'],
-          merge(existing, incoming, { args: { max = Infinity } }) {
+          merge (existing, incoming, { args: { max = Infinity } }) {
             const merged = {
               ...incoming,
               getAllContacts: mergeArraysWithDuplicates(
@@ -165,7 +165,7 @@ export const cache = new InMemoryCache({
             'max',
             'statusOrder'
           ],
-          merge(existing, incoming, { args: { max = Infinity } }) {
+          merge (existing, incoming, { args: { max = Infinity } }) {
             const merged = {
               ...incoming,
               getAllOrdersFromStore: mergeArraysWithDuplicates(
@@ -180,7 +180,7 @@ export const cache = new InMemoryCache({
         },
         getAllClients: {
           keyArgs: ['search', 'min', 'max', 'idStore'],
-          merge(existing, incoming, { args: { max = Infinity } }) {
+          merge (existing, incoming, { args: { max = Infinity } }) {
             const merged = {
               ...incoming,
               getAllContacts: mergeArraysWithDuplicates(
