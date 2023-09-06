@@ -43,6 +43,7 @@ export const RestaurantProfile = ({
   setQuantity = () => { },
   setRatingStar = () => { },
   setRatingState = () => { },
+  handleQuery = () => { },
   setState = () => { },
   handleAddSubExtraOptionalProduct = () => { },
   setTasty = () => { },
@@ -194,7 +195,10 @@ export const RestaurantProfile = ({
         </ContentSearch>
         <ProductCategories
           data={categoriesWithProduct}
-          handleGetOneProduct={getOneProduct}
+          handleGetOneProduct={(food) => {
+            handleQuery('plato', food.pId)
+            getOneProduct(food)
+          }}
           reference={section1Ref}
         />
       </StickyViewport>
@@ -206,6 +210,7 @@ export const RestaurantProfile = ({
 
 RestaurantProfile.propTypes = {
   SetAppearance: PropTypes.func,
+  handleQuery: PropTypes.func,
   addFav: PropTypes.func,
   appearance: PropTypes.any,
   comments: PropTypes.string,
@@ -236,6 +241,7 @@ RestaurantProfile.propTypes = {
   handleRating: PropTypes.func,
   id: PropTypes.any,
   isMobile: PropTypes.bool,
+  loadingProduct: PropTypes.bool,
   openModalProduct: PropTypes.shape({
     setState: PropTypes.func,
     state: PropTypes.any

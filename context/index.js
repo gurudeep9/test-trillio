@@ -19,6 +19,8 @@ const Provider = ({ children }) => {
   // STATE
   const router = useRouter()
   const [error, setError] = useState({})
+  const [openModalProduct, setOpenModalProduct] = useState(false)
+
   // State to Session
   const [isCompany, setCompany] = useState({})
   // Effects para el Toast
@@ -204,6 +206,7 @@ const Provider = ({ children }) => {
     openProductModal,
     saveDataState,
     selectedStore,
+    openModalProduct,
     state_product_card,
     stateLocation,
     status,
@@ -221,6 +224,7 @@ const Provider = ({ children }) => {
     setOpenMenuMobile,
     setOpenProductModal,
     setSessionActive,
+    setOpenModalProduct,
     setStatus,
     setStoreChatActive,
     useCompany

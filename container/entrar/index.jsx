@@ -23,7 +23,6 @@ import {
   LoadingButton,
   GoogleLogin
 } from 'pkg-components'
-import { OUR_URL_BASE } from '@/apollo/urls'
 
 const Login = ({ watch, settings }) => {
   const router = useRouter()
@@ -48,7 +47,6 @@ const Login = ({ watch, settings }) => {
       })
     return locationFormat ?? locationFormat[0].formatted_address
   }
-  console.log(process.env.URL_BACK_SERVER)
   const [dev] = useState(process.env.NODE_ENV === 'development')
   const responseGoogle = async (response) => {
     if (response && typeof response?.preventDefault === 'function') {
@@ -94,7 +92,8 @@ const Login = ({ watch, settings }) => {
         const res = await fetchJson(`${process.env.URL_BACK_SERVER}api/auth`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dev ? bodyDev : body)
+          body: JSON.stringify(!dev ? bodyDev : body),
+          credentials: 'include'
         })
         const {
           userId,
@@ -124,7 +123,7 @@ const Login = ({ watch, settings }) => {
       <Form>
         <Text size='30px'>¡Falta poco para saciar tu hambre!</Text>
         <Text size='15px'>¿Cómo deseas continuar?</Text>
-        {dev && <button onClick={(e) => { return responseGoogle(e) }}>Login falso</button>}
+        {true && <button onClick={(e) => { return responseGoogle(e) }}>Login falso</button>}
         <GoogleLogin
           autoLoad={false}
           clientId='58758655786-u323tp1dpi6broro865rrm488gh4mnpu.apps.googleusercontent.com'

@@ -19,6 +19,8 @@ import {
 export const AsideCheckout = ({ menu }) => {
   const {
     setAlertBox,
+    openModalProduct,
+    setOpenModalProduct,
     setCountItemProduct,
     handleMenu
   } = useContext(Context)
@@ -34,6 +36,8 @@ export const AsideCheckout = ({ menu }) => {
   } = useAsideCart({
     setCountItemProduct,
     setAlertBox,
+    openModalProduct,
+    setOpenModalProduct,
     handleMenu
   })
 

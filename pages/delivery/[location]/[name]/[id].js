@@ -30,6 +30,7 @@ import {
   useCart,
   useGetOneStoreRating,
   numberFormat,
+  useManageQueryParams,
   useStore
 } from 'npm-pkg-hook'
 
@@ -39,9 +40,15 @@ export default function StoreHomeView ({ idStore }) {
   const { name, id } = location.query || {}
   const locationName = location.query.location
   const [rating, setRatingState] = useState(0)
+  const { handleQuery } = useManageQueryParams()
+
   const [like, setLike] = useState(0)
-  const [openModalProduct, setOpenModalProduct] = useState(false)
-  const { setAlertBox, handleMenu } = useContext(Context)
+  const {
+    setAlertBox,
+    handleMenu,
+    setOpenModalProduct,
+    openModalProduct
+  } = useContext(Context)
   // CUSTOM HOOKS
   const [dataMinPedido] = useGetMinPrice()
   const [dataProductAndCategory, { fetchMore }] = useCatWithProductClient(idStore || id)
@@ -51,6 +58,7 @@ export default function StoreHomeView ({ idStore }) {
     quantity,
     setComments,
     comments,
+    loading: loadingProduct,
     dataOptional,
     dataExtra,
     dataOneProduct,
@@ -80,6 +88,7 @@ export default function StoreHomeView ({ idStore }) {
     handleIncrease,
     handleDecrease,
     openModalProduct,
+    loading: loadingProduct,
     handleMenu,
     setComments,
     comments,
@@ -190,7 +199,7 @@ export default function StoreHomeView ({ idStore }) {
   const product = {
     dataOneProduct,
     dataOptional,
-    loading: false,
+    loading: loadingProduct,
     dataExtra
   }
 
@@ -224,6 +233,7 @@ export default function StoreHomeView ({ idStore }) {
     getOneProduct,
     handleGetRating,
     handleRating,
+    handleQuery,
     removeFav,
     setLike,
     setAlertBox,
