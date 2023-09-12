@@ -12,7 +12,6 @@
     "check:eslint": "eslint '*/**/*.{js,jsx,tsx}' --fix --max-warnings=0 --no-error-on-unmatched-pattern",
     "eslint:fix": "npx eslint --fix --fix-type suggestion,layout ."
   },
-
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "4.0.1",
     "@graphql-tools/load-files": "6.5.3",
@@ -57,13 +56,13 @@
     "use-places-autocomplete": "4.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.24.0",
+    "eslint": "^8.48.0",
     "eslint-config-next": "12.0.10",
-    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-n": "^15.3.0",
-    "eslint-plugin-promise": "^6.0.1",
-    "eslint-plugin-react": "^7.31.8"
+    "eslint-plugin-n": "^16.0.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2"
   },
   "proxy": "localhost:3001"
 }

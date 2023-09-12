@@ -3,7 +3,7 @@ import {
   useMutation
 } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { useFormTools, useGetCart } from 'npm-pkg-hook'
+import { useFormTools, useGetCart, calculateTotalPrice } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import React, {
   useEffect,
@@ -83,7 +83,7 @@ export const Checkout = ({
   const [createMultipleOrderStore] = useMutation(CREATE_MULTIPLE_ORDER_PRODUCTS, {
     onCompleted: data => {
       if (data.createMultipleOrderStore.success === true) {
-        // router.push('/proceso-de-compra/finalizar')
+        router.push('/proceso-de-compra/finalizar')
       }
     }
   })
@@ -137,23 +137,13 @@ export const Checkout = ({
     if (!loading && dataShoppingCard !== null) {
       const dataProduct2 = Object.keys(result)
       setSetKey(dataProduct2)
-      setCountItemProduct(dataShoppingCard.length || 0)
     }
   }, [dataShoppingCard])
 
 
   useEffect(() => {
-    const totalProductPrice = dataShoppingCard.reduce((total, item) => {
-      const { productFood, cantProducts } = item || {}
-      if (productFood) {
-        const { ProPrice, ValueDelivery } = productFood
-        const PriceFinal = (ProPrice * cantProducts) + ValueDelivery
-        return total + PriceFinal
-      }
-      return total
-    }, 0)
-
-    setTotalProductPrice(totalProductPrice)
+    const totalPrice = calculateTotalPrice(dataShoppingCard);
+    setTotalProductPrice(Math.abs(totalPrice))
   }, [dataShoppingCard])
 
 

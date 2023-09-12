@@ -118,11 +118,11 @@ export const AsideCheckout = ({ menu }) => {
                             </div>
                           </div>
                           <ContentTotal>
-                            <Text margin='0 0 0 10px' > Subtotal</Text>
-                            <Text margin='0 0 0 10px' >$ {numberFormat(product.productFood?.ProPrice)}</Text>
+                            <Text margin='0 0 0 10px'> Subtotal</Text>
+                            <Text margin='0 0 0 10px'>$ {numberFormat(product.productFood?.ProPrice)}</Text>
                           </ContentTotal>
                           <ContentTotal>
-                            <Text margin='0 0 0 10px' >Costo de envio</Text>
+                            <Text margin='0 0 0 10px' >Costo de envío</Text>
                             {product.productFood?.ValueDelivery !== null || 0 ? <Text margin='0 0 0 10px' >$ {numberFormat(product.productFood?.ValueDelivery)}</Text> : <Text color={APColor}>Gratis</Text>}
                           </ContentTotal>
                           <ContentTotal>

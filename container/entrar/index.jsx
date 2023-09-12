@@ -92,7 +92,7 @@ const Login = ({ watch, settings }) => {
         const res = await fetchJson(`${process.env.URL_BACK_SERVER}api/auth`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(!dev ? bodyDev : body),
+          body: JSON.stringify(dev ? bodyDev : body),
           credentials: 'include'
         })
         const {

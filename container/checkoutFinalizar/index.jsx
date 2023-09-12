@@ -1,11 +1,9 @@
-import NotFount from '@/components/404'
-import { useQuery } from '@apollo/client'
 import moment from 'moment'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { BGColor } from 'public/colors'
+import { useStatusOrdersClient } from 'npm-pkg-hook'
 import { IconWhatsApp } from 'public/icons'
-import { GET_ALL_PEDIDOS_STATUS } from './queries'
 import {
   Anchor,
   ContainerShare,
@@ -20,29 +18,24 @@ import {
 
 export const CheckoutFinalizar = () => {
   // STATE
-  const { data, loading } = useQuery(GET_ALL_PEDIDOS_STATUS, {
-    pollInterval: 60000,
-    fetchPolicy: 'cache-and-network',
-    onError: () => {}
-  })
+  const { data, loading } = useStatusOrdersClient()
   const handleContact = ({ getOneStore, ref }) => {
     const { storePhone } = getOneStore
     window.open(`https://api.whatsapp.com/send?text='Hola, mi pedido es ${ref}'?phone=${storePhone}`)
   }
-  const storeOrder = data?.getAllPedidoUserFinal || []
   if (loading) {
     return <span>Loading</span>
   }
-  if (!loading && !storeOrder.length > 0) {
+  if (!loading && !data.length > 0) {
     return (
       <div>
-        <NotFount />
+        <Text>Aun no tienes pedidos</Text>
       </div>
     )
   }
   return (
     <Wrapper>
-      {!!data && storeOrder?.map((x, i) => {
+      {!!data && data?.map((x, i) => {
         const { getOneStore } = x
         return (
           <div className='wrapper-column' key={i + 1}>
@@ -85,7 +78,8 @@ export const CheckoutFinalizar = () => {
                       pulse={x.pSState === 4}
                       text={'Pedido concluido'}
                     />}
-                  </OlList>}
+                  </OlList>
+                }
                 <DisRestaurant>
                   <Text margin='12px 0 0 5px' size='19px'>{getOneStore?.storeName}</Text>
                   <Link href={`/delivery/${encodeURIComponent(getOneStore?.city?.cName?.toLocaleLowerCase())}-${encodeURIComponent(getOneStore?.department?.dName?.toLocaleLowerCase())}/${encodeURIComponent(getOneStore?.storeName)}/${getOneStore?.idStore}`}>
@@ -93,7 +87,6 @@ export const CheckoutFinalizar = () => {
                                             Ir a la tienda
                     </Anchor>
                   </Link>
-
                   <div className='dish-restaurant__divisor'></div>
                   <button> Enviar mensaje</button>
                   <ContentShare >
@@ -125,7 +118,6 @@ export const StatusItemOrderProcess = ({
   return (
     <FeedItem pulse={pulse}>
       <span className='activity-text'>{text}</span>
-      {/* <span className='activity-text'>{x.pSState === 1 ? 'Aceptado' : x.pSState === 2 ? 'Pedido en proceso' : x.pSState === 3 ? 'listo para entrega' : x.pSState === 4 ? 'Pedido pagado (Concluido)'  : x.pSState === 5 ? 'Rechazado' : 'Pedido en espera de confirmacion'}</span> */}
       <div>
         <span className='text-info'>{text}</span>
         <span className='date'>{moment(data).format('DD/MM/YYYY')}</span>

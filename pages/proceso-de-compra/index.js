@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { useContext } from 'react'
-
 import { Checkout } from '../../container/checkout'
 import { Context } from '../../context'
 
@@ -21,7 +20,7 @@ export default function ProcessView () {
       <Checkout
         locationStr={locationStr}
         setAlertBox={setAlertBox}
-        setCountItemProduct={setCountItemProduct}
+        setCountItemProduct={()=>{}}
         setModalLocation={setModalLocation}
       />
     </div>
