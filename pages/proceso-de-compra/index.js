@@ -20,7 +20,7 @@ export default function ProcessView () {
       <Checkout
         locationStr={locationStr}
         setAlertBox={setAlertBox}
-        setCountItemProduct={()=>{}}
+        setCountItemProduct={setCountItemProduct}
         setModalLocation={setModalLocation}
       />
     </div>

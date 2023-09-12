@@ -1,17 +1,4 @@
 {
-  "name": "app",
-  "private": true,
-  "scripts": {
-    "rm": "rm -rf node_modules && npm install -f",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "link:pkgch": "npm link npm-pkg-hook pkg-components &&  rm -rf .next -f",
-    "lint:fix": "npm run lint -- --fix",
-    "check:eslint": "eslint '*/**/*.{js,jsx,tsx}' --fix --max-warnings=0 --no-error-on-unmatched-pattern",
-    "eslint:fix": "npx eslint --fix --fix-type suggestion,layout ."
-  },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "4.0.1",
     "@graphql-tools/load-files": "6.5.3",
@@ -64,5 +51,18 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2"
   },
-  "proxy": "localhost:3001"
+  "name": "app",
+  "private": true,
+  "proxy": "localhost:3001",
+  "scripts": {
+    "build": "next build",
+    "check:eslint": "eslint '*/**/*.{js,jsx,tsx}' --fix --max-warnings=0 --no-error-on-unmatched-pattern",
+    "dev": "next dev",
+    "eslint:fix": "npx eslint --fix --fix-type suggestion,layout .",
+    "link:pkgch": "npm link npm-pkg-hook pkg-components &&  rm -rf .next -f",
+    "lint": "next lint",
+    "lint:fix": "npm run lint -- --fix",
+    "rm": "rm -rf node_modules && npm install -f",
+    "start": "next start"
+  }
 }
