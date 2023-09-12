@@ -74,11 +74,10 @@ const getLink = async (operation) => {
   // await splitLink({ query: operation.query })
   const headers = await authLink()
   const service = operation.getContext().clientName
-  let uri = `${process.env.URL_BACK_SERVER}graphql`
-  if (service === 'subscriptions') uri = `${URL_ADMIN_SERVER}graphql`
-  if (service === 'main') uri = 'http://localhost:3000/api/graphql'
-  if (service === 'admin') uri = `${URL_ADMIN}graphql`
-  if (service === 'admin-server') uri = `${URL_ADMIN_SERVER}graphql`
+  let uri = `${process.env.URL_BACK_SERVER}/graphql`
+  if (service === 'main') uri = `${process.env.URL_BACK_SERVER}/graphql`
+  if (service === 'admin-store') uri = `${URL_ADMIN}graphql`
+  if (service === 'admin-server') uri = `${process.env.URL_ADMIN_SERVER}`
   const link = new HttpLink({
     uri,
     credentials: 'same-origin',

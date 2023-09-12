@@ -62,9 +62,8 @@ const Login = ({ watch, settings }) => {
         imageUrl
       } = profileObj || {}
 
-      const locationResults = await fetchData(location?.latitude, location?.longitude)
-      const locationFormat = locationResults?.[0]?.formatted_address
-
+      // const locationResults = await fetchData(location?.latitude, location?.longitude)
+      const locationFormat = {}
       const device = await getDeviceId()
       const body = {
         name,
@@ -77,6 +76,7 @@ const Login = ({ watch, settings }) => {
         deviceid: device,
         imageUrl
       }
+      
       const bodyDev = {
         name: 'Jesus Juvinao',
         username: 'Jesus Juvinao',
@@ -89,12 +89,14 @@ const Login = ({ watch, settings }) => {
       }
 
       try {
-        const res = await fetchJson(`${process.env.URL_BACK_SERVER}api/auth`, {
+        const res = await fetchJson(`${process.env.URL_BACK_SERVER}/api/auth`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dev ? bodyDev : body),
           credentials: 'include'
         })
+        console.log(res, 'hola')
+
         const {
           userId,
           token,
@@ -113,6 +115,7 @@ const Login = ({ watch, settings }) => {
         setLoading(false)
       }
     } catch (error) {
+      console.log(error)
       // Handle error
     }
   }
