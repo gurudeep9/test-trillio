@@ -47,11 +47,6 @@ export const BannerPromo = styled.div`
 `
 export const ContainerCardProduct = styled.div`
     display: flex;
-    /* margin: 0 40px ; */
-    /* grid-template-columns: repeat(100, 100px); */
-    /* padding: 5px; */
-    /* grid-template: 1fr/ 20% 20% 20% 20% 20% ; */
-    /* grid-template-columns: 33% repeat(auto-fill, 33%) 33%; */
 
 `
 export const ImageBannerPromo = styled.img`
