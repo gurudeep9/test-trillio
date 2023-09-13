@@ -10,7 +10,7 @@ export const PromosBanner = () => {
   const { data } = useQuery(GET_ALL_BANNERS, {
     context: { clientName: 'admin-store' }
   })
-
+  console.log({data})
   return (
     <Content>
       <ContainerCardProduct>
@@ -22,21 +22,19 @@ export const PromosBanner = () => {
           spaceBetween={10}
           virtual
         >
-          {data && data?.getAllMasterBanners?.map((banner, index) => {
+          {data?.getAllMasterBanners?.map((banner, index) => {
             return (
               <SwiperSlide
                 key={banner.BannerId}
                 virtualIndex={index}
               >
                 <Link
-                  // key={banner.BannerId}
-                  href={`/restaurantes/promos/${banner.name.replace(/\s/g, '-')}/${banner.BannerId}`}
+                  href={`/restaurantes/promos/${banner?.name?.replace(/\s/g, '-')}/${banner?.BannerId}`}
                   prefetch={true}
                 >
                   <a>
                     <BannerPromo
-                      color={color}
-                      key={banner.pId}
+                      key={banner?.pId}
                     >
                       <Img alt={banner.description} src={banner.path} />
                     </BannerPromo>
@@ -57,7 +55,7 @@ export const PromoBannerStores = () => {
     context: { clientName: 'admin-store' }
   })
   const dataFinal = datapro?.getAllPromoBanners?.slice(0, 3) ?? [];
-  
+
   return (
     <ContainerSliderPromo>
       {datapro && dataFinal?.map(pb => {
