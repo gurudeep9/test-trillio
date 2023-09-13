@@ -72,7 +72,7 @@ export const CardPromo = styled.div`
     position: relative;
     text-align: center;
     @media (max-width: 960px){
-       height: 250px;
+        height: 250px;
 
     }
     .goto-action {
@@ -86,7 +86,7 @@ export const CardPromo = styled.div`
     position: absolute;
     width: 100%;
     z-index: 1;
-    background: ${({ final }) =>  `linear-gradient(${final})}`};
+    background: linear-gradient(0deg,rgb(255 0 0 / 53%) 0%,rgb(255 0 0 / 0%) 100%);
     }
     .text {
         font-size: 22px;
@@ -107,40 +107,3 @@ export const ContainerSliderPromo = styled.div`
         /* display: flex; */
     }
 `
-
-// const chartColor = ['rgba(1,25,71, 0.0001)', 'rgb(1,25,71)', rgba(255,0,0,1)]
-// // const final = 
-// const final = `0deg, ${chartColor[(Math.random() * (3 - 0) + 0).toFixed(0)]} 0%, ${chartColor[(Math.random() * (3 - 0) + 0).toFixed(0)]} 100%`
-// export const CardPromo = styled.div`
-//     position: relative;
-//     border-radius: 5px;
-//     border-radius: 6px;
-//     display: block;
-//     height: 250px;
-//     overflow: hidden;
-//     position: relative;
-//     text-align: center;
-//     @media (max-width: 960px){
-//        height: 150px;
-//     }
-//     .goto-action {
-//     /* background: linear-gradient(${final}); */
-//     align-items: center;
-//     bottom: 0;
-//     display: flex;
-//     left: 0;
-//     padding: 16px;
-//     position: absolute;
-//     width: 100%;
-//     }
-//     .text {
-//         font-size: 22px;
-//     font-weight: 600;
-//     line-height: 1.09;
-//     color: ${BGColor};
-//     @media (max-width: 960px){
-//        font-size: 12px;
-
-//     }
-//     }
-// `
