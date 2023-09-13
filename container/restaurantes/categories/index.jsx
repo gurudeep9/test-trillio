@@ -1,10 +1,10 @@
-import { CtnBox } from '../styled'
-import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
+import { useCategoryStore } from 'npm-pkg-hook'
+import React from 'react'
 import styled from 'styled-components'
 import { PColor } from '../../../public/colors'
-import { useCategoryStore } from 'npm-pkg-hook'
-import Image from 'next/image'
+import { CtnBox } from '../styled'
 export const Categories = () => {
   const [getCatStore] = useCategoryStore()
   return (
@@ -69,6 +69,7 @@ export const List = styled.div`
     gap: 5px;
     grid-auto-flow: column;
     place-content: space-around;
+    padding: 0 20px;
     overflow: hidden;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 
