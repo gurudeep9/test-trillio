@@ -1,10 +1,32 @@
-import withSession from '../../../apollo/session'
+import { withIronSessionApiRoute } from 'iron-session/next'
+import { cookie } from 'utils'
 
-export default withSession(async (req, res) => {
-  if (req.session) {
-    req.session.destroy()
-    res.json({ isLoggedIn: false })
-    return res.end()
+const logoutHandler = async (req, res) => {
+  try {
+    const { user } = req.session || {}
+    const { isLoggedIn } = user || {}
+
+    if (isLoggedIn === true) {
+      // Destruye la sesión del usuario
+      req.session.destroy()
+
+      return res.status(200).json({
+        status: 200,
+        isLoggedIn: false,
+        ok: true,
+        user: null
+      })
+    }
+    return res.status(200).json({
+      message: 'No hay sesión activa'
+    })
+  } catch (error) {
+    return res.status(500).json({
+      status: 500,
+      error: error.message,
+      message: 'Lo sentimos, ha ocurrido un error interno al cerrar la sesión'
+    })
   }
-  return res.status(200).json({ name: 'John Doe' })
-})
+}
+
+export default withIronSessionApiRoute(logoutHandler, cookie)

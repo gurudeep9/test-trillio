@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, {
-  useCallback,
   useContext,
   useEffect,
   useState
@@ -12,13 +11,17 @@ import { useApolloClient } from '@apollo/client'
 import { IconArrowBottom, IconLogout, IconShopping, IconUser } from '../../public/icons'
 import { useRouter } from 'next/router'
 import { Context } from '../../context'
-import { OUR_URL_BASE } from '../../apollo/urls'
-import { useUser } from 'npm-pkg-hook'
+import { useUser, useLogout } from 'npm-pkg-hook'
 import { Overline } from 'pkg-components'
-import { ButtonOption, FloatingBoxTwo, Button, ButtonOptionFav, Count } from './styled'
+import {
+  ButtonOption,
+  FloatingBoxTwo,
+  Button,
+  ButtonOptionFav,
+  Count
+} from './styled'
 
 export const Options = ({ handleMenu }) => {
-  const { client } = useApolloClient()
   const {
     itemProducts,
     setOpenMenuMobile,
@@ -28,21 +31,8 @@ export const Options = ({ handleMenu }) => {
   } = useContext(Context)
   const [show, setShow] = useState(false)
   const location = useRouter()
+  const [onClickLogout] = useLogout()
 
-  const onClickLogout = useCallback(async () => {
-    localStorage.removeItem('location.data')
-    await window
-      .fetch(`${OUR_URL_BASE}auth/logout/`, {})
-      .then(res => {
-        if (res) {
-          client?.clearStore()
-          location.replace('/')
-        }
-      })
-      .catch(() => {
-        return {}
-      })
-  }, [client, location])
 
   useEffect(() => {
     const body = document.body

@@ -1,4 +1,4 @@
-export const URL_BASE = `${process.env.URL_BASE}api/`
+export const URL_BASE = `${process.env.URL_BASE}/api/`
 export const URL_ADMIN = 'http://localhost:3003/api/'
 export const CLIENT_URL_BASE = 'http://localhost:3000/'
 export const OUR_URL_BASE = 'http://localhost:3000/api/'

@@ -20,7 +20,7 @@ export const Header = () => {
     <HeaderC scrollNav={scrollNav} style={style} >
       <>
         <div style={{ transform: `translateX(${offsetY * 0.8}px)` }} >
-          <ActiveLink href={'/'}>
+          <ActiveLink href='/'>
             <a>
               <IconLogo color={PColor} size='80px' />
             </a>
