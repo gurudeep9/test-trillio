@@ -7,7 +7,6 @@ import React, {
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { BGColor, PColor } from '../../public/colors'
-import { useApolloClient } from '@apollo/client'
 import { IconArrowBottom, IconLogout, IconShopping, IconUser } from '../../public/icons'
 import { useRouter } from 'next/router'
 import { Context } from '../../context'
