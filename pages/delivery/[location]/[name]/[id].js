@@ -21,8 +21,7 @@ import { Context } from 'context'
 import NotFount from 'components/404'
 import {
   cookie,
-  updateCache,
-  defaultReturnObject
+  updateCache
 } from 'utils'
 import {
   useGetMinPrice,
