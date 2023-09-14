@@ -22,7 +22,6 @@ export const PromosBanner = () => {
   const { data } = useQuery(GET_ALL_BANNERS, {
     context: { clientName: 'admin-store' },
   })
-  console.log({ data })
   return (
     <Content>
       <ContainerCardProduct>

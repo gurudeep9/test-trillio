@@ -49,10 +49,11 @@ export default function StoreHomeView ({ idStore }) {
     setOpenModalProduct,
     openModalProduct
   } = useContext(Context)
+  const idCurrentStore = idStore || id
   // CUSTOM HOOKS
-  const [dataMinPedido] = useGetMinPrice()
-  const [dataProductAndCategory, { fetchMore }] = useCatWithProductClient(idStore || id)
-  const [data, { loading }] = useStore({ isClient: true, idStore })
+  const [dataMinPedido] = useGetMinPrice({ idStore: idCurrentStore })
+  const [dataProductAndCategory, { fetchMore }] = useCatWithProductClient(idCurrentStore)
+  const [data, { loading }] = useStore({ isClient: true, idStore: idCurrentStore })
   const {
     handleAddProducts,
     quantity,
@@ -270,7 +271,6 @@ export const getServerSideProps = withIronSessionSsr(async function getServerSid
     const { id } = queryRouter || {}
     const { user } = req.session || {}
     const { storeUserId } = user || {}
-    if (!req.cookies[process.env.SESSION_NAME]) return defaultReturnObject
     return {
       props: {
         storeUserId,
