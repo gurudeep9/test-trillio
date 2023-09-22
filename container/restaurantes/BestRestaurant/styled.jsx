@@ -105,43 +105,5 @@ export const ContainerSliderPromo = styled.div`
     grid-template-columns: 33% repeat(auto-fill, 33%) 33%;
     @media (max-width: 960px){
         grid-template-columns: repeat(auto-fill, 45%);
-        /* display: flex; */
     }
 `
-
-// const chartColor = ['rgba(1,25,71, 0.0001)', 'rgb(1,25,71)', rgba(255,0,0,1)]
-// // const final = 
-// const final = `0deg, ${chartColor[(Math.random() * (3 - 0) + 0).toFixed(0)]} 0%, ${chartColor[(Math.random() * (3 - 0) + 0).toFixed(0)]} 100%`
-// export const CardPromo = styled.div`
-//     position: relative;
-//     border-radius: 5px;
-//     border-radius: 6px;
-//     display: block;
-//     height: 250px;
-//     overflow: hidden;
-//     position: relative;
-//     text-align: center;
-//     @media (max-width: 960px){
-//        height: 150px;
-//     }
-//     .goto-action {
-//     /* background: linear-gradient(${final}); */
-//     align-items: center;
-//     bottom: 0;
-//     display: flex;
-//     left: 0;
-//     padding: 16px;
-//     position: absolute;
-//     width: 100%;
-//     }
-//     .text {
-//         font-size: 22px;
-//     font-weight: 600;
-//     line-height: 1.09;
-//     color: ${BGColor};
-//     @media (max-width: 960px){
-//        font-size: 12px;
-
-//     }
-//     }
-// `

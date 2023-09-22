@@ -1,8 +1,7 @@
 import Head from 'next/head'
+import { CheckoutFinalizar } from 'container/checkoutFinalizar'
 
-import { CheckoutFinalizar } from '../../../container/checkoutFinalizar'
-
-export default function procesoFinalView () {
+export default function processFinalView () {
   return (
     <div >
       <Head>
@@ -11,7 +10,6 @@ export default function procesoFinalView () {
         <link href='/favicon.ico' rel='icon' />
       </Head>
       <CheckoutFinalizar />
-
     </div>
   )
 }

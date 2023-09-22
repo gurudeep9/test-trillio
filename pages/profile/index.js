@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Head from 'next/head'
 import { withIronSessionSsr } from 'iron-session/next'
-import { cookie, defaultReturnObject } from 'utils'
+import { cookie } from 'utils'
 
 import { Profile } from '../../container/profile'
 
@@ -48,7 +48,6 @@ export const getServerSideProps = withIronSessionSsr(async function getServerSid
           bool = true
         }
       })
-    if (!req.cookies[process.env.SESSION_NAME]) return defaultReturnObject
     return {
       props: {
         storeUserId: storeUserId || null,

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { BGColor, PColor } from '../../../public/colors';
 import { Section, Container, Content, CardDevice, Text } from '../styled';
-import moment from 'moment'
 
 
 export const Security = ({ dataDevice, deviceId }) => {
@@ -25,7 +24,7 @@ export const Security = ({ dataDevice, deviceId }) => {
                                 </div>
                                 <span className="device__localization" tabIndex="0"> {x.short_name}</span>
                                 <span className="device__localization" tabIndex="0"> {x.locationFormat}</span>
-                                <span className="device__localization" tabIndex="0"> {moment(x.DatCre).format('YYYY-MM-DD')} </span>
+                                <span className="device__localization" tabIndex="0"> {x.DatCre}} </span>
                             </div>
                         </CardDevice>
                     ))}

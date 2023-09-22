@@ -2,8 +2,19 @@ import moment from 'moment'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { BGColor } from 'public/colors'
-import { useStatusOrdersClient } from 'npm-pkg-hook'
+import {
+  useReport,
+  useStore,
+  useFormTools,
+  useStatusOrdersClient,
+  useGetClients,
+  useGetSale,
+  useReactToPrint,
+  numberFormat,
+  useFormatDate
+} from 'npm-pkg-hook'
 import { IconWhatsApp } from 'public/icons'
+import { Loading, ModalDetailOrder } from 'pkg-components'
 import {
   Anchor,
   ContainerShare,
@@ -15,26 +26,88 @@ import {
   Text,
   Wrapper
 } from './styled'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 export const CheckoutFinalizar = () => {
   // STATE
+  const router = useRouter()
   const { data, loading } = useStatusOrdersClient()
+  const [dataModal, setDataModal] = useState({})
+  const { query } = router
+  const { saleId, idStore } = query || {}
+  const [dataStore] = useStore({ isClient: true, idStore })
+
   const handleContact = ({ getOneStore, ref }) => {
     const { storePhone } = getOneStore
     window.open(`https://api.whatsapp.com/send?text='Hola, mi pedido es ${ref}'?phone=${storePhone}`)
   }
-  if (loading) {
-    return <span>Loading</span>
+  const [open, setOpen] = useState(false)
+
+  const onClose = () => {
+    setOpen(!open)
+    router.push(
+      {
+        query: {
+          ...router.query,
+          saleId: '',
+          idStore: ''
+        }
+      },
+      undefined,
+      { shallow: true }
+    )
   }
-  if (!loading && !data.length > 0) {
+ 
+  const propsModal = {
+    dataModal: dataModal || {},
+    dataStore,
+    handlePrint: () => { },
+    edit: false,
+    loading: false,
+    disabledPrint: false,
+    pDatCre: '',
+    totalProductsPrice: '',
+    handleModalItem: () => { },
+    onClose: () => { onClose() },
+    setModalItem: () => { }
+  }
+  const {
+    getOnePedidoStore,
+    loading: saleLoading,
+    data: sale
+  } = useGetSale({ callback: setDataModal })
+  useEffect(() => {
+    if (!saleId) return
+    if (saleId) {
+      setOpen(true)
+      getOnePedidoStore({
+        variables: {
+          pCodeRef: saleId || ''
+        }
+      }).then((res) => {
+        if (res?.data?.getOnePedidoStore) {
+          setDataModal(res?.data?.getOnePedidoStore || {})
+        }
+      }).catch(() => {
+        return null
+      })
+    }
+  }, [saleId, saleLoading])
+
+  if (loading) {
+    return <Loading />
+  }
+  if (!loading && !data?.length > 0) {
     return (
-      <div>
+      <Wrapper>
         <Text>Aun no tienes pedidos</Text>
-      </div>
+      </Wrapper>
     )
   }
   return (
     <Wrapper>
+        {open && sale && <ModalDetailOrder {...propsModal} />}
       {!!data && data?.map((x, i) => {
         const { getOneStore } = x
         return (

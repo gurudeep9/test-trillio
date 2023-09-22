@@ -86,8 +86,8 @@ export const RestaurantProfile = ({
     isMobile,
     store: data,
     isEmtySchedules,
-    openNow,
-    open,
+    open: data?.scheduleOpenAll ? 'Abierto todos los días' : open,
+    openNow: data?.scheduleOpenAll ? true : openNow,
     banner,
     isEdit: false
   }

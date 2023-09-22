@@ -5,14 +5,18 @@ import PropTypes from 'prop-types'
 import { useContext, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { Context } from '../../context'
-import { AlertBox, ModalProduct } from 'pkg-components'
+import { AlertBox } from 'pkg-components'
 import { AsideCheckout } from '../AsideCheckout'
 import { Footer } from './footer'
 import { FooterDesktop } from './FooterDesktop'
 import { HeaderMain } from './headerlog'
 import { NavHeaderMobile } from './NavHeaderMobile'
 
-export const Layout = ({ children, watch, settings }) => {
+export const Layout = ({
+  children,
+  watch,
+  settings
+}) => {
   const location = useRouter()
   const {
     error,
@@ -43,7 +47,7 @@ export const Layout = ({ children, watch, settings }) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latitude, longitude, timestamp, accuracy, speed])
-  const val = !['/delivery/[location]/[name]/[id]'].find(x => { return x === location.pathname })
+  const val = !['/delivery/[...name]'].find(x => { return x === location.pathname })
   return (
     <div>
       <AlertBox err={error} />

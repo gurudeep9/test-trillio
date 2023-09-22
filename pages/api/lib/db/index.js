@@ -18,7 +18,6 @@ module.exports = function connect () {
         }
       )
     }
-    // sequelize.sync()
     return sequelize
   } catch (error) {
     console.log('/**** Error de conexión con base de datos, algunos datos erroneos o el .env no existe.')

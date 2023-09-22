@@ -47,7 +47,10 @@ export const ListRestaurant = ({
                   pathname: catStoreId
                     ? `/delivery/${encodeURIComponent(city)}-${encodeURIComponent(store?.department?.dName || store?.getOneStore?.department?.dName?.toLowerCase())}/${formattedNameStore}/${store.idStore}`
                     : `/delivery/${encodeURIComponent(city)}-${encodeURIComponent(store?.department?.dName || store?.getOneStore?.department?.dName?.toLowerCase())}/${formattedNameStore}/${store?.idStore}`,
-                  query: { categories: catStoreId }
+                  query: {
+                    categories: catStoreId,
+                    plato: null
+                  }
                 }}
                 passHref
                 shallow

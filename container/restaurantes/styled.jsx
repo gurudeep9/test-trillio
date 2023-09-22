@@ -73,8 +73,7 @@ export const Content = styled.div`
     width: 100%;
     max-width: 1366px!important;
 `
-export const Section = styled.div`
-  margin: 30px 0;
+export const Section = styled.section`
 
 
 .merchant-list-v2 {

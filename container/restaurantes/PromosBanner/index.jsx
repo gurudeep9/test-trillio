@@ -20,7 +20,7 @@ import {
 
 export const PromosBanner = () => {
   const { data } = useQuery(GET_ALL_BANNERS, {
-    context: { clientName: 'admin-store' },
+    context: { clientName: 'admin-store' }
   })
   return (
     <Content>
@@ -47,12 +47,12 @@ export const PromosBanner = () => {
                     <BannerPromo key={banner?.pId}>
                       <Image
                         alt={banner.description}
-                        width={380}
-                        height={190}
+                        height={150}
                         layout='responsive'
                         objectFit='cover'
                         priority={true}
                         src='/images/promotions16.avif'
+                        width={380}
                       />
                     </BannerPromo>
                   </div>
@@ -68,7 +68,7 @@ export const PromosBanner = () => {
 
 export const PromoBannerStores = () => {
   const { data: datapro } = useQuery(GET_ALL_BANNERS_PROMO, {
-    context: { clientName: 'admin-store' },
+    context: { clientName: 'admin-store' }
   })
   const dataFinal = datapro?.getAllPromoBanners?.slice(0, 3) ?? []
 
@@ -80,12 +80,12 @@ export const PromoBannerStores = () => {
             <CardPromo key={pb.bpId}>
               <Image
                 alt={pb.description}
-                width={100}
                 height={100}
                 layout='responsive'
                 objectFit='cover'
                 priority={true}
                 src={'/images/DEFAULTBANNER.png'}
+                width={100}
               />
 
               <div className='goto-action'>
