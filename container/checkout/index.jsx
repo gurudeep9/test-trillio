@@ -262,7 +262,7 @@ export const Checkout = ({
             result={result}
             sumProduct={sumProduct}
           />
-          <Wrapper styles={flex}>
+          <Wrapper style={flex}>
             <Text bold='900' size='30px' >
               Total
             </Text>

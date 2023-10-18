@@ -317,22 +317,22 @@ export const ContentSocial = styled.div`
     }
 `
 export const Title = styled.h1`
-   font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.22;
-    margin-top: 0;
-    margin-bottom: 30px;
     color: #3e3e3e;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.22;
+    margin-bottom: 30px;
+    margin-top: 0;
 `
 export const Overline = styled.div`
+    background-color: transparent;
+    height: 100vh;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
-    height: 100vh;
     width: 100%;
-    background-color: transparent;
     ${props => { return props.show ? css`display: block` : css`display: none;` }};
     @media only screen and (min-width: 960px){
     }
-  
+
 `

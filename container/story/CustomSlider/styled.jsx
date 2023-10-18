@@ -116,7 +116,7 @@ export const Control = styled.button`
     }
   ${ props => !props.display ? css`display: block;` : css`display: none;` };
 
-`;
+`
 
 export const ControlLeft = styled(Control)`
   left: 0;

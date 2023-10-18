@@ -63,7 +63,7 @@ export const ConfirmCheckout = ({ dataOneProduct, handleSubmitPedido }) => {
       <Card>
         <CardPro>
           <Text size='15px'>Tu pedido en</Text>
-          <Wrapper border styles={flex}>
+          <Wrapper border style={flex}>
             <Text size='20px'>{storeName}</Text>
             <Link href={`delivery/${city?.cName}/${storeName}/${idStore}`}>
               <Anchor>
@@ -71,11 +71,11 @@ export const ConfirmCheckout = ({ dataOneProduct, handleSubmitPedido }) => {
               </Anchor>
             </Link>
           </Wrapper>
-          <Wrapper styles={flex}>
+          <Wrapper style={flex}>
             <Text size='12px'>{pName} {ProDescription} </Text>
             <Text align='end' size='12px'>$ {numberFormat(ProPrice)}</Text>
           </Wrapper>
-          <div styles={flex}>
+          <div style={flex}>
             <Text color={PColor} size='12px' >Editar </Text>
             <Text
               align='end'
@@ -83,7 +83,7 @@ export const ConfirmCheckout = ({ dataOneProduct, handleSubmitPedido }) => {
               size='12px'
             >Eliminar </Text>
           </div>
-          <div styles={flex}>
+          <div style={flex}>
             <Text size='12px' >Costo de envio </Text>
             <Text
               align='end'
@@ -91,7 +91,7 @@ export const ConfirmCheckout = ({ dataOneProduct, handleSubmitPedido }) => {
               size='12px'
             >{ValueDelivery || 'Gratis'} </Text>
           </div>
-          <div styles={flex}>
+          <div style={flex}>
             <Text size='12px' >Total </Text>
             <Text
               align='end'
