@@ -57,7 +57,7 @@ const isBrowser = typeof window !== 'undefined'
 // Crea el WebSocketLink solo si se está en un navegador
 const wsLink = isBrowser
   ? new WebSocketLink({
-    uri: graphqlUrl,
+    uri: `${graphqlUrl}/graphql`,
     options: {
       reconnect: true,
       lazy: true,
@@ -77,7 +77,7 @@ const getLink = async (operation) => {
   let uri = `${process.env.URL_BACK_SERVER}/graphql`
   if (service === 'main') uri = `${process.env.URL_BACK_SERVER}/graphql`
   if (service === 'admin-store') uri = `${process.env.URL_BACK_SERVER}/graphql`
-  if (service === 'admin-server') uri = `${process.env.URL_ADMIN_SERVER}`
+  if (service === 'admin-server') uri = `${process.env.URL_ADMIN_SERVER_SOCKET_HTTPS}`
   const link = new HttpLink({
     uri,
     credentials: 'same-origin',
