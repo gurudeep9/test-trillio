@@ -32,14 +32,12 @@ import {
   ContainerAnimation,
   ContainerAnimationTow,
   ContentInfo,
-  flex,
   Text,
   Wrapper
 } from './styled'
 
 export const Checkout = ({
   setAlertBox,
-  setCountItemProduct,
   locationStr,
   setModalLocation
 }) => {
@@ -142,7 +140,7 @@ export const Checkout = ({
 
 
   useEffect(() => {
-    const totalPrice = calculateTotalPrice(dataShoppingCard);
+    const totalPrice = calculateTotalPrice(dataShoppingCard)
     setTotalProductPrice(Math.abs(totalPrice))
   }, [dataShoppingCard])
 
@@ -262,7 +260,7 @@ export const Checkout = ({
             result={result}
             sumProduct={sumProduct}
           />
-          <Wrapper style={flex}>
+          <Wrapper style={{ display: 'flex' }}>
             <Text bold='900' size='30px' >
               Total
             </Text>

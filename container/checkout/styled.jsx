@@ -50,9 +50,6 @@ export const CardPro = styled(Card)`
     box-shadow: 0 0.75rem 2rem #bdbdbdbd;
     margin-top: 75px;
 `
-export const flex = css`
-    display: flex;
-`
 export const Column = css`
     flex-direction: column;
 `
