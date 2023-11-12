@@ -20,7 +20,7 @@ module.exports = async (phase) => {
     URL_BACK_SERVER: process.env.URL_BACK_SERVER,
     HOST_DB: process.env.HOST_DB,
     URL_ADMIN_SERVER_SOCKET_HTTPS: process.env.URL_ADMIN_SERVER_SOCKET_HTTPS,
-    BUSSINESS_TITLE: process.env.BUSSINESS_TITLE,
+    BUSINESS_TITLE: process.env.BUSINESS_TITLE,
     MYSQL_PORT: process.env.MYSQL_PORT,
     DIALECTDB: process.env.DIALECTDB,
     LOCAL_SALES_STORE: process.env.LOCAL_SALES_STORE,

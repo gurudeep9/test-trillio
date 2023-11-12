@@ -3,10 +3,6 @@ import nodemailer from 'nodemailer'
 import jwt from 'jsonwebtoken'
 import { google } from 'googleapis'
 
-export const dateFormat = value => { return moment(value).format('DD-MM-YYYY') }
-
-
-// Email Transporter
 
 const CLIENT_ID = '214924348774-fqrod1bismchnpo3muih10omufbokkn3.apps.googleusercontent.com'
 const CLIENT_SECRET = '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'

@@ -425,14 +425,13 @@ export const SpicePayment = () => {
                 <h5 style={Styles.LateralInfo}>INVOICE DATE:  </h5>
               </div>
               <div style={Styles.block}>
-                {/* <h5 style={Styles.LateralInfo}>{dateFormat(data[0].Date)} </h5> */}
               </div>
             </div>
           </div>
           <h1 style={Styles.title}> COMMISSION PAYMENT</h1>
           <div>
           </div>
-          {data && data[0]?.lineItemsInvoiceIsPay?.map(item => {
+          {data[0]?.lineItemsInvoiceIsPay?.map(item => {
             return (
               <div key={item._id}>
                 <h2 style={Styles.headerline} > Agent Trading Name: {item.agentDetails.agentTradingName}  </h2>
@@ -463,7 +462,7 @@ export const SpicePayment = () => {
                       <h2 style={Styles.TextCard}>Ticket Price:</h2>
                     </div>
                   </div>
-                  {item && item?.lineItemsArray?.map(lineitem => {
+                  {item?.lineItemsArray?.map(lineitem => {
                     return (
                       <div key={lineitem._id} style={Styles.lineitembox} >
                         <div style={Styles.Card}>

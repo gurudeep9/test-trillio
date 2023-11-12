@@ -4,9 +4,12 @@ import Image from 'next/image'
 import React, { useContext } from 'react'
 import { Context } from '../../context/index'
 import { APColor, PColor } from 'public/colors'
-import { IconCancel } from 'public/icons'
-import { numberFormat, useAsideCart } from 'npm-pkg-hook'
-import { Overline, RippleButton } from 'pkg-components'
+import {
+  generateStoreURL,
+  numberFormat,
+  useAsideCart
+} from 'npm-pkg-hook'
+import { Overline, RippleButton, IconCancel } from 'pkg-components'
 import {
   CardProduct,
   Content,
@@ -46,23 +49,35 @@ export const AsideCheckout = ({ menu }) => {
       <Overline
         onClick={() => { return handleMenu(1) }}
         show={menu === 1}
-        zIndez='999'
+        zIndex='999'
       />
       <LateralModal show={menu === 1}>
-        <RippleButton bgColor='transparent' onClick={() => { return handleMenu(1) }}>
-          <IconCancel color={PColor} size='15px' />
+        <RippleButton
+          bgColor='transparent'
+          onClick={() => { return handleMenu(1) }}
+          widthButton='min-content'
+        >
+          <IconCancel color={PColor} size='25px' />
         </RippleButton>
         <Content>
-          {<div className='restaurant-cart-header'>Tu pedido en</div>}
+          <div className='restaurant-cart-header'>
+            Tu pedido en
+          </div>
           <div>
             {key?.map((store, i) => {
               return (
-                <div key={i + 1}>
+                <div key={i}>
                   <div>
                     {result2[store]?.map((product, idx) => {
+                      const url = generateStoreURL({
+                        city: product.getStore.city,
+                        department: product.getStore.department,
+                        storeName: product.getStore.storeName,
+                        idStore: product.getStore.idStore
+                      })
                       return (
                         <CardProduct key={product.ShoppingCard}>
-                          <Link href={`/delivery/${product.getStore.city.cName?.toLocaleLowerCase()}-${product.getStore.department.dName?.toLocaleLowerCase()}/${product.getStore.storeName}/${product.getStore.idStore}`}>
+                          <Link href={url}>
                             <a>
                               <Text
                                 color={PColor}

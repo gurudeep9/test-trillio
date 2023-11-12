@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import {
-  RippleButton,
   AwesomeModal,
   Range
 } from 'pkg-components'
@@ -17,8 +16,7 @@ import {
   ContentFilter,
   CtnItemFilter,
   H2,
-  ItemFilter,
-  WrapFlex
+  ItemFilter
 } from './styled'
 
 export const Restaurant = () => {
@@ -37,35 +35,37 @@ export const Restaurant = () => {
       </ContainerFilter>
       <H2>Categorías</H2>
       <Categories />
-      {/* BEST RESTAURANT */}
       <PromoBannerStores />
       <AwesomeModal
         btnCancel={false}
         btnConfirm={true}
-        customHeight='60vh'
-        footer={true}
+        footer={false}
         header={false}
-        height='60vh'
         onCancel={() => { return false }}
         onConfirm={() => { return router.push('/restaurantes') }}
         onHide={() => { setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}
         padding='25px'
+        question={false}
         show={openModalOrganiceQuery}
-        size='80%'
         zIndex='9990'
       >
         <Tabs width={['33.33%', '33.33%', '33.330%']} >
-          <Tabs.Panel label={`Básicos`}>
+          <Tabs.Panel label='Básicos'>
             <>
               <h2>Modo de entrega</h2>
               <ContainerFilter>
-                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>Entrega a domicilio</ItemFilter>
-                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>Entrega a domicilio</ItemFilter>
+                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
+                  Entrega a domicilio
+                </ItemFilter>
+                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
+                  Retiro en tienda
+                </ItemFilter>
               </ContainerFilter>
               <h2>Ordenar por</h2>
               <ContainerFilter>
-                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>Entrega a domicilio</ItemFilter>
-                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>Entrega a domicilio</ItemFilter>
+                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
+                  Precio
+                </ItemFilter>
               </ContainerFilter>
               <h2>Distancia</h2>
               <Range
@@ -74,21 +74,7 @@ export const Restaurant = () => {
                 min={1962}
                 value={2018}
               />
-              <RippleButton widthButton='100%'>Ver resultados </RippleButton>
             </>
-          </Tabs.Panel>
-          <Tabs.Panel label={`Categorías`}>
-            <WrapFlex>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((item, index) => { return <ItemFilter key={index + 1} onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>Entrega a domicilio</ItemFilter> })}
-            </WrapFlex>
-            <RippleButton widthButton='100%'>Ver resultados </RippleButton>
-          </Tabs.Panel>
-          <Tabs.Panel label={`Métodos de pago`}>
-            <h2>Pago de la app</h2>
-            <WrapFlex>
-              {[1, 2, 3, 4, 5].map((item, index) => { return <ItemFilter key={index + 1} onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>Amex</ItemFilter> })}
-            </WrapFlex>
-            <RippleButton widthButton='100%'>Ver resultados </RippleButton>
           </Tabs.Panel>
         </Tabs>
       </AwesomeModal >
@@ -96,9 +82,8 @@ export const Restaurant = () => {
         borderRadius='10px'
         btnCancel={false}
         btnConfirm={true}
-        footer={true}
+        footer={false}
         header={false}
-        height='40vh'
         onCancel={() => { return false }}
         onConfirm={() => { return router.push('/restaurante') }}
         onHide={() => { OPEN_MODAL_FILTER.setState(!OPEN_MODAL_FILTER.state) }}
@@ -107,11 +92,10 @@ export const Restaurant = () => {
         size='60%'
         zIndex='9990'
       >
-        <h2>Ordenar por </h2>
         <ContentFilter>
-          {[1, 2, 3, 4, 5].map((x, i) => {
+          {[1, 2, 3, 4, 5].map((x) => {
             return (
-              <CtnItemFilter key={i + 1}>
+              <CtnItemFilter key={x}>
                 <IconLogo color={PColor} size='52px' />
               </CtnItemFilter>
             )
