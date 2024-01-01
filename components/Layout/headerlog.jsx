@@ -1,34 +1,76 @@
 import PropTypes from 'prop-types'
 import React, { useContext, useEffect } from 'react'
-import { useScrollY } from 'npm-pkg-hook'
+import {
+  useScrollY,
+  useFormTools,
+  useGetAllLocationUser,
+  useGetOneCountry,
+  useGetOneDepartment,
+  useCountries,
+  useDepartments,
+  useSaveLocation,
+  useRoads,
+  useCities,
+  useGetOneCity,
+  usePosition
+} from 'npm-pkg-hook'
 import { InputSearch } from 'container/InputSearch'
 import styled from 'styled-components'
 import { IconLocationMap, IconLogo } from '../../public/icons'
 import { PColor } from '../../public/colors'
 import { Options } from './options'
 import { Context } from '../../context'
-import { ActiveLink } from 'pkg-components'
+import { ActiveLink, Map } from 'pkg-components'
+import { filterKeyObject } from 'utils'
+import { useRouter } from 'next/router'
 
-
-export const HeaderMain = ({ menu, handleMenu }) => {
+export const HeaderMain = ({
+  watch,
+  settings,
+  menu,
+  handleMenu = () => { }
+}) => {
   const {
     modalLocation,
     setModalLocation,
     setLocationString,
+    setAlertBox,
     locationStr
   } = useContext(Context)
+  const dataLocation = usePosition(watch, settings)
+  const router = useRouter()
+  const { latitude, longitude } = dataLocation || {}
+
+  const [handleChange, handleSubmit, setDataValue, { dataForm, errorForm }] = useFormTools()
+  const { data: dataCountries } = useCountries()
+  const [getDepartments, { data: departments }] = useDepartments()
+  const { data: dataRoad } = useRoads()
+  const [getCities, { data: dataCities }] = useCities()
+  const [updateUserLocations] = useSaveLocation()
+
+  const [data] = useGetAllLocationUser()
+  const { getOneCountry, dataCountry } = useGetOneCountry()
+  const { getOneDepartment, dataDepartment } = useGetOneDepartment()
+  const { getOneCities, dataGetOneCity } = useGetOneCity()
   const { offsetY } = useScrollY()
+
   useEffect(() => {
     const location = localStorage.getItem('location.data')
     setLocationString(JSON.parse(location))
   }, [setLocationString])
+
   const { department, pais, uLocationKnow, city } = locationStr || {}
+  const handleLogout = () => {
+    localStorage.removeItem('session')
+    localStorage.removeItem('location.data')
+    router.push('/entrar')
+  }
   return (
     <div>
       <ContentHeader>
         <HeaderMainC>
           <ItemHeader style={{ transform: `translateX(${offsetY * 0.8}px)` }} >
-            <ActiveLink href={'/restaurantes'}>
+            <ActiveLink href='/restaurantes'>
               <a>
                 <IconLogo color={PColor} size='80px' />
               </a>
@@ -51,14 +93,47 @@ export const HeaderMain = ({ menu, handleMenu }) => {
           <Options handleMenu={handleMenu} menu={menu} />
         </HeaderMainC>
       </ContentHeader>
-      {/* {modalLocation && <Map setShowModal={setModalLocation} showModal={modalLocation} />} */}
+      {Boolean(modalLocation) &&
+      <Map
+        cities={dataCities}
+        countries={dataCountries}
+        dataCountry={dataCountry}
+        dataDepartment={dataDepartment}
+        dataForm={dataForm}
+        dataGetOneCity={dataGetOneCity}
+        dataLocation={data}
+        departments={departments}
+        errorForm={errorForm}
+        filterKeyObject={filterKeyObject}
+        getCities={getCities}
+        getDepartments={getDepartments}
+        getOneCities={getOneCities}
+        getOneCountry={getOneCountry}
+        getOneDepartment={getOneDepartment}
+        handleChange={handleChange}
+        handleLogout={handleLogout}
+        handleSubmit={handleSubmit}
+        latitude={latitude}
+        longitude={longitude}
+        road={dataRoad?.road || []}
+        setAlertBox={setAlertBox}
+        setDataValue={setDataValue}
+        setLocationString={setLocationString}
+        setShowModal={setModalLocation}
+        showModal={modalLocation}
+        updateUserLocations={updateUserLocations}
+        useFormTools={useFormTools}
+      />
+      }
     </div>
   )
 }
 
 HeaderMain.propTypes = {
   handleMenu: PropTypes.any,
-  menu: PropTypes.any
+  menu: PropTypes.any,
+  settings: PropTypes.any,
+  watch: PropTypes.any
 }
 export const ContentHeader = styled.div`
   width: 100%;

@@ -51,7 +51,7 @@ query getOneCountry($cId: ID){
     cCalCod
     cState
     cDatMod
-    
+
   }
 }
 `

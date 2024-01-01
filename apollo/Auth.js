@@ -69,6 +69,8 @@ export default function Auth ({ children }) {
       }
     }
   }, [dataLogged?.isLogged])
+
+
   return (
     <Fragment>
       {children}
