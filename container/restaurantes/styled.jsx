@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { BColor, BGColor, BGVColor, DarkSilver, SFVColor } from '../../public/colors'
+import { BColor, BGColor, BGVColor, DarkSilver, SFVColor, PColor } from '../../public/colors'
 
 export const ItemWrapper = styled.div`
     height: min-content;
@@ -71,7 +71,28 @@ export const Content = styled.div`
     flex-grow: 1;
     justify-content: space-between;
     width: 100%;
-    max-width: 1366px!important;
+    max-width: 1366px !important;
+    .wrapper-query {
+        line-height: 1.15;
+        font-size: 16px;
+        overflow-y: auto;
+        height: calc(100% - 80px);
+        padding: 16px;
+    }
+    .content-ripple-action__query {
+        -webkit-box-align: center;
+        align-items: center;
+        background: rgb(255, 255, 255);
+        border-top: 2px solid rgb(245, 240, 235);
+        display: flex;
+        -webkit-box-pack: end;
+        justify-content: flex-end;
+        padding: 20px;
+        height: 80px;
+        width: 100%;
+        position: absolute;
+    bottom: 0;
+    }
 `
 export const Section = styled.section`
 
@@ -198,6 +219,12 @@ export const ItemFilter = styled.button`
     cursor: pointer;
     min-width: 5.375rem;
     font-family: PFont-Light;
+    ${({ active }) => {
+    return active && css`
+            background-color: #fcebea;
+            color: ${PColor};
+        `
+  }}
 `
 export const CardProduct = styled.div`
     height: 300px;

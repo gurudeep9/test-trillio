@@ -26,7 +26,6 @@ import { cookie } from 'utils'
 import { Restaurant } from '../../container/restaurantes'
 import { PromosBanner } from '../../container/restaurantes/PromosBanner'
 import { ListRestaurant } from '../../container/restaurantes/restaurant'
-import { Section } from '../../container/restaurantes/styled'
 import { Context } from '../../context'
 import styles from '../../styles/Home.module.css'
 import Script from 'next/script'
@@ -36,11 +35,9 @@ export default function RestaurantHome ({
   ID_CATEGORIE = '',
   PRODUCT_NAME_COOKIE = ''
 }) {
-  const [data, { fetchMore }] = useRestaurant()
   const { data: storeOrder } = useStatusOrdersClient()
   const { setAlertBox } = useContext(Context)
   const [close, setClose] = useState(ACEPTE_COOKIE)
-  const [showMore, setShowMore] = useState(100)
   const UPDATE_COOKIES = gql`
 mutation setCookie($name: String, $value: String) {
   setCookie(name: $name, value: $value){
@@ -81,37 +78,12 @@ mutation setCookie($name: String, $value: String) {
         />
       </Head>
       <OrderCard storeOrder={storeOrder} />
-      <Section>
+      <section>
         <PromosBanner />
-      </Section>
-      <Section>
+      </section>
+      <section>
         <Restaurant />
-      </Section>
-      <Section>
-        <ListRestaurant data={data} />
-      </Section>
-      <RippleButton
-        bgColor={BGColor}
-        border={`1px solid ${SECBGColor}`}
-        color={PColor}
-        onClick={() => {
-          setShowMore(showMore + 100)
-          fetchMore({
-            variables: { max: showMore, min: 0 },
-            updateQuery: (prevResult, { fetchMoreResult }) => {
-              if (!fetchMoreResult) return prevResult
-              return {
-                getAllStoreInStore: [...fetchMoreResult.getAllStoreInStore]
-
-              }
-            }
-          })
-        }}
-        overColor={PColor}
-        widthButton='100%'
-      >
-        Ver más
-      </RippleButton>
+      </section>
       <FavoriteStore />
       <LastRecommended ID_CATEGORIE={ID_CATEGORIE} />
       <ItMayInterestYou PRODUCT_NAME_COOKIE={PRODUCT_NAME_COOKIE} />

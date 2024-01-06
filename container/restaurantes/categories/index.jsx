@@ -7,6 +7,7 @@ import { PColor } from '../../../public/colors'
 import { CtnBox } from '../styled'
 export const Categories = () => {
   const [getCatStore] = useCategoryStore()
+
   return (
     <Container>
       <List>

@@ -25,6 +25,7 @@ export const ListRestaurant = ({
       <MerchantListWrapper>
         {data?.map((store) => {
           const nameStore = store?.storeName || store?.getOneStore?.storeName
+          const isNeW = store?.isNew || false
           const isOpen = store?.open || store?.getOneStore
           const formattedNameStore = nameStore?.replace(/\s/g, '-').toLowerCase()
           const city = (like ? store?.getOneStore?.city?.cName : store?.city?.cName)?.toLowerCase()
@@ -73,8 +74,13 @@ export const ListRestaurant = ({
                     <div>
                       <h2 className='Name'>{nameStore}</h2>
                       <span className='store_info'>{store?.cateStore?.cName || store?.getOneStore?.cateStore?.cName} {avgRatings?.length > 0 && <><IconRate color={WColor} size={18} /> {avgRatings[avgRatings.length - 1]?.toFixed(1)}</>}</span>
-                      <div>
-                        {!isOpen && <span className='store_info close'>Cerrado</span>}
+                      <div style={{ display: 'flex' }}>
+                        <div>
+                          {!isOpen && <span className='store_info close'>Cerrado</span>}
+                        </div>
+                        <div>
+                          {!isNeW && <span className='store_info close'>Nuevo</span>}
+                        </div>
                       </div>
                     </div>
                     {store.fState === 1 && <IconLoveFill color={PVColor} size={20} />}

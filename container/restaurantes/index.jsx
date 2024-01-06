@@ -2,9 +2,11 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import {
   AwesomeModal,
-  Range
+  BGColor,
+  RippleButton,
+  SECBGColor
 } from 'pkg-components'
-import { useSetState } from '../../components/hooks/useState'
+import { useRestaurant } from 'npm-pkg-hook'
 import Tabs from '../../components/Tabs'
 import { PColor } from '../../public/colors'
 import { IconLogo } from '../../public/icons'
@@ -18,12 +20,27 @@ import {
   H2,
   ItemFilter
 } from './styled'
+import { ListRestaurant } from './restaurant'
 
 export const Restaurant = () => {
   // STATES
-  const router = useRouter()
+
   const [openModalOrganiceQuery, setOpenModalOrganiceQuery] = useState(false)
-  const OPEN_MODAL_FILTER = useSetState(0)
+  const [modal, setModal] = useState(false)
+  const [showMore, setShowMore] = useState(100)
+  // HOOKS
+  const router = useRouter()
+  const [data, {
+    fetchMore,
+    loading,
+    handleSendQueries,
+    handleFilterStore,
+    loadingFilter,
+    handleCleanQueries
+  }] = useRestaurant({
+    location: router
+  })
+  const queryPriceStore = router.query.bestPrice
   return (
     <Content>
       <ContainerFilter>
@@ -31,53 +48,68 @@ export const Restaurant = () => {
         <ItemFilter>Mejor precio</ItemFilter>
         <ItemFilter>Envíos gratis</ItemFilter>
         <ItemFilter>Promociones</ItemFilter>
-        <ItemFilter onClick={() => { return OPEN_MODAL_FILTER.setState(!OPEN_MODAL_FILTER.state) }}>Filtros</ItemFilter>
+        <ItemFilter onClick={() => { return setModal(!modal) }}>Filtros</ItemFilter>
       </ContainerFilter>
       <H2>Categorías</H2>
       <Categories />
       <PromoBannerStores />
       <AwesomeModal
         btnCancel={false}
-        btnConfirm={true}
+        btnConfirm={false}
+        customHeight='75vh'
         footer={false}
         header={false}
         onCancel={() => { return false }}
-        onConfirm={() => { return router.push('/restaurantes') }}
         onHide={() => { setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}
-        padding='25px'
         question={false}
         show={openModalOrganiceQuery}
+        size='40vw'
         zIndex='9990'
       >
-        <Tabs width={['33.33%', '33.33%', '33.330%']} >
-          <Tabs.Panel label='Básicos'>
-            <>
-              <h2>Modo de entrega</h2>
-              <ContainerFilter>
-                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
-                  Entrega a domicilio
-                </ItemFilter>
-                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
-                  Retiro en tienda
-                </ItemFilter>
-              </ContainerFilter>
-              <h2>Ordenar por</h2>
-              <ContainerFilter>
-                <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
-                  Precio
-                </ItemFilter>
-              </ContainerFilter>
-              <h2>Distancia</h2>
-              <Range
-                label='km'
-                max={5000}
-                min={1962}
-                value={2018}
-              />
-            </>
-          </Tabs.Panel>
-        </Tabs>
-      </AwesomeModal >
+        <div className='wrapper-query'>
+          <Tabs width={['33.33%', '33.33%', '33.330%']} >
+            <Tabs.Panel label='Básicos'>
+              <>
+                <h2>Modo de entrega</h2>
+                <ContainerFilter>
+                  <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
+                    Entrega a domicilio
+                  </ItemFilter>
+                  <ItemFilter onClick={() => { return setOpenModalOrganiceQuery(!openModalOrganiceQuery) }}>
+                    Retiro en tienda
+                  </ItemFilter>
+                </ContainerFilter>
+                <h2>Ordenar por</h2>
+                <ContainerFilter>
+                  <ItemFilter
+                    active={queryPriceStore}
+                    onClick={() => {
+                      if (queryPriceStore) return handleCleanQueries('bestPrice')
+                      return handleSendQueries('bestPrice', true)
+                    }}
+                  >
+                    Precio
+                  </ItemFilter>
+                </ContainerFilter>
+              </>
+            </Tabs.Panel>
+            <Tabs.Panel label='Categorias'>
+            Categorias
+            </Tabs.Panel>
+          </Tabs>
+        </div>
+        <div className='content-ripple-action__query'>{console.log({loading})}
+          <RippleButton
+            loading={loading}
+            onClick={() => {
+              return handleFilterStore()
+            }}
+          >
+            Ver resultados
+          </RippleButton>
+        </div>
+      </AwesomeModal>
+
       <AwesomeModal
         borderRadius='10px'
         btnCancel={false}
@@ -86,9 +118,9 @@ export const Restaurant = () => {
         header={false}
         onCancel={() => { return false }}
         onConfirm={() => { return router.push('/restaurante') }}
-        onHide={() => { OPEN_MODAL_FILTER.setState(!OPEN_MODAL_FILTER.state) }}
+        onHide={() => { setModal(!modal) }}
         padding='25px'
-        show={OPEN_MODAL_FILTER.state}
+        show={modal}
         size='60%'
         zIndex='9990'
       >
@@ -103,6 +135,33 @@ export const Restaurant = () => {
         </ContentFilter>
       </AwesomeModal >
       <H2>Tiendas</H2>
+      <setion>
+        <ListRestaurant data={data} />
+      </setion>
+      <RippleButton
+        bgColor={PColor}
+        border={`1px solid ${SECBGColor}`}
+        color={BGColor}
+        loading={loading}
+        margin={'20px 0'}
+        onClick={() => {
+          setShowMore(showMore + 100)
+          fetchMore({
+            variables: { max: showMore, min: 0 },
+            updateQuery: (prevResult, { fetchMoreResult }) => {
+              if (!fetchMoreResult) return prevResult
+              return {
+                getAllStoreInStore: [...fetchMoreResult.getAllStoreInStore]
+
+              }
+            }
+          })
+        }}
+        overColor={PColor}
+        widthButton='100%'
+      >
+        Ver más
+      </RippleButton>
     </Content>
   )
 }
