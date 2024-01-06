@@ -4,17 +4,15 @@ import {
   useMutation,
   useSubscription
 } from '@apollo/client'
-import { RippleButton, OrderCard } from 'pkg-components'
+import { OrderCard } from 'pkg-components'
 import { FavoriteStore } from 'container/favoriteStore'
 import { ItMayInterestYou, LastRecommended } from 'container/LastRecomendation'
 import { withIronSessionSsr } from 'iron-session/next'
-import { useRestaurant, useStatusOrdersClient } from 'npm-pkg-hook'
+import { useStatusOrdersClient } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import {
   BGColor,
-  PColor,
-  PVColor,
-  SECBGColor
+  PVColor
 } from 'public/colors'
 import {
   useContext,
@@ -25,7 +23,6 @@ import styled from 'styled-components'
 import { cookie } from 'utils'
 import { Restaurant } from '../../container/restaurantes'
 import { PromosBanner } from '../../container/restaurantes/PromosBanner'
-import { ListRestaurant } from '../../container/restaurantes/restaurant'
 import { Context } from '../../context'
 import styles from '../../styles/Home.module.css'
 import Script from 'next/script'
