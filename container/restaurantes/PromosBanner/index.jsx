@@ -33,9 +33,9 @@ export const PromosBanner = () => {
           spaceBetween={10}
           virtual
         >
-          {data?.getAllMasterBanners?.map((banner, index) => {
+          {[1, 3, 4, 5, 6]?.map((banner, index) => {
             return (
-              <SwiperSlide key={banner.BannerId} virtualIndex={index}>
+              <SwiperSlide key={banner?.BannerId} virtualIndex={index}>
                 <Link
                   href={`/restaurantes/promos/${banner?.name?.replace(
                     /\s/g,
@@ -46,7 +46,7 @@ export const PromosBanner = () => {
                   <div>
                     <BannerPromo key={banner?.pId}>
                       <Image
-                        alt={banner.description}
+                        alt={banner?.description}
                         height={150}
                         layout='responsive'
                         objectFit='cover'

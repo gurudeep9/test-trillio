@@ -5,26 +5,30 @@ import React from 'react'
 import styled from 'styled-components'
 import { PColor } from '../../../public/colors'
 import { CtnBox } from '../styled'
+import { handleJoinImage } from './helpers'
+import { BColor } from 'pkg-components'
 export const Categories = () => {
   const [getCatStore] = useCategoryStore()
-
+  const newDataCatStore = handleJoinImage({
+    data: getCatStore?.getAllCatStore || []
+  })
   return (
     <Container>
       <List>
-        {getCatStore?.getAllCatStore?.map(cat => {
+        {newDataCatStore?.map(cat => {
           const nameCat = cat?.cName?.replace(/\s/g, '-')?.toLowerCase()
           return (
             <CtnBox key={cat.catStore}>
               <Link href={`/categories/${nameCat}/${cat.catStore}`}>
-                <a>
+                <a style={{ color: BColor }}>
                   <ItemCategory>
                     <Image
-                      alt='Picture of the author'
+                      alt={cat.cPathImage || ''}
                       blurDataURL='data:...'
                       height={90}
                       objectFit='contain'
                       placeholder='blur'
-                      src={'/images/cat1.png'}
+                      src={cat.cPathImage}
                       unoptimized={true}
                       width={90}
 

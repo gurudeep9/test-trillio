@@ -18,8 +18,11 @@ import {
   ActionPay,
   ContentTotal
 } from './styled'
+import { useRouter } from 'next/router'
 
 export const AsideCheckout = ({ menu }) => {
+  const location = useRouter()
+
   const {
     setAlertBox,
     openModalProduct,
@@ -38,6 +41,7 @@ export const AsideCheckout = ({ menu }) => {
     sumProduct
   } = useAsideCart({
     setCountItemProduct,
+    location,
     setAlertBox,
     openModalProduct,
     setOpenModalProduct,

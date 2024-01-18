@@ -39,7 +39,10 @@ export default function StoreHomeView ({ idStore }) {
   const { name } = location.query || {}
   const id = name ? name[name?.length - 1] : null;
   const [rating, setRatingState] = useState(0)
-  const { handleQuery } = useManageQueryParams()
+  
+  const { handleQuery } = useManageQueryParams({
+    location
+  })
 
   const [like, setLike] = useState(0)
   const {
@@ -74,6 +77,7 @@ export default function StoreHomeView ({ idStore }) {
   } = useCart({
     handleMenu,
     openModalProduct,
+    location,
     setOpenModalProduct
   })
 

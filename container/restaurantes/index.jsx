@@ -35,12 +35,12 @@ export const Restaurant = () => {
     loading,
     handleSendQueries,
     handleFilterStore,
-    loadingFilter,
     handleCleanQueries
   }] = useRestaurant({
     location: router
   })
   const queryPriceStore = router.query.bestPrice
+
   return (
     <Content>
       <ContainerFilter>

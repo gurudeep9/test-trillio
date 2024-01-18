@@ -43,7 +43,9 @@ export const Email = () => {
   const [step, setStep] = useState(0)
   const router = useRouter()
   const [registerEmailLogin] = useMutation(EMAIL_SESSION)
-  const { handleQuery } = useManageQueryParams()
+  const { handleQuery } = useManageQueryParams({
+    location: router
+  })
 
   const handleForm = async (e, show) => {
     e.preventDefault()
