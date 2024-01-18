@@ -17,11 +17,24 @@ import {
   A11y,
   Parallax
 } from 'swiper'
+import { List } from '../styled'
+import { Loading } from 'pkg-components'
 
 export const PromosBanner = () => {
-  const { data } = useQuery(GET_ALL_BANNERS, {
+  const { data, loading } = useQuery(GET_ALL_BANNERS, {
     context: { clientName: 'admin-store' }
   })
+  const isValidImageUrl = (url) => {
+    // Expresión regular para validar URLs con protocolo http o https
+    const urlPattern = /^(http|https):\/\/.*$/
+    // Expresión regular para validar extensiones de imagen comunes
+    const imageExtensionPattern = /\.(jpg|jpeg|png|gif)$/i
+
+    return urlPattern.test(url) && imageExtensionPattern.test(url)
+  }
+  const banners = data?.getAllMasterBanners || []
+  const virtualSlides = Array.from({ length: banners.length }).map((_, index) => { return index })
+  if (loading) return <Loading />
   return (
     <Content>
       <ContainerCardProduct>
@@ -33,9 +46,10 @@ export const PromosBanner = () => {
           spaceBetween={10}
           virtual
         >
-          {[1, 3, 4, 5, 6]?.map((banner, index) => {
+          {virtualSlides?.map((banner, index) => {
             return (
               <SwiperSlide key={banner?.BannerId} virtualIndex={index}>
+
                 <Link
                   href={`/restaurantes/promos/${banner?.name?.replace(
                     /\s/g,
@@ -51,7 +65,7 @@ export const PromosBanner = () => {
                         layout='responsive'
                         objectFit='cover'
                         priority={true}
-                        src='/images/promotions16.avif'
+                        src={isValidImageUrl(banner?.path) ? banner.path : '/images/promotions16.avif'}
                         width={380}
                       />
                     </BannerPromo>

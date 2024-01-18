@@ -7,40 +7,59 @@ import { PColor } from '../../../public/colors'
 import { CtnBox } from '../styled'
 import { handleJoinImage } from './helpers'
 import { BColor } from 'pkg-components'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import {
+  Virtual,
+  Navigation,
+  Pagination,
+  A11y,
+  Parallax
+} from 'swiper'
+
 export const Categories = () => {
   const [getCatStore] = useCategoryStore()
   const newDataCatStore = handleJoinImage({
     data: getCatStore?.getAllCatStore || []
   })
+
   return (
     <Container>
-      <List>
+      <Swiper
+        autoplay={true}
+        modules={[Virtual, Navigation, Pagination, A11y, Parallax]}
+        navigation
+        slidesPerView={3}
+        spaceBetween={10}
+        virtual
+      >
         {newDataCatStore?.map(cat => {
           const nameCat = cat?.cName?.replace(/\s/g, '-')?.toLowerCase()
           return (
-            <CtnBox key={cat.catStore}>
-              <Link href={`/categories/${nameCat}/${cat.catStore}`}>
-                <a style={{ color: BColor }}>
-                  <ItemCategory>
-                    <Image
-                      alt={cat.cPathImage || ''}
-                      blurDataURL='data:...'
-                      height={90}
-                      objectFit='contain'
-                      placeholder='blur'
-                      src={cat.cPathImage}
-                      unoptimized={true}
-                      width={90}
+            <SwiperSlide key={cat.catStore}>
+              <CtnBox >
+                <Link href={`/categories/${nameCat}/${cat.catStore}`}>
+                  <a style={{ color: BColor }}>
+                    <ItemCategory>
+                      <Image
+                        alt={cat.cPathImage || ''}
+                        blurDataURL='data:...'
+                        height={90}
+                        objectFit='contain'
+                        placeholder='blur'
+                        src={cat.cPathImage}
+                        unoptimized={true}
+                        width={90}
 
-                    />
-                  </ItemCategory>
-                  <h2 className='title-cat'>{cat.cName}</h2>
-                </a>
-              </Link>
-            </CtnBox>
+                      />
+                    </ItemCategory>
+                    <h2 className='title-cat'>{cat.cName}</h2>
+                  </a>
+                </Link>
+              </CtnBox>
+            </SwiperSlide>
           )
         })}
-      </List>
+      </Swiper>
       <Link href={'/categorias'}>
         <Anchor>
           Ver todas
@@ -70,13 +89,6 @@ export const ItemCategory = styled.div`
 `
 export const List = styled.div`
     width: 100%;
-    display: grid;
-    gap: 5px;
-    grid-auto-flow: column;
-    place-content: space-around;
-    padding: 0 20px;
-    overflow: hidden;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 
     .title-cat {
         margin-top: 10px;

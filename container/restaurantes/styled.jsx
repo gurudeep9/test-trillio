@@ -121,6 +121,7 @@ export const Section = styled.section`
 }
   `
 export const CtnBox = styled.div`
+    width: 100px;
     &:hover{
         transform: scale(1.05); 
         transition: transform .2s ease-out;

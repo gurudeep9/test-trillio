@@ -8,9 +8,9 @@ export const imagePaths = {
 
 export const handleJoinImage = ({ data }) => {
   const array = data.map((data) => {
+    if (!data?.cName) return data
     const cName = data?.cName?.toLowerCase().replace(/\s+/g, '') || null
     const cPathImage = imagePaths[cName]
-    if (!data?.cName) return data
     return {
       ...data,
       cPathImage

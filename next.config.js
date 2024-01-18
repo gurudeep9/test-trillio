@@ -45,7 +45,7 @@ module.exports = async (phase) => {
     domains: [
       'http2.mlstatic.com',
       'localhost',
-      'server-image-food.herokuapp.com',
+      'front-back-server.onrender.com',
       '*'
     ]
   }

@@ -99,7 +99,7 @@ export const InputSearch = () => {
     </button>
     <Input
       aria-label='Busca por platillo o restaurante'
-      autoComplete='off'
+      autoComplete='on'
       name='search'
       onChange={(e) => { return handleChange(e) }}
       onKeyPress={(e) => {
