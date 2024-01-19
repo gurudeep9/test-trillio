@@ -17,7 +17,6 @@ import {
   A11y,
   Parallax
 } from 'swiper'
-import { List } from '../styled'
 import { Loading } from 'pkg-components'
 
 export const PromosBanner = () => {
@@ -33,23 +32,39 @@ export const PromosBanner = () => {
     return urlPattern.test(url) && imageExtensionPattern.test(url)
   }
   const banners = data?.getAllMasterBanners || []
-  const virtualSlides = Array.from({ length: banners.length }).map((_, index) => { return index })
   if (loading) return <Loading />
   return (
     <Content>
       <ContainerCardProduct>
         <Swiper
           autoplay={true}
+          breakpoints={{
+            200: {
+              slidesPerView: 1,
+              spaceBetween: 10
+            },
+            640: {
+              slidesPerView: 1, // Display 1 slide on mobile
+              spaceBetween: 20
+            },
+            768: {
+              slidesPerView: 2, // Display 2 slides on tablet
+              spaceBetween: 30
+            },
+            1024: {
+              slidesPerView: 3, // Display 2 slides on tablet (adjust as needed)
+              spaceBetween: 40
+            }
+          }}
+          className='Swiper_wrapper_banner'
+          loop={true}
           modules={[Virtual, Navigation, Pagination, A11y, Parallax]}
           navigation
-          slidesPerView={3}
-          spaceBetween={10}
           virtual
         >
-          {virtualSlides?.map((banner, index) => {
+          {banners?.map((banner, index) => {
             return (
               <SwiperSlide key={banner?.BannerId} virtualIndex={index}>
-
                 <Link
                   href={`/restaurantes/promos/${banner?.name?.replace(
                     /\s/g,
@@ -57,19 +72,15 @@ export const PromosBanner = () => {
                   )}/${banner?.BannerId}`}
                   prefetch={true}
                 >
-                  <div>
-                    <BannerPromo key={banner?.pId}>
-                      <Image
-                        alt={banner?.description}
-                        height={150}
-                        layout='responsive'
-                        objectFit='cover'
-                        priority={true}
-                        src={isValidImageUrl(banner?.path) ? banner.path : '/images/promotions16.avif'}
-                        width={380}
-                      />
-                    </BannerPromo>
-                  </div>
+                  <BannerPromo key={banner?.pId}>
+                    <Image
+                      alt={banner?.description}
+                      layout='fill'
+                      objectFit='contain'
+                      priority={true}
+                      src={isValidImageUrl(banner?.path) ? banner.path : '/images/promotions16.avif'}
+                    />
+                  </BannerPromo>
                 </Link>
               </SwiperSlide>
             )

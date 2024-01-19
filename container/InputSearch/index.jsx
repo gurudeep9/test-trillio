@@ -85,7 +85,6 @@ export const InputSearch = () => {
     }
   }
   // INITIAL REDUCER
-  const initializer = (initialValue = initialState) => { return JSON.parse(localStorage.getItem('localCart')) || initialValue }
   const [searchHistory, dispatch] = useReducer(favoriteReducer, initialState)
 
   useEffect(() => {
@@ -99,7 +98,7 @@ export const InputSearch = () => {
     </button>
     <Input
       aria-label='Busca por platillo o restaurante'
-      autoComplete='on'
+      autoComplete='off'
       name='search'
       onChange={(e) => { return handleChange(e) }}
       onKeyPress={(e) => {

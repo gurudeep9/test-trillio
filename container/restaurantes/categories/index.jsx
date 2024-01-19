@@ -26,11 +26,33 @@ export const Categories = () => {
     <Container>
       <Swiper
         autoplay={true}
+        breakpoints={{
+          200: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          390: {
+            slidesPerView: 3,
+            spaceBetween: 20
+          },
+          640: {
+            slidesPerView: 4,
+            spaceBetween: 20
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 40
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 10
+          }
+        }}
+        loop={true}
         modules={[Virtual, Navigation, Pagination, A11y, Parallax]}
         navigation
-        slidesPerView={3}
-        spaceBetween={10}
         virtual
+
       >
         {newDataCatStore?.map(cat => {
           const nameCat = cat?.cName?.replace(/\s/g, '-')?.toLowerCase()
@@ -78,14 +100,18 @@ export const Anchor = styled.a`
   }
 `
 export const Container = styled.div`
+  height: 150px;
+  max-height: 150px;
+  min-height: 150px;
   text-align: end;
 `
 export const ItemCategory = styled.div`
     width: 100%;
     border-radius: 3% ;
     height: 100px;
-    align-items: center;
-    display: grid;
+    && .swiper-slide .swiper-slide-visible {
+      width: min-content !important;
+    }
 `
 export const List = styled.div`
     width: 100%;

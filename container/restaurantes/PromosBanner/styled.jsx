@@ -30,23 +30,21 @@ export const Img = styled.img`
 `
 export const BannerPromo = styled.div`
     cursor: pointer;
-    box-shadow: 1px 1px 3px #00000052;
     margin: auto;
-    /* height: 190px; */
-    /* min-height: 190px; */
-    border: 2px solid transparent;
-
-    /* width: 490px; */
-    border-radius: 5px;
-    /* margin: 0 40px; */
-    /* ${props => props.color && css`
-        background-color: ${props.color}
-    `} */
-
-
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    @media (max-width: 640px) {
+        height: auto;
+        width: 100%;
+        
+     }
 `
 export const ContainerCardProduct = styled.div`
-    display: flex;
+    .Swiper_wrapper_banner {
+        height: 240px;
+
+    }
 
 `
 export const ImageBannerPromo = styled.img`
