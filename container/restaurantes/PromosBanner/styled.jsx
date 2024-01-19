@@ -42,8 +42,19 @@ export const BannerPromo = styled.div`
 `
 export const ContainerCardProduct = styled.div`
     .Swiper_wrapper_banner {
-        height: 240px;
-
+        height: 160px;
+        margin: 10px 0;
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 12px;
+            color: ${BGColor};
+        }
+        .swiper-button-next, .swiper-button-prev {
+            width: 2rem;
+            height: 2rem;
+            background-color: rgba(0,0,0,.4);
+            box-shadow: 0 0 4px rgba(0,0,0,.4);
+            border-radius: 2rem;
+        }
     }
 
 `

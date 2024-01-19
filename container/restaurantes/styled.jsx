@@ -82,8 +82,6 @@ export const Content = styled.div`
     .content-ripple-action__query {
         -webkit-box-align: center;
         align-items: center;
-        background: rgb(255, 255, 255);
-        border-top: 2px solid rgb(245, 240, 235);
         display: flex;
         -webkit-box-pack: end;
         justify-content: flex-end;
@@ -121,7 +119,8 @@ export const Section = styled.section`
 }
   `
 export const CtnBox = styled.div`
-    width: 100%;
+    width: 100px;
+
     &:hover{
         transform: scale(1.05); 
         transition: transform .2s ease-out;
@@ -145,12 +144,11 @@ export const ItemCategory = styled.div`
 export const ContentStores = styled.div`
     width: 100%;
     display: grid;  
-    gap: 5px;
     grid-auto-flow: column;
     place-content: space-around;
+    margin: 10px 0; 
     overflow: hidden;
     grid-template-columns: 30% repeat(auto-fill, 30%);
-    margin: 0 30px 30px auto;
 `
 export const H2 = styled.h2`
     color: ${BColor};

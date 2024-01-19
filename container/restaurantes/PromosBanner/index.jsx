@@ -37,27 +37,29 @@ export const PromosBanner = () => {
     <Content>
       <ContainerCardProduct>
         <Swiper
-          autoplay={true}
           breakpoints={{
-            200: {
-              slidesPerView: 1,
-              spaceBetween: 10
+            320: {
+              spaceBetween: 12,
+              slidesPerView: 1
             },
-            640: {
-              slidesPerView: 1, // Display 1 slide on mobile
-              spaceBetween: 20
+            560: {
+              spaceBetween: 12,
+              slidesPerView: 3
             },
-            768: {
-              slidesPerView: 2, // Display 2 slides on tablet
-              spaceBetween: 30
+            960: {
+              spaceBetween: 12,
+              slidesPerView: 3
             },
-            1024: {
-              slidesPerView: 3, // Display 2 slides on tablet (adjust as needed)
-              spaceBetween: 40
+            1440: {
+              spaceBetween: 16,
+              slidesPerView: 3
+            },
+            1818: {
+              spaceBetween: 16,
+              slidesPerView: 3
             }
           }}
           className='Swiper_wrapper_banner'
-          loop={true}
           modules={[Virtual, Navigation, Pagination, A11y, Parallax]}
           navigation
           virtual

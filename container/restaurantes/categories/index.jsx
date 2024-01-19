@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { PColor } from '../../../public/colors'
 import { CtnBox } from '../styled'
 import { handleJoinImage } from './helpers'
-import { BColor } from 'pkg-components'
+import { BColor, BGColor } from 'pkg-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
   Virtual,
@@ -33,21 +33,22 @@ export const Categories = () => {
           },
           390: {
             slidesPerView: 3,
-            spaceBetween: 20
+            spaceBetween: 5
           },
           640: {
             slidesPerView: 4,
-            spaceBetween: 20
+            spaceBetween: 5
           },
           768: {
             slidesPerView: 4,
-            spaceBetween: 40
+            spaceBetween: 5
           },
           1024: {
             slidesPerView: 5,
-            spaceBetween: 10
+            spaceBetween: 5
           }
         }}
+        className='Swiper_wrapper_categories'
         loop={true}
         modules={[Virtual, Navigation, Pagination, A11y, Parallax]}
         navigation
@@ -104,6 +105,21 @@ export const Container = styled.div`
   max-height: 150px;
   min-height: 150px;
   text-align: end;
+  .Swiper_wrapper_categories {
+        height: 160px;
+        margin: 10px 0;
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 12px;
+            color: ${BGColor};
+        }
+        .swiper-button-next, .swiper-button-prev {
+            width: 2rem;
+            height: 2rem;
+            background-color: rgba(0,0,0,.4);
+            box-shadow: 0 0 4px rgba(0,0,0,.4);
+            border-radius: 2rem;
+    }
+  }
 `
 export const ItemCategory = styled.div`
     width: 100%;

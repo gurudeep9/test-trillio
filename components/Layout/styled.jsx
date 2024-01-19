@@ -42,7 +42,7 @@ export const ContentFooter = styled.footer`
 export const Text = styled.div` 
     font-size: 13px;
     text-align: center;
-    margin: 5px 0px;
+    margin: 0px;
     font-family: PFont-Light;
     word-break: break-word;
 `
@@ -60,6 +60,7 @@ export const Anchor = styled.a`
   align-items: center;
   color: #3e3e3e;
   font-weight: 300;
+  flex-direction: column;
   font-size: 0.75rem;
   line-height: 0.875rem;
 `
