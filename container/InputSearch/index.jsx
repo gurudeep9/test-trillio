@@ -7,6 +7,8 @@ import { Button, ContentInputSearch, Input, SearchTarget } from './styled'
 export const InputSearch = () => {
   const location = useRouter()
   const [values, setValues] = useState({})
+  const [search, setTodos] = useState([])
+
   const [onkUp, setOnKeyUp] = useState(false)
   const ref = useRef()
   useEffect(() => {
@@ -50,7 +52,6 @@ export const InputSearch = () => {
       payload: favorite
     })
   }
-  const [search, setTodos] = useState([])
   useEffect(() => {
     const localTodos = localStorage.getItem('search')
     if (localTodos) {
@@ -98,7 +99,6 @@ export const InputSearch = () => {
     </button>
     <Input
       aria-label='Busca por platillo o restaurante'
-      autoComplete='off'
       name='search'
       onChange={(e) => { return handleChange(e) }}
       onKeyPress={(e) => {
@@ -112,11 +112,11 @@ export const InputSearch = () => {
       role='search'
       tabIndex={'0'}
       type='text'
-      value={values.search}
+      value={''}
     />
     {/* https://codesandbox.io/s/persist-localstorage-with-usereducer-forked-j5wbgi */}
     <SearchTarget values={values?.search?.length}>
-      {values?.search?.length
+      {false && values?.search?.length > 0
         ? <div>
           <button onClick={() => { return handleSearch(null, 'PLATOS', true) }}>
             <IconShopping color={PColor} size='25px' />

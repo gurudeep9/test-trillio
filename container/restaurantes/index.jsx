@@ -39,6 +39,7 @@ export const Restaurant = () => {
   }] = useRestaurant({
     location: router
   })
+
   const queryPriceStore = router.query.bestPrice
 
   return (
@@ -98,7 +99,7 @@ export const Restaurant = () => {
             </Tabs.Panel>
           </Tabs>
         </div>
-        <div className='content-ripple-action__query'>{console.log({loading})}
+        <div className='content-ripple-action__query'>
           <RippleButton
             loading={loading}
             onClick={() => {

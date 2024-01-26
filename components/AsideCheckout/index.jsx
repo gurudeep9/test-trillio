@@ -9,7 +9,11 @@ import {
   numberFormat,
   useAsideCart
 } from 'npm-pkg-hook'
-import { Overline, RippleButton, IconCancel } from 'pkg-components'
+import {
+  Overline,
+  RippleButton,
+  IconCancel
+} from 'pkg-components'
 import {
   CardProduct,
   Content,
@@ -38,6 +42,7 @@ export const AsideCheckout = ({ menu }) => {
     dataShoppingCard,
     handleDeleteItemShopping,
     handleEditProduct,
+    handleVerifyStoreOpenStatus,
     sumProduct
   } = useAsideCart({
     setCountItemProduct,
@@ -73,10 +78,12 @@ export const AsideCheckout = ({ menu }) => {
                 <div key={i}>
                   <div>
                     {result2[store]?.map((product, idx) => {
+                      const nameStore = product.getStore.storeName
+                      const comment = product.comments ?? ''
                       const url = generateStoreURL({
                         city: product.getStore.city,
                         department: product.getStore.department,
-                        storeName: product.getStore.storeName,
+                        storeName: nameStore,
                         idStore: product.getStore.idStore
                       })
                       return (
@@ -87,12 +94,15 @@ export const AsideCheckout = ({ menu }) => {
                                 color={PColor}
                                 margin={'10px 0'}
                                 size='1.325rem'
-                              >{product.getStore.storeName}</Text>
+                              >
+                                {nameStore}
+                              </Text>
                             </a>
                           </Link>
+
                           <div>
                             <Image
-                              alt={'Picture of the author'}
+                              alt=''
                               blurDataURL='/images/cat1.png'
                               className='store_image'
                               height={100}
@@ -103,7 +113,14 @@ export const AsideCheckout = ({ menu }) => {
                             />
                           </div>
                           <div className='item-line'>
-                            <Text margin={'40px 0'} size='20px'>{product.productFood?.pName}</Text>
+                            <Text margin={'10px 0'} size='20px'>{product.productFood?.pName}</Text>
+                            <Text
+                              color='#717171'
+                              margin={'2px 0'}
+                              size='.875rem'
+                            >
+                              Obs: {comment}
+                            </Text>
                             <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>
                               <Text color={APColor}>
                                 $ {numberFormat(product.productFood?.ProPrice)}
@@ -162,17 +179,19 @@ export const AsideCheckout = ({ menu }) => {
             <Text bold='900'>Total</Text>
             <Text bold='900'>$ {numberFormat(dataShoppingCard.length > 0 && totalProductPrice)}</Text>
           </ContentTotal>
-          <Link href='/proceso-de-compra' >
-            <a>
-              <RippleButton
-                margin={'auto'}
-                onClick={() => { return handleMenu(false) }}
-                widthButton='100%'
-              >
-                Eligir método de pago
-              </RippleButton>
-            </a>
-          </Link>
+
+          <RippleButton
+            margin='auto'
+            onClick={() => {
+              const { open, message } = handleVerifyStoreOpenStatus()
+              if (!open) return setAlertBox({ message })
+              location.push('proceso-de-compra')
+              return handleMenu(false)
+            }}
+            widthButton='100%'
+          >
+            Eligir método de pago
+          </RippleButton>
         </ActionPay>}
       </LateralModal>
     </div>

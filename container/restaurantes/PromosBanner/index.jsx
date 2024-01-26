@@ -11,11 +11,9 @@ import { GET_ALL_BANNERS, GET_ALL_BANNERS_PROMO } from 'gql/getBanners'
 import { useQuery } from '@apollo/client'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
-  Virtual,
   Navigation,
   Pagination,
-  A11y,
-  Parallax
+  A11y
 } from 'swiper'
 import { Loading } from 'pkg-components'
 
@@ -32,7 +30,9 @@ export const PromosBanner = () => {
     return urlPattern.test(url) && imageExtensionPattern.test(url)
   }
   const banners = data?.getAllMasterBanners || []
+
   if (loading) return <Loading />
+
   return (
     <Content>
       <ContainerCardProduct>
@@ -60,9 +60,8 @@ export const PromosBanner = () => {
             }
           }}
           className='Swiper_wrapper_banner'
-          modules={[Virtual, Navigation, Pagination, A11y, Parallax]}
+          modules={[Navigation, Pagination, A11y]}
           navigation
-          virtual
         >
           {banners?.map((banner, index) => {
             return (

@@ -9,11 +9,9 @@ import { handleJoinImage } from './helpers'
 import { BColor, BGColor } from 'pkg-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import {
-  Virtual,
   Navigation,
   Pagination,
-  A11y,
-  Parallax
+  A11y
 } from 'swiper'
 
 export const Categories = () => {
@@ -36,33 +34,28 @@ export const Categories = () => {
             spaceBetween: 5
           },
           640: {
-            slidesPerView: 4,
+            slidesPerView: 7,
             spaceBetween: 5
           },
           768: {
-            slidesPerView: 4,
-            spaceBetween: 5
-          },
-          1024: {
-            slidesPerView: 5,
+            slidesPerView: 7,
             spaceBetween: 5
           }
         }}
         className='Swiper_wrapper_categories'
         loop={true}
-        modules={[Virtual, Navigation, Pagination, A11y, Parallax]}
+        modules={[Navigation, Pagination, A11y]}
         navigation
-        virtual
-
       >
         {newDataCatStore?.map(cat => {
           const nameCat = cat?.cName?.replace(/\s/g, '-')?.toLowerCase()
           return (
             <SwiperSlide key={cat.catStore}>
-              <CtnBox >
+              <CtnBox>
                 <Link href={`/categories/${nameCat}/${cat.catStore}`}>
                   <a style={{ color: BColor }}>
                     <ItemCategory>
+                      {/* Changed the style prop to use styled-components */}
                       <Image
                         alt={cat.cPathImage || ''}
                         blurDataURL='data:...'
@@ -72,7 +65,6 @@ export const Categories = () => {
                         src={cat.cPathImage}
                         unoptimized={true}
                         width={90}
-
                       />
                     </ItemCategory>
                     <h2 className='title-cat'>{cat.cName}</h2>
@@ -92,6 +84,7 @@ export const Categories = () => {
   )
 }
 
+
 export const Anchor = styled.a`
   color: ${PColor};
   font-size: 12px;
@@ -108,6 +101,11 @@ export const Container = styled.div`
   .Swiper_wrapper_categories {
         height: 160px;
         margin: 10px 0;
+        .swiper-slide {
+          justify-content: center;
+    align-items: start;
+    display: flex;
+        }
         .swiper-button-next:after, .swiper-button-prev:after {
             font-size: 12px;
             color: ${BGColor};
