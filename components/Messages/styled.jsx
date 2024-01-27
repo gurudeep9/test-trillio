@@ -1,4 +1,4 @@
-import { SFColor, TBGEColor } from 'pkg-components'
+import { SFColor } from 'pkg-components'
 import { BGColor, PColor } from 'public/colors'
 import styled from 'styled-components'
 
@@ -78,21 +78,21 @@ export const TextMessage = styled.span`
     color: ${SFColor};
     box-shadow: 1px 1px 7px 0px #7171716b;
     ${({ messageUser, user }) => {
-        return messageUser === user && `
+    return messageUser === user && `
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
     `
-    }}
+  }}
 
     ${({ messageUser, user }) => {
-        return messageUser !== user && `
+    return messageUser !== user && `
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 10px;
     `
-    }}
+  }}
   .minute-hour {
     font-size: 12px;
     color: #9c9999;
