@@ -1,18 +1,60 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PColor } from '../../public/colors'
 import { IconCancel, IconTicker, IconLogo, IconSearch } from '../../public/icons'
 import { Body, BtnNav, Header, Box, ContainerBtn, Text, ContentHeader, BoxJr, Anchor, HeaderContent, ContentInputSearch, ButtonSearch, ScrollbarContainer, ContentImgs, Section, Acquisition, BoxLi } from './styled'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useSubscription, gql } from '@apollo/client'
 
 export const Home = () => {
+  // useEffect(() => {
+  //   // Establece la suscripción cuando el componente se monta
+  //   if (codeRoom) {
+  //     subscription.current =
+
+  //   // Limpia la suscripción cuando el componente se desmonta
+  //   return () => {
+  //     if (subscription.current) {
+  //       subscription.current.unsubscribe()
+  //     }
+  //   }
+  // }, [codeRoom, onMessageReceived])
+  const NEW_CHAT_ROOM_MESSAGE_SUBSCRIPTION = gql`
+    subscription NewChatRoomMessage($codeRoom: String!) {
+      newChatRoomMessage(codeRoom: $codeRoom) {
+        uuid
+        content
+        from
+        to
+      }
+    }
+  `
+
+
+  const data = useSubscription(NEW_CHAT_ROOM_MESSAGE_SUBSCRIPTION, {
+    context: { clientName: 'web-socket-chat' },
+    variables: { codeRoom: 'código_de_la_sala_de_chat' },
+    onSubscriptionData: ({ client, subscriptionData }) => {
+      if (subscriptionData.data && subscriptionData.data.newChatRoomMessage) {
+        // Llama a la función proporcionada cuando se recibe un nuevo mensaje
+        console.log(subscriptionData.data.newChatRoomMessage)
+      }
+    }
+  })
+
+  console.log(data)
+  // Define la suscripción GraphQL
+
+
   const [close, setClose] = useState(false)
   const [name, setName] = useState(false)
   const location = useRouter()
+
   function capFirst (string) {
     if (typeof string !== 'undefined') {
       return string?.charAt(0)?.toUpperCase() + string?.slice(1)
     }
+    return null
   }
 
   function getRandomInt (min, max) {

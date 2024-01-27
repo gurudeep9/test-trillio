@@ -1,5 +1,6 @@
-import { BGColor, PColor, PLVColor } from 'public/colors'
-import styled, { css } from 'styled-components'
+import { SFColor, TBGEColor } from 'pkg-components'
+import { BGColor, PColor } from 'public/colors'
+import styled from 'styled-components'
 
 export const ContainerContextMessage = styled.div`
     position: fixed;
@@ -9,10 +10,10 @@ export const ContainerContextMessage = styled.div`
     width: 472px;
 `
 export const BoxChat = styled.div`
-    bottom: 20px;
+    bottom: 70px;
     display: block;
     position: fixed;
-    right: 40px;
+    right: 70px;
     width: min-content;
 `
 export const ItemMessage = styled.div`
@@ -41,19 +42,21 @@ export const CircleStore = styled.div`
     }
 `
 export const Message = styled.div`
-    /* height: 100%; */
-    /* overflow: hidden; */
     
 `
 export const Chat = styled.div`
     overflow: hidden scroll;
-    height: 382px;
-    max-height: 382px;
+    height: 100%;
+    border-top: 1px solid #ccc;
 `
 export const ContentAction = styled.div`
-    position: absolute;
+position: absolute;
     bottom: 0;
-    
+    height: 80%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
     input {
         padding: 10px;
         
@@ -66,25 +69,46 @@ export const ContentAction = styled.div`
         align-items: self-start;
     }
 `
-export const TextMessage = styled.span`
-    background-color: ${({ messageUser, user }) => { return messageUser === user ? PColor : PLVColor }};
-    width: fit-content;
-    border-radius: 5px;
-    word-break: break-word;
-    padding: 5px;
 
+export const TextMessage = styled.span`
+    background-color: ${({ messageUser, user }) => { return messageUser === user ? `${SFColor}24` : BGColor }};
+    width: fit-content;
+    word-break: break-word;
+    padding: 10px;
+    color: ${SFColor};
+    box-shadow: 1px 1px 7px 0px #7171716b;
+    ${({ messageUser, user }) => {
+        return messageUser === user && `
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    `
+    }}
+
+    ${({ messageUser, user }) => {
+        return messageUser !== user && `
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 10px;
+    `
+    }}
+  .minute-hour {
+    font-size: 12px;
+    color: #9c9999;
+  }
 `
+
 export const ContentMessage = styled.div`
     width: 100%;
-    padding-left: 9%;
+    padding-left: 5%;
     padding-right: 5%;
     padding-top: 1%;
+    padding-bottom: 5%;
     display: flex;
     position: relative;
     justify-content: ${({ messageUser, user }) => { return messageUser === user ? 'flex-end' : 'flex-start' }};
-    /* width: 100%; */
-    /* padding: 5px; */
-    font-family: PFont-Light;
+    font-family: 'PFont-Light';
     border-radius: 5px;
     color: ${BGColor};
 `
@@ -93,31 +117,25 @@ export const WrapperChat = styled.form`
     border-top-right-radius: 8px;
     overflow: hidden;
     font-size: .9375rem;
-    border-top: 1px solid ${PColor};
-    border-left: 1px solid ${PColor};
-    border-right: 1px solid ${PColor};
-    height: 455px;
-    max-height: calc(100vh - 56px - 10px);
+    height: 100%;
     background-color: ${BGColor};
-    width: 328px;
-    position: absolute;
-    transition: 1s ease forwards;
+    width: 100%;
     transition: all 200ms ease 0s;
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    bottom: 0;
-    left: -85px;
     button {
         background-color: transparent;
     }
-    ${props => {
-    return props.show
-      ? css`
-        transform: translateY(425px);
-        
-        `
-      : css`
-        transform: translateY(0px);
-    
-    `
-  }}
+    .alert-message {
+        align-items: center;
+        color: #272323; 
+        display: flex;
+        font-size: 1rem;
+        justify-content: center;
+        left: 0;
+        margin: auto;
+        padding: 20px;
+        position: absolute;
+        right: 0;
+        width: 80%;
+    }
 `

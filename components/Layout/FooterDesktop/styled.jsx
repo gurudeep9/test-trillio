@@ -8,7 +8,6 @@ import {
 
 export const Container = styled.div`
     background-color: ${BGColor};
-    /* border-top: 1px solid ${PColor}; */
     padding: 30px;
     width: 100%;
     height: auto;
@@ -75,7 +74,6 @@ export const Content = styled.div`
         grid-template-areas:
         'logo-link company-copy'
         'logo-link company-info';
-
     `
   }}
 `

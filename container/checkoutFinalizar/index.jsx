@@ -3,15 +3,9 @@ import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { BGColor } from 'public/colors'
 import {
-  useReport,
   useStore,
-  useFormTools,
   useStatusOrdersClient,
-  useGetClients,
-  useGetSale,
-  useReactToPrint,
-  numberFormat,
-  useFormatDate
+  useGetSale
 } from 'npm-pkg-hook'
 import { IconWhatsApp } from 'public/icons'
 import { Loading, ModalDetailOrder } from 'pkg-components'
@@ -58,7 +52,7 @@ export const CheckoutFinalizar = () => {
       { shallow: true }
     )
   }
- 
+
   const propsModal = {
     dataModal: dataModal || {},
     dataStore,
@@ -107,7 +101,7 @@ export const CheckoutFinalizar = () => {
   }
   return (
     <Wrapper>
-        {open && sale && <ModalDetailOrder {...propsModal} />}
+      {open && sale && <ModalDetailOrder {...propsModal} />}
       {!!data && data?.map((x, i) => {
         const { getOneStore } = x
         return (

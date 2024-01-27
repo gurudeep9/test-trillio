@@ -103,10 +103,5 @@ export const ContainerProductSearch = styled.div`
     grid-template-columns: repeat(auto-fill,minmax(275px,1fr));
     grid-gap: 30px;
   }
-  /* @media only screen and (min-width: 743px) {
-    grid-template-columns: repeat(2,minmax(320px,1fr));
-    grid-gap: 30px;
-    padding: 0 20px; 
-  } */
 
 `

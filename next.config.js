@@ -21,6 +21,7 @@ module.exports = async (phase) => {
     HOST_DB: process.env.HOST_DB,
     URL_ADMIN_SERVER_SOCKET_HTTPS: process.env.URL_ADMIN_SERVER_SOCKET_HTTPS,
     BUSINESS_TITLE: process.env.BUSINESS_TITLE,
+    URL_WEB_SOCKET_CHAT: process.env.URL_WEB_SOCKET_CHAT,
     MYSQL_PORT: process.env.MYSQL_PORT,
     DIALECTDB: process.env.DIALECTDB,
     LOCAL_SALES_STORE: process.env.LOCAL_SALES_STORE,

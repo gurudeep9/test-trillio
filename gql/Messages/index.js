@@ -12,21 +12,22 @@ query getMessages($from: String!) {
 }
 `
 export const SEND_MESSAGES = gql`
-mutation sendMessage($to: String!, $content: String!) {
-  sendMessage(to: $to, content: $content) {
-    uuid
-    content
-    from
-    to
+ mutation SendMessage($codeRoom: String!, $from: String!, $to: String!, $content: String!) {
+    sendMessage(codeRoom: $codeRoom, from: $from, to: $to, content: $content) {
+      uuid
+      content
+      aDatCre
+      from
+      to
+    }
   }
-
-}
 `
 export const NEW_MESSAGE = gql`
   subscription newMessage {
     newMessage {
       uuid
       from
+      aDatCre
       to
       content
     }

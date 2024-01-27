@@ -108,6 +108,5 @@ export const ContainerSliderPromo = styled.div`
     grid-template-columns: 33% repeat(auto-fill, 33%) 33%;
     @media (max-width: 960px){
         grid-template-columns: repeat(auto-fill, 45%);
-        /* display: flex; */
     }
 `

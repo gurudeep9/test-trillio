@@ -15,8 +15,7 @@ import isEqual from 'lodash/isEqual'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { onError } from '@apollo/client/link/error'
-
-import { URL_ADMIN, URL_ADMIN_SERVER, URL_BASE } from './urls'
+import { SERVICES } from 'npm-pkg-hook'
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
@@ -35,13 +34,11 @@ const authLink = async (_) => {
     return token
       ? {
         headers: {
-          // ...headers,
           authorization
         }
       }
       : {
         headers: {
-          // ...headers,
         }
       }
   }
@@ -49,7 +46,7 @@ const authLink = async (_) => {
 }
 
 // Define la URL del servidor GraphQL
-const graphqlUrl = process.env.URL_ADMIN_SERVER_SOCKET // Si estás en producción y usando WSS
+const graphqlUrl = `${process.env.URL_WEB_SOCKET_CHAT}/graphql`
 
 // Comprueba si el código se está ejecutando en un navegador
 const isBrowser = typeof window !== 'undefined'
@@ -57,13 +54,16 @@ const isBrowser = typeof window !== 'undefined'
 // Crea el WebSocketLink solo si se está en un navegador
 const wsLink = isBrowser
   ? new WebSocketLink({
-    uri: `${graphqlUrl}/graphql`,
+    uri: `${graphqlUrl.replace('https', 'wss')}`,
     options: {
       reconnect: true,
       lazy: true,
       connectionParams: () => {
         return {
-          headers: { Authorization: 'Bearer TOKEN' } // Agrega tus encabezados de autorización
+          headers: {
+            Authorization: 'Bearer TOKEN',
+            restaurant: '013e5387-34a1-6a78-303d-5098f17bf640'
+          } 
         }
       }
     }
@@ -75,9 +75,10 @@ const getLink = async (operation) => {
   const headers = await authLink()
   const service = operation.getContext().clientName
   let uri = `${process.env.URL_BACK_SERVER}/graphql`
-  if (service === 'main') uri = `${process.env.URL_BACK_SERVER}/graphql`
-  if (service === 'admin-store') uri = `${process.env.URL_BACK_SERVER}/graphql`
-  if (service === 'admin-server') uri = `${process.env.URL_ADMIN_SERVER_SOCKET_HTTPS}/graphql`
+  if (service === SERVICES.MAIN) uri = `${process.env.URL_BACK_SERVER}/graphql`
+  if (service === SERVICES.ADMIN_STORE) uri = `${process.env.URL_BACK_SERVER}/graphql`
+  if (service === SERVICES.WEB_SOCKET_CHAT) uri = `${process.env.URL_WEB_SOCKET_CHAT}/graphql`
+  if (service === SERVICES.ADMIN_SERVER) uri = `${process.env.URL_ADMIN_SERVER_SOCKET_HTTPS}/graphql`
   const link = new HttpLink({
     uri,
     credentials: 'same-origin',

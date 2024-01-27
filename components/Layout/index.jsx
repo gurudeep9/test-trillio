@@ -11,6 +11,7 @@ import { Footer } from './footer'
 import { FooterDesktop } from './FooterDesktop'
 import { HeaderMain } from './headerlog'
 import { NavHeaderMobile } from './NavHeaderMobile'
+import { Messages } from '@/container/messages'
 
 export const Layout = ({
   children,
@@ -60,6 +61,7 @@ export const Layout = ({
           {val && <FooterDesktop />}
         </div>
         {!['/login', '/register', '/varify-email', '/restaurante', '/checkout/[id]', '/forgotpassword', '/terms_and_conditions', '/email/confirm/[code]', '/switch-options', '/teams/invite/[id]', '/contact'].find(x => { return x === location.pathname }) && <Footer />}
+          <Messages />
         <div style={{ gridArea: 'right' }}>
         </div>
       </Main>
@@ -86,12 +88,10 @@ const Main = styled.main`
         'main main main right';
     text-align: center;
     grid-gap: 0;
-    /* grid-gap: 10px; */
     @media (min-width: 960px) {
         ${props => {
     return !props.aside &&
         css`
-                /* grid-template-columns: 1fr; */
                 display: flex;
                 flex-direction: column;
                 height: 100%;
