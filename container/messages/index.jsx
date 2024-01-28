@@ -32,9 +32,10 @@ export const Messages = () => {
   }
   // QUERIES
   const { data: storeOrder } = useStatusOrdersClient()
+  console.log("🚀 ~ Messages ~ storeOrder:", storeOrder)
   const uniqueStoreOrders = removeDuplicatesByIdStore(storeOrder)
 
-  const roomCode = Array.isArray(uniqueStoreOrders) ? uniqueStoreOrders[0]?.idStore ?? '' : null
+  const roomCode = Array.isArray(uniqueStoreOrders) ? uniqueStoreOrders[0]?.pCodeRef ?? '' : null
 
   const [sendMessage, { loading }] = useMutation(SEND_MESSAGES, {
     context: { clientName: 'web-socket-chat' }

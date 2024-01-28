@@ -1,9 +1,12 @@
-import {
-  useLazyQuery,
-  useMutation
-} from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
-import { useFormTools, useGetCart, calculateTotalPrice } from 'npm-pkg-hook'
+import {
+  useFormTools,
+  usePushNotificationOrder,
+  SERVICES,
+  useGetCart,
+  calculateTotalPrice
+} from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import React, {
   useEffect,
@@ -22,8 +25,7 @@ import { GET_ALL_SHOPPING_CARD } from '../restaurantes/queries'
 import { ListProducts } from './helpers/ListProducts'
 import {
   CREATE_MULTIPLE_ORDER_PRODUCTS,
-  DELETE_ONE_ITEM_SHOPPING_PRODUCT,
-  PUSH_NOTIFICATION_ORDER_STORE
+  DELETE_ONE_ITEM_SHOPPING_PRODUCT
 } from './queries'
 import {
   Body,
@@ -65,10 +67,10 @@ export const Checkout = ({
     return r
   }, Object.create(null))
 
-  const [pushNotificationOrder] = useLazyQuery(PUSH_NOTIFICATION_ORDER_STORE, {
-    context: { clientName: 'admin-server' }
-
+  const pushNotificationOrder = usePushNotificationOrder({
+    client: SERVICES.WEB_SOCKET_CHAT
   })
+
   const [deleteOneItem] = useMutation(DELETE_ONE_ITEM_SHOPPING_PRODUCT, {
     onCompleted: data => {
       setAlertBox({ message: data?.deleteOneItem?.message })
@@ -97,45 +99,51 @@ export const Checkout = ({
   const handleSubmitPedido = async () => {
     const newArray = dataShoppingCard.map(x => { return { ShoppingCard: x.ShoppingCard, idStore: x.getStore.idStore } })
     const code = RandomCode(10)
-    if (!objLocation) return setAlertBox({ message: 'Elige una ubicación' })
-    await createMultipleOrderStore({
-      variables: {
-        input: {
-          setInput: newArray,
-          change: parseInt(dataForm?.change?.replace(/\./g, '')),
-          pickUp: 1,
-          totalProductsPrice: totalProductPrice,
-          pCodeRef: code,
-          payMethodPState: 1,
-          pPRecoger: 1,
-          locationUser: JSON.stringify(objLocation)
-        }
-      },
-      update: (cache, { data: { getAllShoppingCard } }) => {
-        return updateCache({
-          cache,
-          query: GET_ALL_SHOPPING_CARD,
-          nameFun: 'getAllShoppingCard',
-          dataNew: getAllShoppingCard
-        })
-      }
-    }).then(x => {
-      const success = x.data.createMultipleOrderStore.success
-      setAlertBox({ color: `${success ? 'success' : 'error'}`, message: `${success ? x.data.createMultipleOrderStore.message : 'No se pudo realizar tu pedido'}` })
-      pushNotificationOrder({
+
+    if (!objLocation) {
+      return setAlertBox({ message: 'Elige una ubicación' })
+    }
+
+    try {
+      const { data: { createMultipleOrderStore: { success, message } } } = await createMultipleOrderStore({
         variables: {
-          pCodeRef: code,
-          idStore: newArray[0]?.idStore || ''
+          input: {
+            setInput: newArray,
+            change: parseInt(dataForm?.change?.replace(/\./g, '')),
+            pickUp: 1,
+            totalProductsPrice: totalProductPrice,
+            pCodeRef: code,
+            payMethodPState: 1,
+            pPRecoger: 1,
+            locationUser: JSON.stringify(objLocation)
+          }
+        },
+        update: (cache, { data: { getAllShoppingCard } }) => {
+          return updateCache({
+            cache,
+            query: GET_ALL_SHOPPING_CARD,
+            nameFun: 'getAllShoppingCard',
+            dataNew: getAllShoppingCard
+          })
         }
       })
-    }).catch(err => { return setAlertBox({ message: `${err}`, duration: 7000 }) })
+
+      setAlertBox({ color: `${success ? 'success' : 'error'}`, message: `${success ? message : 'No se pudo realizar tu pedido'}` })
+      if (newArray[0]?.idStore) {
+        await pushNotificationOrder(code, newArray[0]?.idStore)
+      }
+    } catch (err) {
+      setAlertBox({ message: `${err.message}`, duration: 7000 })
+    }
   }
+
   // EFFECTS
   useEffect(() => {
     if (!loading && dataShoppingCard !== null) {
       const dataProduct2 = Object.keys(result)
       setSetKey(dataProduct2)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataShoppingCard])
 
 
@@ -281,7 +289,6 @@ export const Checkout = ({
 Checkout.propTypes = {
   locationStr: PropTypes.object,
   setAlertBox: PropTypes.func,
-  setCountItemProduct: PropTypes.func,
   setModalLocation: PropTypes.func
 }
 
