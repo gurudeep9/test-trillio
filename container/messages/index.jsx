@@ -32,7 +32,7 @@ export const Messages = () => {
   }
   // QUERIES
   const { data: storeOrder } = useStatusOrdersClient()
-  console.log("🚀 ~ Messages ~ storeOrder:", storeOrder)
+
   const uniqueStoreOrders = removeDuplicatesByIdStore(storeOrder)
 
   const roomCode = Array.isArray(uniqueStoreOrders) ? uniqueStoreOrders[0]?.pCodeRef ?? '' : null
