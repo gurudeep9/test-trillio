@@ -39,7 +39,6 @@ export const Restaurant = () => {
   }] = useRestaurant({
     location: router
   })
-
   const queryPriceStore = router.query.bestPrice
 
   return (

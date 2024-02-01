@@ -5,11 +5,7 @@ import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { PVColor, WColor } from '../../public/colors'
 import { IconLoveFill, IconRate } from '../../public/icons'
-import {
-  Content,
-  ItemWrapper,
-  MerchantListWrapper
-} from './styled'
+import { Content, ItemWrapper, MerchantListWrapper } from './styled'
 
 export const ListRestaurant = ({
   data = [],
@@ -24,11 +20,16 @@ export const ListRestaurant = ({
     <Content>
       <MerchantListWrapper>
         {data?.map((store) => {
+          const min = store.min ?? store?.getOneStore?.min
           const nameStore = store?.storeName || store?.getOneStore?.storeName
           const isNeW = store?.isNew || false
           const isOpen = store?.open || store?.getOneStore
-          const formattedNameStore = nameStore?.replace(/\s/g, '-').toLowerCase()
-          const city = (like ? store?.getOneStore?.city?.cName : store?.city?.cName)?.toLowerCase()
+          const formattedNameStore = nameStore
+            ?.replace(/\s/g, '-')
+            .toLowerCase()
+          const city = (
+            like ? store?.getOneStore?.city?.cName : store?.city?.cName
+          )?.toLowerCase()
 
           const calculateAverageRating = (ratings) => {
             let sum = 0
@@ -39,15 +40,27 @@ export const ListRestaurant = ({
             return avgRatings
           }
 
-          const avgRatings = calculateAverageRating(store?.getAllRatingStar || [])
+          const avgRatings = calculateAverageRating(
+            store?.getAllRatingStar || []
+          )
 
           return (
             <div key={store.idStore || store.fIStoreId}>
               <Link
                 href={{
                   pathname: catStoreId
-                    ? `/delivery/${encodeURIComponent(city)}-${encodeURIComponent(store?.department?.dName || store?.getOneStore?.department?.dName?.toLowerCase())}/${formattedNameStore}/${store.idStore}`
-                    : `/delivery/${encodeURIComponent(city)}-${encodeURIComponent(store?.department?.dName || store?.getOneStore?.department?.dName?.toLowerCase())}/${formattedNameStore}/${store?.idStore}`,
+                    ? `/delivery/${encodeURIComponent(
+                      city
+                    )}-${encodeURIComponent(
+                      store?.department?.dName ||
+                          store?.getOneStore?.department?.dName?.toLowerCase()
+                    )}/${formattedNameStore}/${store.idStore}`
+                    : `/delivery/${encodeURIComponent(
+                      city
+                    )}-${encodeURIComponent(
+                      store?.department?.dName ||
+                          store?.getOneStore?.department?.dName?.toLowerCase()
+                    )}/${formattedNameStore}/${store?.idStore}`,
                   query: {
                     categories: catStoreId,
                     plato: null
@@ -60,7 +73,18 @@ export const ListRestaurant = ({
                   <ItemWrapper
                     isOpen={isOpen === 1}
                     key={store.idStore}
-                    onClick={() => { return pushOneRecommendation({ variables: { input: { id: '', carProId: !like ? store.catStore : store.getOneStore.catStore } } }) }}
+                    onClick={() => {
+                      return pushOneRecommendation({
+                        variables: {
+                          input: {
+                            id: '',
+                            carProId: !like
+                              ? store.catStore
+                              : store.getOneStore.catStore
+                          }
+                        }
+                      })
+                    }}
                   >
                     <div>
                       <Image
@@ -73,17 +97,36 @@ export const ListRestaurant = ({
                     </div>
                     <div>
                       <h2 className='Name'>{nameStore}</h2>
-                      <span className='store_info'>{store?.cateStore?.cName || store?.getOneStore?.cateStore?.cName} {avgRatings?.length > 0 && <><IconRate color={WColor} size={18} /> {avgRatings[avgRatings.length - 1]?.toFixed(1)}</>}</span>
+                      <span className='store_info'>
+                        {store?.cateStore?.cName ||
+                          store?.getOneStore?.cateStore?.cName}{' '}
+                        <span className='store_info__separator'> • </span>
+                        <span className='store_info_min_order_time'>
+                          {min}
+                        </span>
+                        {avgRatings?.length > 0 && (
+                          <>
+                            <IconRate color={WColor} size={18} />{' '}
+                            {avgRatings[avgRatings.length - 1]?.toFixed(1)}
+                          </>
+                        )}
+                      </span>
                       <div style={{ display: 'flex' }}>
                         <div>
-                          {!isOpen && <span className='store_info close'>Cerrado</span>}
+                          {!isOpen && (
+                            <span className='store_info close'>Cerrado</span>
+                          )}
                         </div>
                         <div>
-                          {!isNeW && <span className='store_info close'>Nuevo</span>}
+                          {!isNeW && (
+                            <span className='store_info close'>Nuevo</span>
+                          )}
                         </div>
                       </div>
                     </div>
-                    {store.fState === 1 && <IconLoveFill color={PVColor} size={20} />}
+                    {store.fState === 1 && (
+                      <IconLoveFill color={PVColor} size={20} />
+                    )}
                   </ItemWrapper>
                 </a>
               </Link>
@@ -91,16 +134,13 @@ export const ListRestaurant = ({
           )
         })}
       </MerchantListWrapper>
-
     </Content>
   )
 }
-
 
 ListRestaurant.propTypes = {
   data: PropTypes.array,
   map: PropTypes.func,
   catStoreId: PropTypes.string,
   like: PropTypes.bool
-
 }
