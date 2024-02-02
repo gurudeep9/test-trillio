@@ -2,4 +2,4 @@
   command = "npm install -f"
 
 [build]
-  command = "npm run build"
+  command = "npm install pkg-components npm-pkg-hook && npm run build"
