@@ -14,6 +14,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import '../public/styles/App.css'
+import '../public/styles/tokens.css'
 
 function MyApp ({ Component, pageProps }) {
   const router = useRouter()

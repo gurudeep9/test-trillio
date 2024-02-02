@@ -80,7 +80,7 @@ export const ListRestaurant = ({
                             id: '',
                             carProId: !like
                               ? store.catStore
-                              : store.getOneStore.catStore
+                              : store?.getOneStore?.catStore
                           }
                         }
                       })
