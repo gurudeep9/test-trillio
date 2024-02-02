@@ -185,7 +185,8 @@ export const AsideCheckout = ({ menu }) => {
             onClick={() => {
               const { open, message } = handleVerifyStoreOpenStatus()
               if (!open) return setAlertBox({ message })
-              location.push('proceso-de-compra')
+              window.scrollTo(0, 0)
+              window.location.href = '/proceso-de-compra'
               return handleMenu(false)
             }}
             widthButton='100%'
