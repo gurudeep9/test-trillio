@@ -109,5 +109,5 @@ export const Title = styled.h1`
     line-height: 1.22;
     margin-top: 0;
     margin-bottom: 30px;
-    color: #3e3e3e;
+    color: var(--color-text-gray-light);
 `

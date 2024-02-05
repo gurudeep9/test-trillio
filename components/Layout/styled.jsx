@@ -58,7 +58,7 @@ export const Anchor = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #3e3e3e;
+  color: var(--color-text-gray-light);
   font-weight: 300;
   flex-direction: column;
   font-size: 0.75rem;
@@ -318,7 +318,7 @@ export const ContentSocial = styled.div`
     }
 `
 export const Title = styled.h1`
-    color: #3e3e3e;
+    color: var(--color-text-gray-light);
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.22;

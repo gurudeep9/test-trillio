@@ -46,7 +46,7 @@ export const ContainerAside = styled.div`
 `
 export const LeftNav = styled.div`
     display: grid;
-    grid-template-columns: 30% repeat(auto-fill, 30%);
+    grid-template-columns: 50% repeat(auto-fill, 50%);
     position: absolute;
     background-color: ${BGColor};
     transition: all 200ms ease 0s;
@@ -54,7 +54,6 @@ export const LeftNav = styled.div`
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
     z-index: 999;
     border-radius: 5px;
-    // overflow: hidden;
     width: 400px;
     place-content: center;
     gap: 10px;

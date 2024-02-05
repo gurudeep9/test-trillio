@@ -52,7 +52,7 @@ display: grid;
     list-style: none;
     cursor: pointer;
     margin-top: 22px;
-    color: #3e3e3e;
+    color: var(--color-text-gray-light);
     line-height: 1.5625rem;
     font-size: 1.125rem;
 }
@@ -318,7 +318,7 @@ export const HeaderContent = styled.div`
     }
     h1 {
     font-family:  PFont-Bold;
-    color: #3e3e3e;
+    color: var(--color-text-gray-light);
     font-weight: 500;
     margin: 15px 10px;
         padding: 15px 10px;
@@ -332,7 +332,7 @@ export const HeaderContent = styled.div`
     }
     h3 {
         font-family: PFont-Light;
-        color: #3e3e3e;
+        color: var(--color-text-gray-light);
         text-align: center;
         font-weight: 400;
         margin: 15px 10px;

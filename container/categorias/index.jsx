@@ -59,7 +59,7 @@ const ContentCateItem = styled.div`
     padding: 16px;
     font-family: PFont-Regular;
     .title-cat {
-        color: #3e3e3e;
+        color: var(--color-text-gray-light);
         font-weight: 500;
         font-size: 1.5rem;
         margin: 20px 0;

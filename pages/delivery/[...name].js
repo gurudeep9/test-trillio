@@ -37,8 +37,8 @@ export default function StoreHomeView ({ idStore }) {
   // STATES
   const location = useRouter()
   const { name } = location.query || {}
-  const id = name ? name[name?.length - 1] : null;
-  const [rating, setRatingState] = useState(0)
+  const id = name ? name[name?.length - 1] : null
+  const [rating, setRating] = useState(0)
 
   const { handleQuery } = useManageQueryParams({
     location
@@ -105,7 +105,7 @@ export default function StoreHomeView ({ idStore }) {
     handleShowModalProduct
   }
 
-  const [setRating] = useMutation(SET_RATING_STORE)
+  const [setMuateRating] = useMutation(SET_RATING_STORE)
 
   const {
     ratings,
@@ -153,7 +153,7 @@ export default function StoreHomeView ({ idStore }) {
 
 
   const handleRating = idStore => {
-    return setRating({
+    return setMuateRating({
       variables: {
         data: {
           idStore,
@@ -212,41 +212,70 @@ export default function StoreHomeView ({ idStore }) {
     getOneRating,
     setRatings
   }
+  const [active, setActive] = useState(0)
+  const [overActive, setOverActive] = useState(0)
+  const [show, setShow] = useState(true)
+
+  const handleClose = () => {
+    setShow(!show)
+  }
+
+  const handleOverActive = (index) => {
+    setOverActive(index)
+  }
 
   const restaurantProps = {
-    productProps,
-    product,
-    dataRating,
     appearance,
+    handleClose,
+    setActive,
+    active,
+    show,
+    overActive,
+    handleOverActive,
+    setShow,
     comments,
     data: data || {},
     dataCatProducts: dataProductAndCategory || [],
     dataMinPedido: numberFormat(dataMinPedido?.getMinPrice),
     dataOneFav: dataOneFav?.getOneFavorite || {},
     dataOneProduct: dataOneProduct || {},
+    dataRating,
     fetchMore,
+    getOneProduct,
     handleAddProducts,
+    handleQuery,
     id,
     like,
     loading,
     name: '',
     openModalProduct,
+    product,
+    productProps,
     quantity,
     rating,
-    addFav,
-    getOneProduct,
-    handleGetRating,
-    handleRating,
-    handleQuery,
-    removeFav,
-    setLike,
     setAlertBox,
     setOpenModalProduct,
+    addFav,
+    handleGetRating,
+    handleRating,
+    removeFav,
+    setLike,
     setRating,
-    setRatingStar,
-    setRatingState
+    setRatingStar
   }
-  const { storeName, city, department } = data || {}
+  const {
+    storeName,
+    city,
+    department
+  } = data || {
+    storeName: '',
+    city: {
+      cName: ''
+    },
+    department: {
+      dName: ''
+    }
+  }
   return (
     <div>
       {id && <Head>
@@ -254,7 +283,7 @@ export default function StoreHomeView ({ idStore }) {
         <meta content={location.query.name} name='description' />
         <link href='/favicon.ico' rel='icon' />
       </Head>}
-      {(data?.getOneStore && data?.getOneStore?.uState) !== '1'
+      {data?.getOneStore?.uState !== '1'
         ? (
           <RestaurantProfile {...restaurantProps} />
         )

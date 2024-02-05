@@ -250,7 +250,7 @@ export const CtnItemFilter = styled.div`
     flex-direction: column;
     display: flex;
     font-size: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid  var(--color-neutral-gray-silver);
     border-radius: 60%;
     height: 100px;
     align-items: center;
@@ -261,7 +261,7 @@ export const CtnItemFilter = styled.div`
 `
 export const CardProductsContent = styled.div`
     width: 100%;  
-    border: 1px solid #ccc;
+    border: 1px solid  var(--color-neutral-gray-silver);
     height: min-content;
     padding: 10px;
     border-radius: 4px;
@@ -387,7 +387,7 @@ export const Title = styled.h1`
   font-family: PFont-Light;
   box-sizing: border-box;
   display: inline;
-  color: #3e3e3e;
+  color: var(--color-text-gray-light);
   margin: 0 0 2px;
   margin-right: 10px;
   font-weight: 400;

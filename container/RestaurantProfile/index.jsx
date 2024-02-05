@@ -1,41 +1,38 @@
 import PropTypes from 'prop-types'
-import {
-  useRef,
-  useMemo,
-  useState
-} from 'react'
+import { useRef, useMemo, useState } from 'react'
 import {
   SearchBar,
   ModalProduct,
-  Button,
-  Text,
+  LateralStoreInfo,
   BannerStore,
-  Rate
+  Button
 } from 'pkg-components'
 import { StickyViewport } from './stickyheader'
-import {
-  ButtonLike,
-  Container,
-  ContentSearch
-} from './styled'
+import { Container, ContentSearch } from './styled'
 import {
   useStatusOpenStore,
   useBanner,
   getCategoriesWithProduct,
+  completeSchedules,
   useSchedules
 } from 'npm-pkg-hook'
 import { ProductCategories } from './StickyBoundaryCategories'
 import { RatingModal } from './RatingModal'
 
 export const RestaurantProfile = ({
-  addFav = () => { },
-  getOneProduct = () => { },
-  handleGetRating = () => { },
-  handleRating = () => { },
-  removeFav = () => { },
-  setRatingStar = () => { },
-  setRatingState = () => { },
-  handleQuery = () => { },
+  addFav = () => {},
+  getOneProduct = () => {},
+  handleClose = () => {},
+  handleOverActive = () => {},
+  handleQuery = () => {},
+  handleRating = () => {},
+  removeFav = () => {},
+  setActive = () => {},
+  setRating = () => {},
+  setRatingStar = () => {},
+  active = 0,
+  show = false,
+  overActive = 0,
   data = {},
   productProps = {},
   dataRating = {},
@@ -50,17 +47,10 @@ export const RestaurantProfile = ({
   const [openRate, setOpenRate] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const section1Ref = useRef()
-  const {
-    ratings,
-    setRatings
-  } = dataRating || {}
+  const { ratings, setRatings } = dataRating || {}
 
-  const {
-    rGoodTemperature,
-    rGoodCondition,
-    rTasty,
-    appearance
-  } = ratings ?? {}
+  const { rGoodTemperature, rGoodCondition, rTasty, appearance } =
+    ratings ?? {}
 
   const { fState } = dataOneFav
 
@@ -68,17 +58,13 @@ export const RestaurantProfile = ({
     height: '100vh'
   }
 
-  const handleSetRating = () => {
-    setOpenRate(!openRate)
-    handleGetRating(id)
-  }
   const idStore = data.idStore ?? id
   const [banner] = useBanner()
   const [dataSchedules] = useSchedules({ schDay: 1, idStore })
+  const schedulesStore = completeSchedules(dataSchedules || [])
   const { path, bnImageFileName } = banner || {}
   const { open, openNow } = useStatusOpenStore({ dataSchedules })
   const isEmtySchedules = dataSchedules?.length === 0
-
   const bannerProps = {
     path,
     bnImageFileName,
@@ -89,20 +75,21 @@ export const RestaurantProfile = ({
     open: data?.scheduleOpenAll ? 'Abierto todos los días' : open,
     openNow: data?.scheduleOpenAll ? true : openNow,
     banner,
-    isEdit: false
+    isEdit: false,
+    handleClose
   }
 
   const ratingModalProps = {
-    data,
-    rTasty,
     appearance,
-    rGoodTemperature,
+    data,
+    id,
+    openRate,
     rGoodCondition,
+    rGoodTemperature,
+    rTasty,
     setRatings,
     handleRating,
-    setOpenRate,
-    openRate,
-    id
+    setOpenRate
   }
   const handleChange = (e) => {
     setSearchQuery(e.target.value)
@@ -119,57 +106,23 @@ export const RestaurantProfile = ({
     <Container>
       <StickyViewport as='main' style={containerStyle}>
         <BannerStore {...bannerProps} />
-        <ContentSearch>
-          <div className='container-rating' style={{ width: '50%' }}>
-            <Button className='rating-store' onClick={() => { return handleSetRating() }}>
-              <Text>
-                Calificar Restaurante
-              </Text>
-            </Button>
-            <div style={{ width: 'min-content' }}>
-              <Rate
-                onRating={rate => {
-                  setRatingState(rate)
-                  setRatingStar({
-                    variables: {
-                      data: {
-                        idStore: data?.idStore || '',
-                        rScore: rate
-                      }
-                    }
-                  })
-                }}
-                rating={rating}
-                size={20}
-              />
-            </div>
-          </div>
-          <div className='container-rating' style={{ width: '50%', justifyContent: 'end' }}>
-            {!!dataMinPedido &&
-              <Text
-                className='text-favorite'
-                margin='0 10px'
-                size='15px'
-              >
-                Precio de Producto mínimo $ {dataMinPedido}
-              </Text>
-            }
-
-            <Text className='text-favorite'>
-              {fState === 1 ? 'Elimina de' : 'Añade de '} tus favoritos
-            </Text>
-            <ButtonLike
-              isLiked={fState === 1}
-              onClick={() => {
-                return fState === 1
-                  ? removeFav(data?.idStore, fState)
-                  : addFav(data?.idStore)
-              }}
-            >
-            </ButtonLike>
-          </div>
-        </ContentSearch>
-
+        <LateralStoreInfo
+          active={active}
+          addFav={addFav}
+          fState={fState}
+          handleClose={handleClose}
+          handleOverActive={handleOverActive}
+          idStore={idStore}
+          overActive={overActive}
+          rating={rating}
+          removeFav={removeFav}
+          schedulesStore={schedulesStore || []}
+          setActive={setActive}
+          setRating={setRating}
+          setRatingStar={setRatingStar}
+          show={show}
+          steps={['Sobre', 'Horarios', '']}
+        />
         <ContentSearch>
           <SearchBar
             handleChange={handleChange}
@@ -195,7 +148,7 @@ export const RestaurantProfile = ({
 
 RestaurantProfile.propTypes = {
   SetAppearance: PropTypes.func,
-  handleQuery: PropTypes.func,
+  active: PropTypes.number,
   addFav: PropTypes.func,
   appearance: PropTypes.any,
   comments: PropTypes.string,
@@ -222,7 +175,10 @@ RestaurantProfile.propTypes = {
   getOneProduct: PropTypes.func,
   handleAddProducts: PropTypes.func,
   handleAddSubExtraOptionalProduct: PropTypes.func,
+  handleClose: PropTypes.func,
   handleGetRating: PropTypes.func,
+  handleOverActive: PropTypes.func,
+  handleQuery: PropTypes.func,
   handleRating: PropTypes.func,
   id: PropTypes.any,
   isMobile: PropTypes.bool,
@@ -231,6 +187,7 @@ RestaurantProfile.propTypes = {
     setState: PropTypes.func,
     state: PropTypes.any
   }),
+  overActive: PropTypes.number,
   product: PropTypes.object,
   productProps: PropTypes.object,
   quantity: PropTypes.number,
@@ -239,15 +196,17 @@ RestaurantProfile.propTypes = {
   rTasty: PropTypes.any,
   rating: PropTypes.any,
   removeFav: PropTypes.func,
+  setActive: PropTypes.func,
   setAlertBox: PropTypes.func,
   setComments: PropTypes.func,
   setGoodCondition: PropTypes.func,
   setGoodTemperature: PropTypes.func,
   setOpenModalProduct: PropTypes.func,
   setQuantity: PropTypes.func,
+  setRating: PropTypes.func,
   setRatingStar: PropTypes.func,
-  setRatingState: PropTypes.func,
   setState: PropTypes.func,
   setTasty: PropTypes.func,
+  show: PropTypes.bool,
   state: PropTypes.any
 }

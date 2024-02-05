@@ -28,7 +28,7 @@ export const Card = styled.div`
       font-size: 1rem;
       line-height: 1.25rem;
       font-weight: 400;
-      color: #3e3e3e;
+      color: var(--color-text-gray-light);
       &:nth-child(2) {
         margin-left: 10px;
       }
@@ -40,7 +40,7 @@ export const Card = styled.div`
       list-style: none;
       cursor: pointer;
       box-sizing: border-box;
-      color: #3e3e3e;
+      color: var(--color-text-gray-light);
       font-weight: 400;
       margin-top: 0;
       font-size: 1.125rem;

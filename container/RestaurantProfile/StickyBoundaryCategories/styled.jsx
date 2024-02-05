@@ -51,7 +51,7 @@ export const Title = styled.h1`
   font-family: PFont-Light;
   box-sizing: border-box;
   display: inline;
-  color: #3e3e3e;
+  color: var(--color-text-gray-light);
   margin: 0 0 2px;
   margin-right: 10px;
   font-weight: 400;
