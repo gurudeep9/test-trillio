@@ -92,6 +92,7 @@ export const ProductCategories = ({
                         onClick={() => { return handleGetOneProduct(food) }}
                         redirect={() => { return router.push(`/update/products/editar/${food.pId}`) }}
                         setAlertBox={setAlertBox}
+                        showDiscount={false}
                       />
                     )
                   }) : <Skeleton height={200} numberObject={2} />}

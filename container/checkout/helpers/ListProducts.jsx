@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 
 import { Text } from '../styled'
 import { ProductsStores } from './ProductsStores'
+import { EmptyData } from 'pkg-components'
 
 export const ListProducts = ({
   existData,
@@ -9,6 +10,7 @@ export const ListProducts = ({
   refs,
   handleDeleteItemShopping,
   sumProduct,
+  loading,
   ashKey
 }) => {
   return (
@@ -33,7 +35,7 @@ export const ListProducts = ({
             </div>
           )
         })
-        : <div>Carrito vacio</div>
+        : <EmptyData />
       }
     </>
   )

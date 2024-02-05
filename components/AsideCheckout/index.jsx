@@ -12,7 +12,8 @@ import {
 import {
   Overline,
   RippleButton,
-  IconCancel
+  IconCancel,
+  EmptyData
 } from 'pkg-components'
 import {
   CardProduct,
@@ -52,7 +53,7 @@ export const AsideCheckout = ({ menu }) => {
     setOpenModalProduct,
     handleMenu
   })
-
+  const emptyData = Array.isArray(dataShoppingCard) && dataShoppingCard?.length > 0
   return (
     <div>
       <Overline
@@ -68,113 +69,115 @@ export const AsideCheckout = ({ menu }) => {
         >
           <IconCancel color={PColor} size='25px' />
         </RippleButton>
-        <Content>
-          <div className='restaurant-cart-header'>
+        {emptyData
+          ? <Content>
+            <div className='restaurant-cart-header'>
             Tu pedido en
-          </div>
-          <div>
-            {key?.map((store, i) => {
-              return (
-                <div key={i}>
-                  <div>
-                    {result2[store]?.map((product, idx) => {
-                      const nameStore = product.getStore.storeName
-                      const comment = product.comments ?? ''
-                      const url = generateStoreURL({
-                        city: product.getStore.city,
-                        department: product.getStore.department,
-                        storeName: nameStore,
-                        idStore: product.getStore.idStore
-                      })
-                      return (
-                        <CardProduct key={product.ShoppingCard}>
-                          <Link href={url}>
-                            <a>
-                              <Text
-                                color={PColor}
-                                margin={'10px 0'}
-                                size='1.325rem'
-                              >
-                                {nameStore}
-                              </Text>
-                            </a>
-                          </Link>
-
-                          <div>
-                            <Image
-                              alt=''
-                              blurDataURL='/images/cat1.png'
-                              className='store_image'
-                              height={100}
-                              objectFit='cover'
-                              placeholder='blur'
-                              src={'/images/cat1.png'}
-                              width={100}
-                            />
-                          </div>
-                          <div className='item-line'>
-                            <Text margin={'10px 0'} size='20px'>{product.productFood?.pName}</Text>
-                            <Text
-                              color='#717171'
-                              margin={'2px 0'}
-                              size='.875rem'
-                            >
-                              Obs: {comment}
-                            </Text>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>
-                              <Text color={APColor}>
-                                $ {numberFormat(product.productFood?.ProPrice)}
-                              </Text>
-                              <Text color={APColor}>
-                                Cantidad {numberFormat(product.cantProducts)}
-                              </Text>
-                              <Text
-                                line
-                                margin='0 0 0 10px'
-                                size='25px'
-                              >
-                                $ {numberFormat(product.productFood?.ProDescuento || 0)}</Text>
-                            </div>
-                            <div className='footer' style={{ display: 'flex' }}>
-                              <button onClick={() => { return handleEditProduct(product) }}>
-                                <Text color={PColor}>
-                                  Editar
-                                </Text>
-                              </button>
-                              &nbsp;
-                              &nbsp;
-                              <button onClick={() => { return handleDeleteItemShopping(product) }}>
+            </div>
+            <div>
+              {key?.map((store, i) => {
+                return (
+                  <div key={i}>
+                    <div>
+                      {result2[store]?.map((product, idx) => {
+                        const nameStore = product.getStore.storeName
+                        const comment = product.comments ?? ''
+                        const url = generateStoreURL({
+                          city: product.getStore.city,
+                          department: product.getStore.department,
+                          storeName: nameStore,
+                          idStore: product.getStore.idStore
+                        })
+                        return (
+                          <CardProduct key={product.ShoppingCard}>
+                            <Link href={url}>
+                              <a>
                                 <Text
-                                  color='#ccc'
-                                  margin='0 0 0 10px'
+                                  color={PColor}
+                                  margin={'10px 0'}
+                                  size='1.325rem'
                                 >
-                                  Eliminar
+                                  {nameStore}
                                 </Text>
-                              </button>
+                              </a>
+                            </Link>
+
+                            <div>
+                              <Image
+                                alt=''
+                                blurDataURL='/images/cat1.png'
+                                className='store_image'
+                                height={100}
+                                objectFit='cover'
+                                placeholder='blur'
+                                src={'/images/cat1.png'}
+                                width={100}
+                              />
                             </div>
-                          </div>
-                          <ContentTotal>
-                            <Text margin='0 0 0 10px'> Subtotal</Text>
-                            <Text margin='0 0 0 10px'>$ {numberFormat(product.productFood?.ProPrice)}</Text>
-                          </ContentTotal>
-                          <ContentTotal>
-                            <Text margin='0 0 0 10px' >Costo de envío</Text>
-                            {product.productFood?.ValueDelivery !== null || 0 ? <Text margin='0 0 0 10px' >$ {numberFormat(product.productFood?.ValueDelivery)}</Text> : <Text color={APColor}>Gratis</Text>}
-                          </ContentTotal>
-                          <ContentTotal>
-                            <Text margin='0 0 0 10px' >Costo Final</Text>
-                            <Text margin='0 0 0 10px'>$ {numberFormat(sumProduct(product.productFood?.ProPrice, product.productFood?.ValueDelivery, product.cantProducts))}</Text>
-                          </ContentTotal>
-                        </CardProduct>
-                      )
-                    })}
+                            <div className='item-line'>
+                              <Text margin={'10px 0'} size='20px'>{product.productFood?.pName}</Text>
+                              {comment && <Text
+                                color='#717171'
+                                margin={'2px 0'}
+                                size='.875rem'
+                              >
+                              Obs: {comment}
+                              </Text>}
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>
+                                <Text color={APColor}>
+                                $ {numberFormat(product.productFood?.ProPrice)}
+                                </Text>
+                                <Text color={APColor}>
+                                Cantidad {numberFormat(product.cantProducts)}
+                                </Text>
+                                <Text
+                                  line
+                                  margin='0 0 0 10px'
+                                  size='25px'
+                                >
+                                $ {numberFormat(product.productFood?.ProDescuento || 0)}</Text>
+                              </div>
+                              <div className='footer' style={{ display: 'flex' }}>
+                                <button onClick={() => { return handleEditProduct(product) }}>
+                                  <Text color={PColor}>
+                                  Editar
+                                  </Text>
+                                </button>
+                              &nbsp;
+                              &nbsp;
+                                <button onClick={() => { return handleDeleteItemShopping(product) }}>
+                                  <Text
+                                    color='#ccc'
+                                    margin='0 0 0 10px'
+                                  >
+                                  Eliminar
+                                  </Text>
+                                </button>
+                              </div>
+                            </div>
+                            <ContentTotal>
+                              <Text margin='0 0 0 10px'> Subtotal</Text>
+                              <Text margin='0 0 0 10px'>$ {numberFormat(product.productFood?.ProPrice)}</Text>
+                            </ContentTotal>
+                            <ContentTotal>
+                              <Text margin='0 0 0 10px' >Costo de envío</Text>
+                              {product.productFood?.ValueDelivery !== null || 0 ? <Text margin='0 0 0 10px' >$ {numberFormat(product.productFood?.ValueDelivery)}</Text> : <Text color={APColor}>Gratis</Text>}
+                            </ContentTotal>
+                            <ContentTotal>
+                              <Text margin='0 0 0 10px' >Costo Final</Text>
+                              <Text margin='0 0 0 10px'>$ {numberFormat(sumProduct(product.productFood?.ProPrice, product.productFood?.ValueDelivery, product.cantProducts))}</Text>
+                            </ContentTotal>
+                          </CardProduct>
+                        )
+                      })}
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
-        </Content>
-        {dataShoppingCard?.length && <ActionPay>
+                )
+              })}
+            </div>
+          </Content>
+          : <EmptyData height={300} />}
+        {emptyData && <ActionPay>
           <ContentTotal>
             <Text bold='900'>Total</Text>
             <Text bold='900'>$ {numberFormat(dataShoppingCard.length > 0 && totalProductPrice)}</Text>

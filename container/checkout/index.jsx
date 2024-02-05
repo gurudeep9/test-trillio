@@ -13,7 +13,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { RippleButton, InputHooks } from 'pkg-components'
+import { RippleButton, InputHooks, EmptyData } from 'pkg-components'
 import { PColor } from '../../public/colors'
 import { IconGoogleLocation, IconLocationMap } from '../../public/icons'
 import {
@@ -195,10 +195,10 @@ export const Checkout = ({
 
   const checkoutCart = active === 2
   const existData = dataShoppingCard?.length
-  if (!existData && !loading) return <>Carrito vacio</>
+
   return (
     <Body>
-      {existData > 0
+      {existData > 0 && !loading
         ? <Card>
           <RippleButton
             active={active === 1}
@@ -257,7 +257,7 @@ export const Checkout = ({
             </RippleButton>
           </ContentInfo>
         </Card>
-        : <div>Carrito vacio</div>}
+        : <EmptyData />}
       {existData > 0 && <Card>
         <CardPro>
           <ListProducts
@@ -265,6 +265,7 @@ export const Checkout = ({
             existData={existData}
             handleDeleteItemShopping={handleDeleteItemShopping}
             refs={refs}
+            loading={loading}
             result={result}
             sumProduct={sumProduct}
           />

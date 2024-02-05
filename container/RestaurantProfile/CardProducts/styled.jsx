@@ -5,7 +5,7 @@ export const Card = styled.div`
     background: ${BGColor};
     border-radius: 4px;
     border: 1px solid #f2f2f2;
-    box-shadow: 0 1px 4px rgb(0 0 0 / 5%);
+    box-shadow: var(--box-shadow-lg);
     display: grid;
     grid-gap: 15px;
     grid-template-columns: 1fr 146px;

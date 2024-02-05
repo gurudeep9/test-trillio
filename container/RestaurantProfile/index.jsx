@@ -4,8 +4,7 @@ import {
   SearchBar,
   ModalProduct,
   LateralStoreInfo,
-  BannerStore,
-  Button
+  BannerStore
 } from 'pkg-components'
 import { StickyViewport } from './stickyheader'
 import { Container, ContentSearch } from './styled'
@@ -32,6 +31,7 @@ export const RestaurantProfile = ({
   setRatingStar = () => {},
   active = 0,
   show = false,
+  loadingButton = false,
   overActive = 0,
   data = {},
   productProps = {},
@@ -55,7 +55,7 @@ export const RestaurantProfile = ({
   const { fState } = dataOneFav
 
   const containerStyle = {
-    height: '100vh'
+    height: '100%'
   }
 
   const idStore = data.idStore ?? id
@@ -127,7 +127,7 @@ export const RestaurantProfile = ({
           <SearchBar
             handleChange={handleChange}
             margin='20px 0'
-            padding='0'
+            padding='10px'
             placeholder='Buscar productos'
           />
         </ContentSearch>

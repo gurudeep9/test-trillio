@@ -72,11 +72,13 @@ export default function StoreHomeView ({ idStore }) {
     handleIncrementExtra,
     handleDecrementExtra,
     handleAddOptional,
+    loadingButton,
     disabled,
     handleCountProducts
   } = useCart({
     handleMenu,
     openModalProduct,
+    setAlertBox,
     location,
     setOpenModalProduct
   })
@@ -93,6 +95,7 @@ export default function StoreHomeView ({ idStore }) {
     handleDecrease,
     openModalProduct,
     loading: loadingProduct,
+    loadingButton,
     handleMenu,
     setComments,
     comments,
@@ -214,7 +217,7 @@ export default function StoreHomeView ({ idStore }) {
   }
   const [active, setActive] = useState(0)
   const [overActive, setOverActive] = useState(0)
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
 
   const handleClose = () => {
     setShow(!show)
@@ -247,6 +250,7 @@ export default function StoreHomeView ({ idStore }) {
     id,
     like,
     loading,
+    loadingButton,
     name: '',
     openModalProduct,
     product,
