@@ -1,5 +1,5 @@
 import { PColor, SECBGColor } from 'public/colors'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const flexCenter = css`
   display: flex;

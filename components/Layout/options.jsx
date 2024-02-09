@@ -7,16 +7,14 @@ import React, {
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { BGColor, PColor } from '../../public/colors'
-import { IconArrowBottom, IconLogout, IconShopping, IconUser } from '../../public/icons'
+import { IconLogout, IconShopping, IconUser } from '../../public/icons'
 import { useRouter } from 'next/router'
 import { Context } from '../../context'
 import { useUser, useLogout } from 'npm-pkg-hook'
 import { Overline } from 'pkg-components'
 import {
   ButtonOption,
-  FloatingBoxTwo,
   Button,
-  ButtonOptionFav,
   Count
 } from './styled'
 
