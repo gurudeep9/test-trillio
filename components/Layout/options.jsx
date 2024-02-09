@@ -24,9 +24,7 @@ export const Options = ({ handleMenu }) => {
   const {
     itemProducts,
     setOpenMenuMobile,
-    menuMobile,
-    setStatus,
-    status
+    menuMobile
   } = useContext(Context)
   const [show, setShow] = useState(false)
   const location = useRouter()
@@ -53,7 +51,6 @@ export const Options = ({ handleMenu }) => {
 
   const handleOpenMenu = () => {
     setOpenMenuMobile(!menuMobile)
-    setStatus(status === 'open' ? 'close' : 'open')
   }
   const email = dataUser?.email ? dataUser?.email.split('@')[0] : ''
 
@@ -67,9 +64,9 @@ export const Options = ({ handleMenu }) => {
             onClick={() => { return handleOpenMenu() }}
             role='button'
           >
-            <span className={status}></span>
-            <span className={status}></span>
-            <span className={status}></span>
+            <span className={menuMobile ? 'open' : 'close'}></span>
+            <span className={menuMobile ? 'open' : 'close'}></span>
+            <span className={menuMobile ? 'open' : 'close'}></span>
           </div>
         </ContainerBurger>
         <Count onClick={() => { return handleMenu(1) }}>
@@ -90,13 +87,6 @@ export const Options = ({ handleMenu }) => {
               </Button>
             </a>
           </Enlace>
-          <Enlace href='/historial'>
-            <a>
-              <Button type='button'>
-                <IconShopping color={PColor} size='25px' />
-              </Button>
-            </a>
-          </Enlace>
         </LeftNav>
       </ButtonOption>
       <ButtonOption onClick={onClickLogout}>
@@ -108,22 +98,6 @@ export const Options = ({ handleMenu }) => {
         </div>
         <IconShopping color={PColor} size='25px' />
       </ButtonOption>
-      <ButtonOptionFav onClick={() => { return handleClick(2) }} >
-        <Button type='button'>
-          <IconArrowBottom color={PColor} size='15px' />
-        </Button>
-      </ButtonOptionFav>
-      <ContainerOption>
-        <FloatingBoxTwo show={show === 2}>
-          <Enlace href='/historial'>
-            <a>
-              <Button type='button'>
-                <IconShopping color={PColor} size='25px' />
-              </Button>
-            </a>
-          </Enlace>
-        </FloatingBoxTwo>
-      </ContainerOption>
     </ContainerActions>
   )
 }
@@ -204,7 +178,10 @@ export const ContainerActions = styled.div`
     display: flex;
     align-items: center;
     width: 30%;
-    
+    margin: 0 15px;
+    @media only screen and (max-width: 768px){
+      margin-left: 0;
+    }
 `
 export const OnlyMovil = styled.div`
     display: flex;

@@ -319,3 +319,12 @@ export const getServerSideProps = withIronSessionSsr(async function getServerSid
 },
 cookie
 )
+
+// StoreHomeView.getLayout = function getLayout (page) {
+//   return (
+//     <>
+//       {page}
+//     </>
+//   )
+// }
+

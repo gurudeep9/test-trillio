@@ -5,7 +5,7 @@ import {
   PLColor,
   SECBGColor
 } from 'public/colors'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const ContentInputSearch = styled.div`
   display: flex;
@@ -15,30 +15,48 @@ export const ContentInputSearch = styled.div`
   place-content: center;
   align-items: center;
   position: relative;
-  @media(max-width: 768px){
+  transition: all 0.3s ease;
+  ${({ focus }) => {
+    return (
+      focus &&
+      css`
+        position: fixed;
+        right: 0;
+        height: 80px;
+        z-index: 999;
+        width: 90%;
+        left: 0;
+        margin: auto;
+        top: -5px;
+      `
+    )
+  }}
+  @media(max-width: 768px) {
     .btn {
-        display: none;
+      display: none;
     }
-    }
-    .btn {
+  }
+  .btn {
     background-color: transparent;
     cursor: pointer;
-    }
+  }
 `
 export const SearchTarget = styled.div`
-    position: absolute;
-    z-index: 9998;
-    width: 100%;
-    left: 0;
-    right: 0;
-    height: min-content;
-    border-radius: 8px;
-    top: 80px;
-    z-index: 99898;
-    box-shadow: 1px 0px 23px -10px rgb(0 0 0 / 38%);
-    background-color: ${BGColor};
-    border-radius: 8px;
-    display: ${({ values }) => { return values ? 'block' : 'none' }};
+  position: absolute;
+  z-index: 9998;
+  width: 100%;
+  left: 0;
+  right: 0;
+  height: min-content;
+  border-radius: 8px;
+  top: 80px;
+  z-index: 99898;
+  box-shadow: 1px 0px 23px -10px rgb(0 0 0 / 38%);
+  background-color: ${BGColor};
+  border-radius: 8px;
+  display: ${({ values }) => {
+    return values ? 'block' : 'none'
+  }};
 
   button {
     border-bottom: 1px solid #d4d2d2;
@@ -51,70 +69,70 @@ export const SearchTarget = styled.div`
     background: transparent;
     cursor: pointer;
     span {
-        font-size: .875rem;
-        color: ${DarkSilver};
+      font-size: 0.875rem;
+      color: ${DarkSilver};
     }
     .recent {
-        display: block;
-        padding: 10px 5px !important;
-        width: 95%;
-        @media only screen and (max-width: 768px){
-    display: none;
-}
+      display: block;
+      padding: 10px 5px !important;
+      width: 95%;
+      @media only screen and (max-width: 768px) {
+        display: none;
+      }
     }
-    }
-    .recent-span {
-        color: ${BColor};
-        font-weight: 300;
-        line-height: 29px;
-        list-style: initial;
-        font-family: PFont-Light;
-        margin: 0 25px;
-        font-size: 17px;
-        display: block;
-    }
-    .item-recent {
-        padding: 10px 5px;
-        margin: 10px;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        width: 90%;
-        margin: auto;
-        align-items: center;
-    }
-    @media only screen and (max-width: 768px){
+  }
+  .recent-span {
+    color: ${BColor};
+    font-weight: 300;
+    line-height: 29px;
+    list-style: initial;
+    font-family: PFont-Light;
+    margin: 0 25px;
+    font-size: 17px;
+    display: block;
+  }
+  .item-recent {
+    padding: 10px 5px;
+    margin: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+    align-items: center;
+  }
+  @media only screen and (max-width: 768px) {
     display: none !important;
-    }
+  }
 `
 export const Button = styled.button`
-    border-bottom: none !important;
-    width: min-content !important;
-    margin: 0 !important;
+  border-bottom: none !important;
+  width: min-content !important;
+  margin: 0 !important;
 `
 export const Input = styled.input`
-    color: ${`${PLColor}`};
-    margin-left: 10px;
-    outline: none;
-    border: none;
-    display: flex;
-    font-size: 1rem;
-    background-color: ${SECBGColor};
-    height: 48px;
-    padding-left: 20px;
-    padding-right: 0;
-    line-height: 1.25em;
-    font-weight: 300;
-    border-radius: 8px;
-    min-width: 320px;
-    width: 100%;
-    &:focus ~ ${SearchTarget} {
-        display: block;
-    }  
-    @media(max-width: 768px){
-      min-width: 100%;    
-      font-size: 12px;
-      padding-left: 13px;
-
-    }
-     `
+  background: var(--color-alvi-primary-background-blue);
+  border-radius: 8px;
+  border: none;
+  color: ${`${PLColor}`};
+  display: flex;
+  font-size: 1rem;
+  font-weight: 300;
+  height: 48px;
+  line-height: 1.25em;
+  margin-left: 10px;
+  min-width: 320px;
+  outline: none;
+  padding-left: 20px;
+  padding-right: 0;
+  width: 100%;
+  &:focus ~ ${SearchTarget} {
+    display: block;
+  }
+  @media (max-width: 768px) {
+    min-width: 100%;
+    font-size: 12px;
+    padding-left: 13px;
+    position: absolute;
+  }
+`

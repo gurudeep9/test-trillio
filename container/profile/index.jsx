@@ -58,7 +58,7 @@ export const Profile = () => {
     setErrors({ ...errorForm })
     try {
       if (!errorSubmit) {
-        return
+        return null
       }
     } catch (error) {
       setAlertBox({ message: `${error}` })
@@ -88,14 +88,11 @@ export const Profile = () => {
 
   return (
     <Section bg={emailFormat?.repeat(100)}>
-      {/* // <Section bg={emailFormat?.repeat(8)} bg2={"inao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuv"} bg3={"sjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesusjuvinao jesu"}> */}
       <Container >
         <Content>
           {loading && <Loading />}
           <Title>Editar datos</Title>
           <Paragraph>Hola {`${email || 'Bienvenido'}`} </Paragraph>
-          {/* <RippleButton padding='5px' widthButton='45%' onClick={() => active !== 1 && handleClick(1)}>1</RippleButton> */}
-          {/* <RippleButton padding='5px' widthButton='45%' onClick={() => active !== 2 && handleClick(2)}>2</RippleButton> */}
           <form onSubmit={handleSavePass} >
             <React.Fragment> {active === 1
               ? <ContainerAnimation>

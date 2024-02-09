@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable camelcase */
 import { useRouter } from 'next/router'
-import { useUpdateCart } from 'npm-pkg-hook'
+import { useUpdateCart, useEvents } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import {
   createContext,
@@ -148,7 +148,13 @@ const Provider = ({ children }) => {
 
   const [menuMobile, setOpenMenuMobile] = useState(false)
   const [status, setStatus] = useState('close')
-
+  useEvents({
+    eventType: 'menu_mobile',
+    callBack: (args) => {
+      console.log("🚀 ~ Provider ~ args:", args)
+      setOpenMenuMobile(false)
+    }
+  })
   useEffect(() => {
     handleMenu(false)
     setOpenMenuMobile(false)

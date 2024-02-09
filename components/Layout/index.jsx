@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import { usePosition } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { Context } from '../../context'
 import { AlertBox } from 'pkg-components'
@@ -18,6 +18,8 @@ export const Layout = ({
   settings
 }) => {
   const location = useRouter()
+  const mainRef = useRef(null)
+
   const {
     error,
     setAlertBox,
@@ -28,8 +30,11 @@ export const Layout = ({
   } = useContext(Context)
   useEffect(() => {
     setAlertBox({ message: '', color: 'success' })
+    if (mainRef.current) {
+      mainRef.current.scrollTo(0, 0)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [location.pathname])
   const {
     latitude,
     longitude,
@@ -51,10 +56,14 @@ export const Layout = ({
   return (
     <div>
       <AlertBox err={error} />
-      <Main aside={!['/', '/login', '/entrar', '/restaurante', '/entrar/email', '/contact', '/varify-email', '/checkout/[id]', '/add-payment-method', '/register', '/terms_and_conditions', '/email/confirm/[code]', '/forgotpassword', '/teams/invite/[id]', '/autho', '/contact-us', '/switch-options'].find(x => { return x === location.pathname })} >
+      <Main val={val}>
         <AsideCheckout handleMenu={handleMenu} menu={menu} />
-        {<HeaderMain handleMenu={handleMenu} menu={menu} />}
-        <div style={{ gridArea: 'main', overflowY: 'auto' }}>
+        <HeaderMain
+          handleMenu={handleMenu}
+          location={location}
+          menu={menu}
+        />
+        <div ref={mainRef} style={{ gridArea: 'main', overflowY: 'auto' }}>
           {<NavHeaderMobile menuMobile={menuMobile} setOpenMenuMobile={setOpenMenuMobile} />}
           {children}
           {val && <FooterDesktop />}
@@ -86,14 +95,14 @@ const Main = styled.main`
         'main main main right';
     text-align: center;
     grid-gap: 0;
-    @media (min-width: 960px) {
-        ${props => {
-    return !props.aside &&
-        css`
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-            `
-  }};
+    ${props => {
+    return !props.val && css`
+   @media only screen and (max-width: 960px){
+     grid-template-rows: 0 2fr;
     }
+
+        `
+  }}
+  
+
 `

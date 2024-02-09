@@ -22,17 +22,17 @@ export const Content = styled.div`
 
 `
 export const Form = styled.form`
-box-shadow: 0px 1px 4px rgb(0 0 0 / 5%), 0px 4px 16px rgb(0 0 0 / 6%);
+    align-self: center;
+    background-color: var(--color-base-white);
     border-radius: 8px;
-    padding: 36px;
+    box-shadow: 0px 1px 4px rgb(0 0 0 / 5%), 0px 4px 16px rgb(0 0 0 / 6%);
     display: flex;
     flex-direction: column;
-    background-color: #fff;
     overflow: hidden;
+    padding: 36px;
     position: relative;
-    align-self: center;
-    width: 600px;
-    `
+    width: 500px;
+`
 export const ContainerSliderForm = styled.form`
     @media (min-width: 768px) {
         position: absolute;

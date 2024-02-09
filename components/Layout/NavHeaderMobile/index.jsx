@@ -1,30 +1,30 @@
 import PropTypes from 'prop-types'
-import { useApolloClient } from '@apollo/client'
-import { ActiveLink } from 'pkg-components'
-import { useUser } from 'npm-pkg-hook'
-import {
-  IconLogout,
-  IconLove,
-  IconUser
-} from 'public/icons'
 import React, { useCallback } from 'react'
-
+import { useApolloClient } from '@apollo/client'
 import {
-  CicleUser,
-  NavHeaderMenuMobileContent,
-  Anchor
-} from './styled'
+  ActiveLink,
+  BColor,
+  IconCategorie,
+  IconHome,
+  IconLogout,
+  IconUser,
+  Overline,
+  getGlobalStyle
+} from 'pkg-components'
+import { useUser } from 'npm-pkg-hook'
+
+import { CicleUser, NavHeaderMenuMobileContent, Anchor } from './styled'
 import { OUR_URL_BASE } from '@/apollo/urls'
 import { PColor } from 'public/colors'
 
-export const NavHeaderMobile = ({ menuMobile }) => {
+export const NavHeaderMobile = ({ menuMobile, setOpenMenuMobile = () => { } }) => {
   const [dataUser] = useUser()
   const { client } = useApolloClient()
   const onClickLogout = useCallback(async () => {
     localStorage.removeItem('location.data')
     await window
       .fetch(`${OUR_URL_BASE}auth/logout/`, {})
-      .then(res => {
+      .then((res) => {
         if (res) {
           client?.clearStore()
           location.replace('/')
@@ -34,41 +34,69 @@ export const NavHeaderMobile = ({ menuMobile }) => {
         return {}
       })
   }, [client])
+  const username = dataUser?.username || ''
+  const sliceUserName = username?.slice(0, 2) || ''
   return (
-    <NavHeaderMenuMobileContent height={menuMobile === true ? '70%' : '0'}>
-      <div>
-        <CicleUser>
-          {dataUser?.username?.slice(0, 2)}
-        </CicleUser>
-        <span>Hola, {dataUser?.username}</span>
-        <div className='nav-header-menu-mobile'>
-          <ActiveLink activeClassName='active' href='/restaurantes'>
-            <Anchor><IconUser color={'#ccc'} size='30px' /> Inicio</Anchor>
-          </ActiveLink>
-          <ActiveLink activeClassName='active' href='/historial'>
-            <Anchor><IconUser color={'#ccc'} size='30px' />Historial</Anchor>
-          </ActiveLink>
-          <ActiveLink activeClassName='active' href='/favoritos'>
-            <Anchor><IconLove color={'#ccc'} size='30px' />favoritos</Anchor>
-          </ActiveLink>
-          <ActiveLink activeClassName='active' href='/profile'>
-            <Anchor><IconUser color={'#ccc'} size='30px' />Mi cuenta </Anchor>
-          </ActiveLink>
-          <ActiveLink activeClassName='active' href='/ayuda'>
-            <Anchor><IconUser color={'#ccc'} size='30px' />Ayuda / PQR </Anchor>
-          </ActiveLink>
-          <ActiveLink activeClassName='active' href='/categorias'>
-            <Anchor><IconUser color={'#ccc'} size='30px' />Categorías </Anchor>
-          </ActiveLink>
-          <button onClick={() => { return onClickLogout() }}>
-            <IconLogout color={PColor} size='20px' />
-          </button>
+    <>
+      <Overline
+        bgColor={`${BColor}69`}
+        onClick={() => {
+          return setOpenMenuMobile(false)
+        }}
+        show={menuMobile}
+        zIndex={getGlobalStyle('--z-index-99999')}
+      />
+      <NavHeaderMenuMobileContent active={!menuMobile}>
+        <div>
+          <CicleUser>{sliceUserName}</CicleUser>
+          <span>{username ? `Hola, ${username}` : 'Hola'}</span>
+          <div className='nav-header-menu-mobile'>
+            <ActiveLink activeClassName='active' href='/restaurantes'>
+              <Anchor>
+                <IconHome
+                  color={getGlobalStyle('--color-neutral-gray-dark'
+                  )}
+                  size={30}
+                />{' '}
+                Inicio
+              </Anchor>
+            </ActiveLink>
+            <ActiveLink activeClassName='active' href='/profile'>
+              <Anchor>
+                <IconUser
+                  color={getGlobalStyle('--color-neutral-gray-dark'
+                  )}
+                  size={30}
+                />
+                Mi cuenta{' '}
+              </Anchor>
+            </ActiveLink>
+            <ActiveLink activeClassName='active' href='/categorias'>
+              <Anchor>
+                <IconCategorie
+                  color={getGlobalStyle('--color-neutral-gray-dark'
+                  )}
+                  size={30}
+                />
+                Categorías{' '}
+              </Anchor>
+            </ActiveLink>
+            <button
+              onClick={() => {
+                return onClickLogout()
+              }}
+              style={{ background: getGlobalStyle('--color-base-transparent') }}
+            >
+              <IconLogout color={PColor} size={20} />
+            </button>
+          </div>
         </div>
-      </div>
-    </NavHeaderMenuMobileContent>
+      </NavHeaderMenuMobileContent>
+    </>
   )
 }
 
 NavHeaderMobile.propTypes = {
-  menuMobile: PropTypes.bool
+  menuMobile: PropTypes.bool,
+  setOpenMenuMobile: PropTypes.func
 }

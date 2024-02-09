@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useRef, useMemo, useState } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
 import {
   SearchBar,
   ModalProduct,
@@ -31,7 +31,6 @@ export const RestaurantProfile = ({
   setRatingStar = () => {},
   active = 0,
   show = false,
-  loadingButton = false,
   overActive = 0,
   data = {},
   productProps = {},
@@ -44,13 +43,29 @@ export const RestaurantProfile = ({
   rating
 }) => {
   // CUSTOM HOOK
+  console.log(dataMinPedido)
   const [openRate, setOpenRate] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const section1Ref = useRef()
-  const { ratings, setRatings } = dataRating || {}
+  const {
+    ratings,
+    setRatings
+  } = dataRating || {
+    ratings: {},
+    setRatings: () => {}
+  }
 
-  const { rGoodTemperature, rGoodCondition, rTasty, appearance } =
-    ratings ?? {}
+  const {
+    rGoodTemperature,
+    rGoodCondition,
+    rTasty,
+    appearance
+  } = ratings ?? {
+    rGoodTemperature: 0,
+    rGoodCondition: 0,
+    rTasty: 0,
+    appearance: 0
+  }
 
   const { fState } = dataOneFav
 

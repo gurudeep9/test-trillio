@@ -10,17 +10,17 @@ import {
   useDepartments,
   useSaveLocation,
   useRoads,
+  useMobile,
   useCities,
   useGetOneCity,
   usePosition
 } from 'npm-pkg-hook'
 import { InputSearch } from 'container/InputSearch'
 import styled from 'styled-components'
-import { IconLocationMap, IconLogo } from '../../public/icons'
 import { PColor } from '../../public/colors'
 import { Options } from './options'
 import { Context } from '../../context'
-import { ActiveLink, Map } from 'pkg-components'
+import { ActiveLink, IconLocationMap2, IconLogo, Map } from 'pkg-components'
 import { filterKeyObject } from 'utils'
 import { useRouter } from 'next/router'
 
@@ -28,6 +28,9 @@ export const HeaderMain = ({
   watch,
   settings,
   menu,
+  location = {
+    pathname: ''
+  },
   handleMenu = () => { }
 }) => {
   const {
@@ -59,30 +62,40 @@ export const HeaderMain = ({
     setLocationString(JSON.parse(location))
   }, [setLocationString])
 
-  const { department, pais, uLocationKnow, city } = locationStr || {}
+  const {
+    department,
+    pais,
+    uLocationKnow,
+    city
+  } = locationStr || {}
   const handleLogout = () => {
     localStorage.removeItem('session')
     localStorage.removeItem('location.data')
     router.push('/entrar')
   }
+  const { isMobile } = useMobile()
+  if (location.pathname === '/delivery/[...name]' && isMobile) return <></>
+
   return (
     <div>
       <ContentHeader>
         <HeaderMainC>
-          <ItemHeader style={{ transform: `translateX(${offsetY * 0.8}px)` }} >
+          <ItemHeader style={{ transform: `translateX(${offsetY * 0.8}px)`, margin: '0 30px' }} >
             <ActiveLink href='/restaurantes'>
               <a>
-                <IconLogo color={PColor} size='80px' />
+                <IconLogo
+                  className='logo'
+                  color={PColor}
+                  size={80}
+                />
               </a>
             </ActiveLink>
           </ItemHeader>
-          <ItemHeader width='70%'>
-            <InputSearch />
-          </ItemHeader>
+          <InputSearch />
           <ItemHeader>
             <div className='delivery-location' onClick={() => { return setModalLocation(!modalLocation) }}>
               <div className='delivery-location__content'>
-                <IconLocationMap color={PColor} size={20} />
+                <IconLocationMap2 color={PColor} size={20} />
                 <div className='delivery__address'>
                   {uLocationKnow || (pais ? `${pais?.cName} ${department?.dName} ${city?.cName}` : null)}
                 </div>
@@ -130,7 +143,10 @@ export const HeaderMain = ({
 }
 
 HeaderMain.propTypes = {
-  handleMenu: PropTypes.any,
+  handleMenu: PropTypes.func,
+  location: PropTypes.shape({
+    pathname: PropTypes.string
+  }),
   menu: PropTypes.any,
   settings: PropTypes.any,
   watch: PropTypes.any
@@ -164,9 +180,15 @@ export const ItemHeader = styled.div`
   align-items: center;
   align-self: center;
    @media only screen and (max-width: 960px){
-    width: ${({ width }) => { return width || '30%' }};
+    width: ${({ width }) => { return width || '10%' }};
     display: ${({ display }) => { return display }};
+  }
+  
+  @media only screen and (max-width: 768px){
+    .logo {
+      width: 50px;
     }
+  }
     
 `
 export const HeaderMainC = styled.header`
