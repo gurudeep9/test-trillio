@@ -1,9 +1,0 @@
-.card_sub_items {
-    color: var(--color-neutral-gray-silver);
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-light);
-    line-height: 1.3;
-    margin: 0.5em 0;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-}

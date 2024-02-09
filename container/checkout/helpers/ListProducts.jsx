@@ -15,7 +15,7 @@ export const ListProducts = ({
 }) => {
   return (
     <>
-      {existData > 0
+      {(existData && !loading) > 0
         ? ashKey?.map((store, index) => {
           return (
             <div key={index}>
@@ -47,6 +47,7 @@ ListProducts.propTypes = {
   }),
   existData: PropTypes.number,
   handleDeleteItemShopping: PropTypes.func.isRequired,
+  loading: PropTypes.any,
   refs: PropTypes.any,
   result: PropTypes.any,
   sumProduct: PropTypes.any

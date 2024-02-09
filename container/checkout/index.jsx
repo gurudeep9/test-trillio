@@ -5,10 +5,14 @@ import {
   usePushNotificationOrder,
   SERVICES,
   useGetCart,
-  calculateTotalPrice
+  calculateTotalPrice,
+  numberFormat,
+  RandomCode,
+  updateCacheMod
 } from 'npm-pkg-hook'
 import PropTypes from 'prop-types'
 import React, {
+  useContext,
   useEffect,
   useRef,
   useState
@@ -16,11 +20,6 @@ import React, {
 import { RippleButton, InputHooks, EmptyData } from 'pkg-components'
 import { PColor } from '../../public/colors'
 import { IconGoogleLocation, IconLocationMap } from '../../public/icons'
-import {
-  numberFormat,
-  RandomCode,
-  updateCache
-} from '../../utils'
 import { GET_ALL_SHOPPING_CARD } from '../restaurantes/queries'
 import { ListProducts } from './helpers/ListProducts'
 import {
@@ -31,17 +30,20 @@ import {
   Body,
   Card,
   CardPro,
-  ContainerAnimation,
-  ContainerAnimationTow,
   ContentInfo,
   Text,
   Wrapper
 } from './styled'
+import { Context } from 'context'
 
 export const Checkout = ({
-  setAlertBox,
-  locationStr,
-  setModalLocation
+  locationStr = '',
+  setModalLocation = (boolean) => {
+    return boolean
+  },
+  setAlertBox = (args) => {
+    return args
+  }
 }) => {
   // STATE
   // eslint-disable-next-line
@@ -55,10 +57,11 @@ export const Checkout = ({
       dataForm,
       errorForm
     }] = useFormTools()
-  const [active, setActive] = useState(1)
   const router = useRouter()
-  const [key, setSetKey] = useState([])
-  const handleClick = index => { setActive(index === active ? true : index) }
+  const { setCountItemProduct } = useContext(Context)
+  const [key, setKey] = useState([])
+  const [totalProductPrice, setTotalProductPrice] = useState(0)
+
   // QUERIES
   const [dataShoppingCard, { loading }] = useGetCart()
   const result = dataShoppingCard?.reduce(function (r, a) {
@@ -94,9 +97,9 @@ export const Checkout = ({
   const { cName } = city || {}
   const { cName: country } = pais || {}
   const objLocation = { dName, uLocationKnow, cName, country }
-  const [totalProductPrice, setTotalProductPrice] = useState(0)
-  // eslint-disable-next-line
+
   const handleSubmitPedido = async () => {
+    setCountItemProduct(0)
     const newArray = dataShoppingCard.map(x => { return { ShoppingCard: x.ShoppingCard, idStore: x.getStore.idStore } })
     const code = RandomCode(10)
 
@@ -119,7 +122,7 @@ export const Checkout = ({
           }
         },
         update: (cache, { data: { getAllShoppingCard } }) => {
-          return updateCache({
+          return updateCacheMod({
             cache,
             query: GET_ALL_SHOPPING_CARD,
             nameFun: 'getAllShoppingCard',
@@ -135,13 +138,14 @@ export const Checkout = ({
     } catch (err) {
       setAlertBox({ message: `${err.message}`, duration: 7000 })
     }
+    return null
   }
 
   // EFFECTS
   useEffect(() => {
     if (!loading && dataShoppingCard !== null) {
       const dataProduct2 = Object.keys(result)
-      setSetKey(dataProduct2)
+      setKey(dataProduct2)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataShoppingCard])
@@ -161,7 +165,7 @@ export const Checkout = ({
         ShoppingCard: item.ShoppingCard
       },
       update: (cache, { data: { getAllShoppingCard } }) => {
-        return updateCache({
+        return updateCacheMod({
           cache,
           query: GET_ALL_SHOPPING_CARD,
           nameFun: 'getAllShoppingCard',
@@ -180,9 +184,9 @@ export const Checkout = ({
    */
   const sumProduct = (ProPrice, ProDelivery, cant) => {
     // Parse input values to integers
-    const price = parseInt(ProPrice) || 0
-    const quantity = parseInt(cant) || 0
-    const delivery = parseInt(ProDelivery) || 0
+    const price = ProPrice || 0
+    const quantity = cant || 0
+    const delivery = ProDelivery || 0
 
     // Calculate the total cost of products
     const productCost = price * quantity
@@ -193,79 +197,18 @@ export const Checkout = ({
     return totalCost
   }
 
-  const checkoutCart = active === 2
   const existData = dataShoppingCard?.length
-
+  if (!existData) return <EmptyData />
   return (
     <Body>
-      {existData > 0 && !loading
-        ? <Card>
-          <RippleButton
-            active={active === 1}
-            bgColor='transparent'
-            borderRadius='0'
-            color='red'
-            label='Entrega'
-            margin='0px 5px'
-            onClick={() => { return active !== 1 && handleClick(1) }}
-            padding='10px'
-          />
-          <RippleButton
-            active={active === 2}
-            bgColor='transparent'
-            borderRadius='0'
-            color='red'
-            label='Recoger'
-            margin='0px 5px'
-            onClick={() => { return active !== 2 && handleClick(2) }}
-            padding='10px'
-          />
-          <ContentInfo>
-            <div className='ctn-location' onClick={() => { return setModalLocation(true) }}>
-              <button >
-                <IconGoogleLocation color={PColor} size={70} />
-              </button>
-              <div className='delivery-location' onClick={() => { return setModalLocation(true) }}>
-                <span ><IconLocationMap color={PColor} size={20} /> {uLocationKnow || (pais ? `${pais?.cName} ${department?.dName} ${city?.cName}` : null)}</span>
-                <span className='sub-location'>{pais && `${pais?.cName} ${department?.dName} ${city?.cName}`}</span>
-              </div>
-            </div>
-            {active === 1
-              ? <ContainerAnimation>
-                <InputHooks
-                  error={errorForm?.change}
-                  name='change'
-                  onChange={handleChange}
-                  required
-                  title='cambio'
-                  value={numberFormat(dataForm?.change)}
-                  width={'100%'}
-                />
-              </ContainerAnimation>
-              : checkoutCart &&
-              <ContainerAnimationTow>
-                <ProcessCheckoutCard />
-              </ContainerAnimationTow>
-            }
-            <RippleButton
-              disabled={false}
-              margin='20px auto'
-              onClick={() => { return handleSubmitPedido() }}
-              widthButton='100%'
-            >
-              Hacer pedido
-            </RippleButton>
-          </ContentInfo>
-        </Card>
-        : <EmptyData />}
-      {existData > 0 && <Card>
+      <Card>
         <CardPro>
           <ListProducts
             ashKey={key}
             existData={existData}
             handleDeleteItemShopping={handleDeleteItemShopping}
-            refs={refs}
             loading={loading}
+            refs={refs}
             result={result}
             sumProduct={sumProduct}
           />
@@ -282,7 +225,38 @@ export const Checkout = ({
             </Text>
           </Wrapper>
         </CardPro>
-      </Card>}
+      </Card>
+      <Card>
+        <ContentInfo>
+          <div className='ctn-location' onClick={() => { return setModalLocation(true) }}>
+            <button >
+              <IconGoogleLocation color={PColor} size={70} />
+            </button>
+            <div className='delivery-location' onClick={() => { return setModalLocation(true) }}>
+              <span ><IconLocationMap color={PColor} size={20} /> {uLocationKnow || (pais ? `${pais?.cName} ${department?.dName} ${city?.cName}` : null)}</span>
+              <span className='sub-location'>{pais && `${pais?.cName} ${department?.dName} ${city?.cName}`}</span>
+            </div>
+          </div>
+          <InputHooks
+            error={errorForm?.change}
+            name='change'
+            onChange={handleChange}
+            required
+            title='cambio'
+            value={numberFormat(dataForm?.change)}
+            width={'100%'}
+          />
+          <RippleButton
+            disabled={false}
+            margin='20px auto'
+            onClick={() => { return handleSubmitPedido() }}
+            widthButton='100%'
+          >
+              Hacer pedido
+          </RippleButton>
+        </ContentInfo>
+      </Card>
+
     </Body>
   )
 }

@@ -56,23 +56,7 @@ export const LateralModal = styled.div`
 
     }
     `
-export const CardProduct = styled.div`
-    /* height: 200px; */
-    position: relative;
-    border-radius: 2px;
-    padding: 10px 0;
-    .footer {
-        display: flex;
-        justify-content: flex-start;
-        padding: 10px 0;
-    }
-    .item-line {
-        border-top: 1px solid #dcdcdc;
-        border-bottom: 1px solid #dcdcdc;
-        margin: 25px 0;
-        padding: 25px 0;
-    }
-`
+
 export const Content = styled.div`
     height: 100%;
     display: flex;
