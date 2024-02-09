@@ -20,6 +20,7 @@ export const ContentInputSearch = styled.div`
     return (
       focus &&
       css`
+      @media only screen and (max-width: 768px) {
         position: fixed;
         right: 0;
         height: 80px;
@@ -28,6 +29,7 @@ export const ContentInputSearch = styled.div`
         left: 0;
         margin: auto;
         top: -5px;
+      }
       `
     )
   }}
